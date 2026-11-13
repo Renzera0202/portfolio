@@ -1,135 +1,453 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#070b16">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f8fc">
   <meta name="description" content="Robert Riparip Corpuz — Virtual Assistant, customer support and administrative support professional.">
-  <title>Robert Corpuz | Virtual Assistant & Administrative Support</title>
+  <title>Robert Corpuz | Virtual Assistant & Operations Support</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
-    :root{--bg:#070b16;--panel:#0d1425;--panel2:#101b30;--text:#edf5ff;--muted:#9aaac1;--cyan:#43e8ff;--violet:#a78bfa;--line:rgba(133,169,213,.16);--glow:0 0 32px rgba(67,232,255,.14)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;line-height:1.65;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 15% 10%,rgba(36,130,180,.16),transparent 34%),radial-gradient(ellipse at 85% 30%,rgba(139,92,246,.13),transparent 35%),linear-gradient(145deg,#070b16,#080d1b 55%,#090d19)}
-    a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 42px));margin:auto}.topbar{position:fixed;z-index:20;inset:0 0 auto;background:rgba(7,11,22,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{font:700 1.08rem "Space Grotesk";letter-spacing:.04em}.brand b{color:var(--cyan)}.links{display:flex;gap:28px;align-items:center;color:#c4d0e2;font-size:.9rem}.links a:hover{color:var(--cyan)}.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 19px;border-radius:12px;background:linear-gradient(110deg,#0ea5c6,#6366f1);color:white;font-weight:700;box-shadow:0 8px 28px rgba(14,165,198,.2);transition:.25s}.nav-cta:hover,.btn:hover{transform:translateY(-3px);box-shadow:0 10px 34px rgba(67,232,255,.3)}.menu{display:none;background:none;border:0;color:white;font-size:1.4rem}
-    .hero{min-height:760px;padding:150px 0 90px;display:grid;grid-template-columns:1.25fr .75fr;gap:65px;align-items:center}.eyebrow{display:inline-flex;gap:9px;align-items:center;padding:7px 13px;border:1px solid rgba(67,232,255,.25);border-radius:999px;color:var(--cyan);background:rgba(67,232,255,.06);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}.pulse{width:7px;height:7px;border-radius:50%;background:#55f6b5;box-shadow:0 0 12px #55f6b5}.hero h1{font:700 clamp(2.7rem,6vw,5.1rem)/1.04 "Space Grotesk";letter-spacing:-.055em;margin:25px 0 20px}.gradient{background:linear-gradient(100deg,var(--cyan),#b7a4ff 70%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:650px;color:var(--muted);font-size:1.08rem}.actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}.btn.secondary{background:rgba(255,255,255,.035);border:1px solid var(--line);box-shadow:none;color:#dce8f7}.hero-note{margin-top:24px;color:#8293ac;font-size:.88rem}.portrait-shell{position:relative;width:min(340px,100%);margin:auto;padding:9px;border-radius:30px;background:linear-gradient(145deg,var(--cyan),#5b4bc4,transparent 70%);box-shadow:0 0 55px rgba(67,232,255,.13);animation:float 6s ease-in-out infinite}.portrait{width:100%;height:420px;display:block;object-fit:cover;object-position:top;border-radius:23px;background:#101b30}.portrait-tag{position:absolute;left:-32px;bottom:28px;padding:13px 17px;background:rgba(13,20,37,.94);border:1px solid rgba(67,232,255,.28);border-radius:15px;box-shadow:var(--glow);font-size:.84rem}.portrait-tag strong{display:block;color:var(--cyan)}@keyframes float{50%{transform:translateY(-12px)}}@keyframes shimmer{to{background-position:200% center}}
-    section{padding:95px 0}.section-head{text-align:center;margin:0 auto 48px;max-width:690px}.kicker{color:var(--cyan);text-transform:uppercase;letter-spacing:.16em;font-weight:700;font-size:.75rem}.section-head h2{font:700 clamp(2rem,4vw,3rem)/1.15 "Space Grotesk";margin:10px 0}.section-head p{color:var(--muted);margin:0}.grid{display:grid;gap:18px}.three{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:repeat(2,1fr)}.card{background:linear-gradient(145deg,rgba(16,27,48,.88),rgba(10,17,32,.92));border:1px solid var(--line);border-radius:20px;padding:27px;transition:transform .3s,border-color .3s,box-shadow .3s}.card:hover{transform:translateY(-6px);border-color:rgba(67,232,255,.42);box-shadow:var(--glow)}.icon{width:47px;height:47px;display:grid;place-items:center;border-radius:14px;background:rgba(67,232,255,.09);color:var(--cyan);font-size:1.15rem;margin-bottom:17px}.card h3{font:600 1.15rem "Space Grotesk";margin:0 0 9px}.card p,.muted{color:var(--muted);font-size:.94rem}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}.stat{padding:17px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}.stat strong{display:block;color:var(--cyan);font:700 1.8rem "Space Grotesk"}.stat span{font-size:.8rem;color:var(--muted)}
-    .timeline{max-width:850px;margin:auto;position:relative}.timeline:before{content:"";position:absolute;left:18px;top:12px;bottom:12px;width:2px;background:linear-gradient(var(--cyan),var(--violet),transparent)}.job{position:relative;padding-left:60px;margin-bottom:22px}.dot{position:absolute;left:9px;top:28px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan);box-shadow:0 0 17px rgba(67,232,255,.6)}.job-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}.job h3{margin:0;font:600 1.17rem "Space Grotesk"}.company{color:var(--cyan);font-weight:600;font-size:.9rem}.date{font-size:.8rem;color:#9cadd0;border:1px solid var(--line);padding:4px 10px;border-radius:999px;height:max-content}.job ul{margin:13px 0 0;padding-left:19px;color:var(--muted);font-size:.92rem}.job li{margin:5px 0}
-    .skill-list{display:flex;flex-wrap:wrap;gap:10px}.chip{padding:9px 13px;border:1px solid rgba(67,232,255,.2);background:rgba(67,232,255,.055);border-radius:999px;color:#d7e7f8;font-size:.86rem}.cert-list{display:grid;gap:11px}.cert{display:flex;gap:12px;align-items:flex-start;color:#d2deef;font-size:.9rem}.cert i{color:var(--cyan);margin-top:5px}
-    .review-note{max-width:780px;margin:-25px auto 28px;text-align:center;color:#f8d78a;font-size:.82rem}.stars{color:#ffd166;letter-spacing:3px;margin-bottom:12px}.reviewer{display:flex;align-items:center;gap:12px;margin-top:20px}.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#164e63,#6d28d9);font-weight:700}.reviewer small{display:block;color:var(--muted)}
-    .education{display:flex;gap:17px;align-items:flex-start}.education .icon{flex-shrink:0;margin:0}.education h3{margin:0}.education p{margin:4px 0}
-    .contact-panel{text-align:center;padding:55px 30px;border:1px solid rgba(67,232,255,.24);border-radius:26px;background:radial-gradient(ellipse at 50% 0,rgba(67,232,255,.11),transparent 65%),var(--panel)}.contact-panel p{color:var(--muted);max-width:580px;margin:12px auto 25px}.contact-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.contact-link{padding:12px 16px;border-radius:12px;border:1px solid var(--line);color:#dce8f7}.contact-link:hover{border-color:var(--cyan);color:var(--cyan)}footer{padding:26px 0;border-top:1px solid var(--line);text-align:center;color:#8293ac;font-size:.82rem}
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:none}.reduced *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-    @media(max-width:800px){.hero{grid-template-columns:1fr;text-align:center;gap:50px;padding-top:130px}.hero p{margin-inline:auto}.actions{justify-content:center}.portrait-shell{width:270px}.portrait{height:330px}.portrait-tag{left:-25px}.three{grid-template-columns:1fr}.two{grid-template-columns:1fr}.stats{max-width:480px;margin:25px auto 0}.links{display:none}.menu{display:block}.links.open{display:flex;position:absolute;top:76px;left:0;right:0;background:#0b1222;padding:20px;flex-direction:column;border-bottom:1px solid var(--line)}}
-    @media(max-width:480px){.wrap{width:min(100% - 30px,1120px)}section{padding:72px 0}.hero h1{font-size:2.7rem}.job{padding-left:47px}.job-top{display:block}.date{display:inline-block;margin-top:8px}.stats{grid-template-columns:1fr}.portrait-tag{left:-15px}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+    :root {
+      --bg: #080d18;
+      --surface: #101827;
+      --surface-2: #131f31;
+      --text: #f4f7fb;
+      --muted: #9aa9bd;
+      --line: rgba(185, 205, 230, .13);
+      --cyan: #55e6e0;
+      --blue: #7c9cff;
+      --lime: #c5f36b;
+      --radius: 22px;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0; color: var(--text); background: var(--bg);
+      font-family: "DM Sans", sans-serif; line-height: 1.65; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(85,230,224,.11), transparent 28%),
+        radial-gradient(circle at 88% 22%, rgba(124,156,255,.13), transparent 30%),
+        linear-gradient(145deg, #080d18 0%, #0a1220 55%, #080d18 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1160px, calc(100% - 44px)); margin: auto; }
+    .header {
+      position: fixed; z-index: 50; inset: 0 0 auto; border-bottom: 1px solid var(--line);
+      background: rgba(8,13,24,.78); backdrop-filter: blur(18px);
+    }
+    .nav { min-height: 78px; display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+    .logo { font: 800 1.04rem "Manrope", sans-serif; letter-spacing: .07em; }
+    .logo span { color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 27px; color: #c1ccda; font-size: .9rem; }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 12px 18px; border-radius: 12px; font-weight: 700; border: 1px solid transparent;
+      background: linear-gradient(110deg, #55e6e0, #7c9cff); color: #07111c;
+      box-shadow: 0 9px 30px rgba(85,230,224,.15); transition: transform .22s, box-shadow .22s;
+    }
+    .nav-cta:hover, .button:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(85,230,224,.23); }
+    .button.outline { background: rgba(255,255,255,.035); border-color: var(--line); color: var(--text); box-shadow: none; }
+    .menu-toggle { display: none; background: none; border: 0; color: white; font-size: 1.35rem; cursor: pointer; }
+    .hero { min-height: 790px; padding: 160px 0 100px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 65px; align-items: center; }
+    .availability {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px;
+      border: 1px solid rgba(85,230,224,.24); border-radius: 99px; color: var(--cyan);
+      background: rgba(85,230,224,.06); text-transform: uppercase; letter-spacing: .12em;
+      font-size: .72rem; font-weight: 800;
+    }
+    .availability i { font-size: .55rem; color: var(--lime); filter: drop-shadow(0 0 7px var(--lime)); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font: 800 clamp(3rem, 6.7vw, 5.7rem)/1.02 "Manrope", sans-serif; letter-spacing: -.065em; margin: 25px 0 22px; }
+    .gradient-text { color: transparent; background: linear-gradient(100deg, var(--cyan), #b4c4ff 80%); background-clip: text; -webkit-background-clip: text; }
+    .hero-copy { max-width: 660px; color: var(--muted); font-size: 1.08rem; }
+    .hero-copy strong { color: var(--text); }
+    .hero-actions { display: flex; gap: 13px; flex-wrap: wrap; margin-top: 30px; }
+    .location { margin-top: 25px; color: #8495aa; font-size: .88rem; }
+    .location i { color: var(--cyan); margin-right: 7px; }
+    .hero-visual { position: relative; max-width: 390px; width: 100%; margin: auto; }
+    .photo-frame {
+      position: relative; padding: 9px; border-radius: 30px;
+      background: linear-gradient(145deg, var(--cyan), #6c7fff 55%, rgba(124,156,255,.1));
+      box-shadow: 0 0 0 1px rgba(85,230,224,.1), 0 25px 80px rgba(43,110,150,.18);
+      animation: levitate 6s ease-in-out infinite;
+    }
+    .photo-frame::before { content: ""; position: absolute; inset: 18px -18px -18px 18px; border: 1px solid rgba(85,230,224,.23); border-radius: 28px; z-index: -1; }
+    .profile-photo { width: 100%; height: 475px; display: block; object-fit: cover; object-position: top; border-radius: 23px; background: var(--surface); }
+    .photo-caption {
+      position: absolute; bottom: 27px; left: -35px; padding: 14px 18px; border-radius: 15px;
+      background: rgba(13,23,38,.94); border: 1px solid rgba(85,230,224,.28); box-shadow: var(--shadow);
+      font-size: .82rem; color: var(--muted); backdrop-filter: blur(12px);
+    }
+    .photo-caption strong { display: block; color: var(--text); font-size: .95rem; }
+    .floating-label {
+      position: absolute; top: 35px; right: -35px; padding: 12px 15px; border-radius: 14px;
+      background: rgba(17,29,47,.94); border: 1px solid var(--line); box-shadow: var(--shadow);
+      color: var(--cyan); font-size: .78rem; font-weight: 700;
+    }
+    @keyframes levitate { 50% { transform: translateY(-11px); } }
+    .quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 610px; margin-top: 38px; }
+    .stat { padding: 15px 16px; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.025); }
+    .stat strong { display: block; color: var(--cyan); font: 800 1.65rem "Manrope"; }
+    .stat span { color: var(--muted); font-size: .76rem; line-height: 1.4; display: block; }
+    section { padding: 94px 0; }
+    .section-title { max-width: 700px; text-align: center; margin: 0 auto 46px; }
+    .eyebrow { color: var(--cyan); font-size: .73rem; letter-spacing: .17em; text-transform: uppercase; font-weight: 800; }
+    h2 { font: 800 clamp(2rem,4vw,3.15rem)/1.13 "Manrope"; letter-spacing: -.045em; margin: 10px 0 13px; }
+    .section-title p { color: var(--muted); margin-bottom: 0; }
+    .grid { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3,1fr); }
+    .grid-2 { grid-template-columns: repeat(2,1fr); }
+    .card {
+      padding: 27px; border-radius: var(--radius); border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(19,31,49,.88), rgba(13,22,36,.94));
+      box-shadow: 0 10px 35px rgba(0,0,0,.08);
+      transition: transform .28s, border-color .28s, box-shadow .28s;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(85,230,224,.38); box-shadow: 0 18px 42px rgba(0,0,0,.2), 0 0 25px rgba(85,230,224,.06); }
+    .icon-box { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; color: var(--cyan); background: rgba(85,230,224,.09); margin-bottom: 18px; font-size: 1.15rem; }
+    .card h3 { font: 700 1.13rem "Manrope"; margin-bottom: 9px; }
+    .card p { color: var(--muted); font-size: .93rem; margin-bottom: 0; }
+    .timeline { max-width: 900px; margin: auto; position: relative; }
+    .timeline::before { content: ""; position: absolute; left: 17px; top: 12px; bottom: 15px; width: 2px; background: linear-gradient(var(--cyan),var(--blue),transparent); }
+    .timeline-item { position: relative; padding-left: 58px; margin-bottom: 20px; }
+    .timeline-dot { position: absolute; left: 8px; top: 29px; width: 20px; height: 20px; border: 3px solid var(--cyan); border-radius: 50%; background: var(--bg); box-shadow: 0 0 14px rgba(85,230,224,.45); }
+    .job-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    .job-heading h3 { margin: 0 0 5px; }
+    .company { color: var(--cyan); font-size: .9rem; font-weight: 700; }
+    .date { white-space: nowrap; border: 1px solid var(--line); color: #a9b8ca; border-radius: 99px; padding: 5px 11px; font-size: .76rem; }
+    .job-points { margin: 13px 0 0; padding-left: 19px; color: var(--muted); font-size: .9rem; }
+    .job-points li { margin: 5px 0; }
+    .service-card { min-height: 225px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tag { padding: 8px 12px; border: 1px solid rgba(85,230,224,.19); border-radius: 99px; background: rgba(85,230,224,.055); color: #dce8f3; font-size: .82rem; }
+    .training-list { display: grid; gap: 12px; }
+    .training-list div { display: flex; gap: 11px; align-items: flex-start; color: #d0dbea; font-size: .9rem; }
+    .training-list i { color: var(--cyan); margin-top: 5px; }
+    .education-row { display: flex; align-items: flex-start; gap: 16px; }
+    .education-row .icon-box { flex: 0 0 48px; margin: 0; }
+    .education-row h3 { margin-bottom: 5px; }
+    .education-row p { margin-bottom: 5px; }
+    .review-disclaimer { text-align: center; color: #e9cc83; font-size: .82rem; max-width: 800px; margin: -23px auto 28px; }
+    .stars { color: #ffd36e; letter-spacing: 3px; margin-bottom: 12px; }
+    .review-person { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg,#165b65,#5355a8); font-weight: 800; }
+    .review-person small { display: block; color: var(--muted); }
+    .contact-box {
+      text-align: center; padding: 60px 28px; border: 1px solid rgba(85,230,224,.23); border-radius: 28px;
+      background: radial-gradient(ellipse at 50% 0,rgba(85,230,224,.1),transparent 62%), var(--surface);
+    }
+    .contact-box p { max-width: 610px; margin: 12px auto 26px; color: var(--muted); }
+    .contact-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .contact-detail { padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; color: #dce7f3; }
+    .contact-detail i { color: var(--cyan); margin-right: 7px; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0; text-align: center; color: #8494a9; font-size: .82rem; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (max-width: 900px) {
+      .nav-links { gap: 16px; font-size: .82rem; }
+      .hero { gap: 35px; }
+      .profile-photo { height: 410px; }
+      .floating-label { right: -10px; }
+    }
+    @media (max-width: 760px) {
+      .nav { min-height: 70px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 22px; background: #0c1524; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; }
+      .nav-links.open { display: flex; }
+      .nav-links .nav-cta { text-align: center; }
+      .hero { min-height: auto; padding: 130px 0 75px; grid-template-columns: 1fr; text-align: center; }
+      .hero-copy { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .location { margin-bottom: 35px; }
+      .hero-visual { max-width: 310px; }
+      .profile-photo { height: 380px; }
+      .quick-stats { margin: 30px auto 0; }
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      section { padding: 72px 0; }
+    }
+    @media (max-width: 480px) {
+      .container { width: min(100% - 30px, 1160px); }
+      h1 { font-size: 2.75rem; }
+      .quick-stats { grid-template-columns: 1fr; text-align: left; }
+      .photo-caption { left: -12px; }
+      .floating-label { right: -8px; top: 18px; }
+      .timeline-item { padding-left: 46px; }
+      .job-heading { display: block; }
+      .date { display: inline-block; margin-top: 9px; }
+      .card { padding: 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* Soft light aesthetic override */
+    :root {
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --surface-2: #f0f3fa;
+      --text: #20263a;
+      --muted: #69738a;
+      --line: rgba(76, 91, 130, .15);
+      --cyan: #5686d9;
+      --blue: #9b8be8;
+      --lime: #72b89b;
+      --shadow: 0 20px 55px rgba(62, 79, 125, .12);
+    }
+    body { color: var(--text); background: var(--bg); }
+    body::before {
+      background:
+        radial-gradient(circle at 12% 12%, rgba(164, 199, 255, .28), transparent 30%),
+        radial-gradient(circle at 88% 22%, rgba(210, 194, 255, .28), transparent 32%),
+        linear-gradient(145deg, #fbfcff 0%, #f4f6fc 55%, #fffafd 100%);
+    }
+    .header { background: rgba(250, 251, 255, .88); }
+    .logo span, .nav-links a:hover, .availability, .location i, .eyebrow,
+    .icon-box, .company, .training-list i, .contact-detail i { color: #5686d9; }
+    .nav-links { color: #59647b; }
+    .nav-cta, .button {
+      background: linear-gradient(110deg, #8fc5ee, #b7a8ef);
+      color: #20263a;
+      box-shadow: 0 9px 25px rgba(112, 145, 211, .18);
+    }
+    .nav-cta:hover, .button:hover { box-shadow: 0 14px 30px rgba(112, 145, 211, .25); }
+    .button.outline { background: rgba(255,255,255,.72); border-color: var(--line); color: var(--text); }
+    .menu-toggle { color: #303951; }
+    .availability { border-color: rgba(86,134,217,.25); background: rgba(86,134,217,.08); }
+    .availability i { color: #72b89b; filter: none; }
+    .gradient-text {
+      background: linear-gradient(100deg, #548bdc, #9b83df 80%);
+      background-clip: text; -webkit-background-clip: text;
+    }
+    .hero-copy strong, .photo-caption strong { color: #27314b; }
+    .location, footer { color: #8490a7; }
+    .photo-frame {
+      background: linear-gradient(145deg, #9bc9ee, #b9a9ee 55%, #e7dffc);
+      box-shadow: 0 18px 55px rgba(115, 137, 190, .2);
+    }
+    .photo-frame::before { border-color: rgba(117, 145, 207, .32); }
+    .profile-photo { background: #edf1f8; }
+    .photo-caption, .floating-label {
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(117, 145, 207, .2);
+      color: #69738a;
+      box-shadow: 0 14px 35px rgba(62,79,125,.13);
+    }
+    .photo-caption strong { color: #27314b; }
+    .floating-label { color: #5686d9; }
+    .stat {
+      background: rgba(255,255,255,.75);
+      border-color: rgba(100,119,164,.16);
+      box-shadow: 0 8px 25px rgba(62,79,125,.05);
+    }
+    .stat strong { color: #5686d9; }
+    .section-title p { color: var(--muted); }
+    .card {
+      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(247,249,255,.98));
+      border-color: rgba(100,119,164,.16);
+      box-shadow: 0 10px 32px rgba(62,79,125,.07);
+    }
+    .card:hover {
+      border-color: rgba(86,134,217,.35);
+      box-shadow: 0 18px 38px rgba(62,79,125,.12);
+    }
+    .icon-box { background: rgba(111,155,220,.12); }
+    .timeline::before { background: linear-gradient(#8bbbe8,#b5a7e9,transparent); }
+    .timeline-dot {
+      border-color: #7da9e2; background: var(--bg);
+      box-shadow: 0 0 0 5px rgba(125,169,226,.13);
+    }
+    .date { color: #68748c; background: rgba(255,255,255,.7); }
+    .job-points, .card p { color: #69738a; }
+    .tag {
+      border-color: rgba(111,155,220,.24);
+      background: rgba(111,155,220,.09);
+      color: #4b5c7b;
+    }
+    .training-list div { color: #56627b; }
+    .review-disclaimer { color: #9b7840; }
+    .stars { color: #e7ad4c; }
+    .avatar { background: linear-gradient(135deg,#9bc9ee,#b9a9ee); color: #293650; }
+    .contact-box {
+      border-color: rgba(111,155,220,.25);
+      background: radial-gradient(ellipse at 50% 0,rgba(173,197,244,.24),transparent 62%), #fff;
+      box-shadow: 0 15px 40px rgba(62,79,125,.08);
+    }
+    .contact-detail { color: #56627b; background: rgba(255,255,255,.75); }
+    footer { border-top-color: var(--line); }
+    @media (max-width: 760px) {
+      .nav-links { background: rgba(250,251,255,.98); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+
   </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap nav">
-  <a class="brand" href="#home">ROBERT <b>CORPUZ.</b></a>
-  <nav class="links" id="navLinks"><a href="#about">About</a><a href="#experience">Experience</a><a href="#services">Services</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#reviews">Sample Reviews</a><a class="nav-cta" href="#contact">Let's Talk <i class="fa-solid fa-arrow-up-right-from-square"></i></a></nav>
-  <button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
-</div></header>
-<main id="home">
-  <div class="wrap hero">
-    <div class="reveal">
-      <span class="eyebrow"><span class="pulse"></span> Open to remote opportunities</span>
-      <h1>Reliable support.<br><span class="gradient">Organized results.</span></h1>
-      <p>Hi, I'm <strong>Robert Riparip Corpuz</strong> — a customer service and administrative support professional with experience in U.S. voice accounts, sales support, data encoding, records management, and payroll documentation. I help teams stay organized while delivering thoughtful customer experiences.</p>
-      <div class="actions"><a class="btn" href="#contact"><i class="fa-regular fa-paper-plane"></i> Hire / Contact Me</a><a class="btn secondary" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-download"></i> Download Resume (PDF)</a><a class="btn secondary" href="#experience">Explore My Experience <i class="fa-solid fa-arrow-down"></i></a></div>
-      <div class="hero-note"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines &nbsp;·&nbsp; Available for remote roles</div>
-      <div class="stats"><div class="stat"><strong>99%</strong><span>Internship evaluation rating</span></div><div class="stat"><strong>3+</strong><span>Customer support accounts / environments</span></div><div class="stat"><strong>2020–23</strong><span>Office Management Technology</span></div></div>
+  <header class="header">
+    <div class="container nav">
+      <a class="logo" href="#home">ROBERT<span>.</span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#about">About</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">Let's talk <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     </div>
-    <div class="portrait-shell reveal"><img class="portrait" src="IMG_0031.jpeg" alt="Portrait of Robert Corpuz"><div class="portrait-tag"><strong>Virtual Assistant</strong>Administrative & Customer Support</div></div>
-  </div>
+  </header>
 
-  <section id="about"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">A little about me</span><h2>Support that keeps work moving</h2><p>Detail-focused, service-minded, and comfortable working with customers, records, and everyday office tools.</p></div>
-    <div class="grid three">
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>Customer Experience</h3><p>Experience assisting customers through U.S. voice accounts, handling inquiries, supporting sales conversations, and addressing order-related concerns.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-folder-open"></i></div><h3>Administrative Support</h3><p>Background in data encoding, document preparation, records management, and supporting accounts payable/receivable and payroll documentation.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Professional Approach</h3><p>Focused on clear communication, time management, organization, attention to detail, business etiquette, and confidentiality.</p></article>
-    </div>
-  </div></section>
+  <main id="home">
+    <section class="container hero">
+      <div class="reveal">
+        <div class="availability"><i class="fa-solid fa-circle"></i> Open to remote opportunities</div>
+        <h1>Dependable support.<br><span class="gradient-text">Better workdays.</span></h1>
+        <p class="hero-copy">Hello, I'm <strong>Robert Riparip Corpuz</strong> — a customer service and administrative support professional experienced in U.S. voice accounts, sales support, data encoding, records management, and payroll documentation. I help people and teams stay organized, responsive, and on track.</p>
+        <div class="hero-actions">
+          <a class="button" href="#contact"><i class="fa-regular fa-paper-plane"></i> Work with me</a>
+          <a class="button outline" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-download"></i> Download résumé</a>
+        </div>
+        <div class="location"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines <span aria-hidden="true">·</span> Remote-ready</div>
+        <div class="quick-stats">
+          <div class="stat"><strong>99%</strong><span>Internship evaluation rating</span></div>
+          <div class="stat"><strong>3+</strong><span>Customer support environments</span></div>
+          <div class="stat"><strong>2020–23</strong><span>Office Management Technology</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="photo-frame">
+          <img class="profile-photo" src="IMG_0031.jpeg" alt="Portrait of Robert Corpuz">
+          <div class="photo-caption"><strong>Robert Corpuz</strong>Virtual & Administrative Support</div>
+        </div>
+        <div class="floating-label"><i class="fa-solid fa-sparkles"></i> Organized · Reliable · Helpful</div>
+      </div>
+    </section>
 
-  <section id="experience"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">Career journey</span><h2>Professional Experience</h2><p>Customer-facing and administrative roles that built a versatile foundation for remote support work.</p></div>
-    <div class="timeline">
-      <article class="job reveal"><span class="dot"></span><div class="card"><div class="job-top"><div><h3>Customer Sales Representative — Verizon Sales Account</h3><div class="company">AFNI Philippines</div></div><span class="date">September 2024 – November 2026</span></div><ul><li>Supported customers in a sales account environment.</li><li>Applied customer communication and sales assistance skills.</li></ul></div></article>
-      <article class="job reveal"><span class="dot"></span><div class="card"><div class="job-top"><div><h3>Customer Service Representative — Paychex Account</h3><div class="company">Foundever</div></div><span class="date">July – September 2024</span></div><ul><li>Provided customer service support in a Paychex account environment.</li><li>Used professional communication and customer support skills to assist with inquiries.</li></ul></div></article>
-      <article class="job reveal"><span class="dot"></span><div class="card"><div class="job-top"><div><h3>Customer Service Representative — U.S. Retail Voice Account</h3><div class="company">Inspiro · 1-800-Flowers International Account</div></div><span class="date">2024 · Seasonal campaigns</span></div><ul><li>Supported customers during seasonal Valentine's Day and Mother's Day operations.</li><li>Assisted with inquiries and order-related concerns in a voice-based support environment.</li></ul></div></article>
-      <article class="job reveal"><span class="dot"></span><div class="card"><div class="job-top"><div><h3>Accounts Payable / Receivable Support</h3><div class="company">Land Transportation Franchising and Regulatory Board (LTFRB), Central Office</div></div><span class="date">October – December 2020</span></div><ul><li>Encoded information and prepared disbursement files for drivers' monthly payroll.</li><li>Encoded records related to the GAA and Bayanihan Act II projects.</li></ul></div></article>
-      <article class="job reveal"><span class="dot"></span><div class="card"><div class="job-top"><div><h3>Encoder Intern</h3><div class="company">Ideal Residence Homeowners Association, Inc.</div></div><span class="date">January – July 2020</span></div><ul><li>Encoded monthly dues and tricycle sticker records.</li><li>Received a <strong style="color:var(--cyan)">99% evaluation rating</strong> for internship encoding performance.</li></ul></div></article>
-    </div>
-  </div></section>
+    <section id="about">
+      <div class="container">
+        <div class="section-title reveal"><span class="eyebrow">A little about me</span><h2>Making the day-to-day easier.</h2><p>I bring a service-first mindset, careful organization, and a professional approach to customer and back-office support.</p></div>
+        <div class="grid grid-3">
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-headset"></i></div><h3>Customer care</h3><p>Experience supporting U.S. voice accounts, assisting with inquiries, sales conversations, and order-related concerns.</p></article>
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-folder-open"></i></div><h3>Office administration</h3><p>Hands-on background in data encoding, document preparation, records management, and payroll-related documentation.</p></article>
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div><h3>Trust & attention to detail</h3><p>Focused on accuracy, confidentiality, clear communication, time management, and professional business etiquette.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="services"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">Ways I can help</span><h2>Services for Remote Teams</h2><p>Flexible support for small businesses, entrepreneurs, and international clients who need dependable day-to-day assistance.</p></div>
-    <div class="grid three">
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-calendar-check"></i></div><h3>Virtual & Administrative Assistance</h3><p>Document preparation, file organization, routine administrative tasks, data encoding, and general back-office support.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>Customer & Client Support</h3><p>Professional voice-based customer assistance, responding to inquiries, communicating clearly, and helping resolve customer concerns.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-table-list"></i></div><h3>Data Entry & Records</h3><p>Accurate data input, spreadsheet updates, record maintenance, document handling, and organized information management.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div><h3>Payroll & Documentation Support</h3><p>Administrative assistance with payroll-related documentation, disbursement file preparation, and AP/AR support tasks.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-comments"></i></div><h3>Sales & Service Assistance</h3><p>Customer-focused sales support, attentive listening, clear communication, and professional handling of account inquiries.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-lock"></i></div><h3>Confidential Office Support</h3><p>Careful handling of business information with an awareness of data privacy, confidentiality, and professional workplace practices.</p></article>
-    </div>
-  </div></section>
+    <section id="services">
+      <div class="container">
+        <div class="section-title reveal"><span class="eyebrow">What I can help with</span><h2>Practical support for busy teams.</h2><p>Flexible assistance for entrepreneurs, small businesses, and remote teams.</p></div>
+        <div class="grid grid-3">
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-list-check"></i></div><h3>Virtual assistance</h3><p>Day-to-day administrative help, document preparation, file organization, and back-office tasks.</p></article>
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-comments"></i></div><h3>Customer support</h3><p>Professional customer communication, inquiry handling, and thoughtful assistance with customer concerns.</p></article>
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-table"></i></div><h3>Data entry & records</h3><p>Accurate data input, spreadsheet updates, record maintenance, and organized information handling.</p></article>
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div><h3>Documentation support</h3><p>Administrative support for payroll documentation, disbursement files, and AP/AR-related tasks.</p></article>
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div><h3>Sales assistance</h3><p>Customer-focused sales support, attentive listening, clear explanations, and professional service.</p></article>
+          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-lock"></i></div><h3>Confidential office tasks</h3><p>Careful handling of business information with awareness of data privacy and workplace confidentiality.</p></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="skills"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">What I bring</span><h2>Skills & Professional Training</h2><p>Practical capabilities supported by my education, work experience, and completed training.</p></div>
-    <div class="grid two">
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-laptop-file"></i></div><h3>Core Skills</h3><div class="skill-list"><span class="chip">Virtual Assistance</span><span class="chip">Administrative Support</span><span class="chip">Customer Service</span><span class="chip">Client Support</span><span class="chip">Sales Assistance</span><span class="chip">Data Entry & Encoding</span><span class="chip">Records Management</span><span class="chip">Document Preparation</span><span class="chip">Payroll Documentation</span><span class="chip">AP / AR Support</span><span class="chip">Business Communication</span><span class="chip">Time Management</span><span class="chip">Confidentiality & Data Privacy</span></div></article>
-      <article class="card reveal"><div class="icon"><i class="fa-brands fa-microsoft"></i></div><h3>Productivity Tools</h3><div class="skill-list"><span class="chip">Microsoft Word</span><span class="chip">Microsoft Excel</span><span class="chip">Microsoft PowerPoint</span><span class="chip">Apple Pages</span><span class="chip">Apple Numbers</span><span class="chip">Apple Keynote</span></div><p class="muted" style="margin-top:18px">Also experienced in professional written and verbal communication, business etiquette, organization, and attention to detail.</p></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-certificate"></i></div><h3>Training & Certifications</h3><div class="cert-list">
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Inspiro Relia Language Training – BPO</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Clinical Documentation Standards (September 2022)</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Data Privacy Act of 2012 and Pertinent DOH Rules on Privacy (August 2022)</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Emergency Room Records and Medicolegal (August 2022)</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Aspirants of the Frontline: Salient Points to Remember in Health Care Institutions (July 2022)</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Values Orientation Training for Future Employees (July 2022)</span></div>
-        <div class="cert"><i class="fa-solid fa-check-circle"></i><span>Alison: Safety in the Workplace, Interpersonal Skills, Ultimate Time Management, Business Etiquette and Professionalism, Administrative Procedures and Support in the Office, and Business Communication Skills</span></div>
-      </div></article>
-      <article class="card reveal"><div class="icon"><i class="fa-solid fa-language"></i></div><h3>Working Style</h3><p>Professional English communication, interpersonal skills, business etiquette, time management, workplace safety awareness, and a strong focus on accurate and confidential handling of information.</p></article>
-    </div>
-  </div></section>
+    <section id="experience">
+      <div class="container">
+        <div class="section-title reveal"><span class="eyebrow">Career journey</span><h2>Experience that builds confidence.</h2><p>Customer-facing and administrative roles across service and office environments.</p></div>
+        <div class="timeline">
+          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Sales Representative — Verizon Sales Account</h3><div class="company">AFNI Philippines</div></div><span class="date">Sep 2024 – Nov 2026</span></div><ul class="job-points"><li>Supported customers in a sales account environment.</li><li>Applied customer communication and sales assistance skills.</li></ul></div></article>
+          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Service Representative — Paychex Account</h3><div class="company">Foundever</div></div><span class="date">Jul – Sep 2024</span></div><ul class="job-points"><li>Provided customer service support in a Paychex account environment.</li><li>Used professional communication skills to assist with inquiries.</li></ul></div></article>
+          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Service Representative — U.S. Retail Voice Account</h3><div class="company">Inspiro · 1-800-Flowers International</div></div><span class="date">2024 · Seasonal</span></div><ul class="job-points"><li>Supported customers during Valentine's Day and Mother's Day campaigns.</li><li>Assisted with inquiries and order-related concerns in a voice support environment.</li></ul></div></article>
+          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Accounts Payable / Receivable Support</h3><div class="company">LTFRB Central Office</div></div><span class="date">Oct – Dec 2020</span></div><ul class="job-points"><li>Encoded information and prepared disbursement files for drivers' monthly payroll.</li><li>Encoded records related to GAA and Bayanihan Act II projects.</li></ul></div></article>
+          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Encoder Intern</h3><div class="company">Ideal Residence Homeowners Association, Inc.</div></div><span class="date">Jan – Jul 2020</span></div><ul class="job-points"><li>Maintained monthly dues and tricycle sticker records.</li><li>Achieved a 99% internship evaluation rating.</li></ul></div></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="education"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">Academic background</span><h2>Education</h2></div>
-    <div class="grid two">
-      <article class="card education reveal"><div class="icon"><i class="fa-solid fa-graduation-cap"></i></div><div><h3>Polytechnic University of the Philippines</h3><p class="muted">College Diploma in Office Management Technology</p><span class="company">2020 – 2023</span></div></article>
-      <article class="card education reveal"><div class="icon"><i class="fa-solid fa-school"></i></div><div><h3>Datamex College of Saint Adeline – Fairview</h3><p class="muted">Senior High School</p><span class="company">2018 – 2020</span></div></article>
-      <article class="card education reveal"><div class="icon"><i class="fa-solid fa-book-open"></i></div><div><h3>Justice Cecilia Muñoz Palma High School</h3><p class="muted">High School</p><span class="company">2014 – 2017</span></div></article>
-      <article class="card education reveal"><div class="icon"><i class="fa-solid fa-book"></i></div><div><h3>Payatas B. Annex Elementary School</h3><p class="muted">Elementary</p><span class="company">2008 – 2014</span></div></article>
-    </div>
-  </div></section>
+    <section id="skills">
+      <div class="container">
+        <div class="section-title reveal"><span class="eyebrow">Tools & strengths</span><h2>Skills I bring to the table.</h2><p>A practical mix of customer support, office administration, and productivity tools.</p></div>
+        <div class="grid grid-2">
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-bolt"></i></div><h3>Core capabilities</h3><div class="skill-tags"><span class="tag">Virtual Assistance</span><span class="tag">Administrative Support</span><span class="tag">Customer Service</span><span class="tag">Client Support</span><span class="tag">Sales Assistance</span><span class="tag">Data Entry</span><span class="tag">Records Management</span><span class="tag">Document Preparation</span><span class="tag">Payroll Documentation</span><span class="tag">AP / AR Support</span><span class="tag">Time Management</span><span class="tag">Data Privacy</span><span class="tag">Business Communication</span></div></article>
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-laptop"></i></div><h3>Productivity tools</h3><div class="skill-tags"><span class="tag">Microsoft Word</span><span class="tag">Microsoft Excel</span><span class="tag">PowerPoint</span><span class="tag">Apple Pages</span><span class="tag">Apple Numbers</span><span class="tag">Apple Keynote</span></div><p style="margin-top:18px">Comfortable with document preparation, spreadsheets, presentations, and organized digital records.</p></article>
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-certificate"></i></div><h3>Selected training</h3><div class="training-list">
+            <div><i class="fa-solid fa-check"></i><span>Inspiro Relia Language Training – BPO</span></div>
+            <div><i class="fa-solid fa-check"></i><span>Clinical Documentation Standards</span></div>
+            <div><i class="fa-solid fa-check"></i><span>Data Privacy Act of 2012 and Pertinent DOH Rules on Privacy</span></div>
+            <div><i class="fa-solid fa-check"></i><span>Emergency Room Records and Medicolegal</span></div>
+            <div><i class="fa-solid fa-check"></i><span>Values Orientation Training for Future Employees</span></div>
+            <div><i class="fa-solid fa-check"></i><span>Workplace safety, interpersonal skills, time management, business etiquette, administrative procedures, and business communication</span></div>
+          </div></article>
+          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div><h3>Education</h3>
+            <div class="training-list">
+              <div><i class="fa-solid fa-building-columns"></i><span><strong>Polytechnic University of the Philippines</strong><br>College Diploma in Office Management Technology · 2020–2023</span></div>
+              <div><i class="fa-solid fa-school"></i><span><strong>Datamex College of Saint Adeline – Fairview</strong><br>Senior High School</span></div>
+              <div><i class="fa-solid fa-school"></i><span><strong>Justice Cecilia Muñoz Palma High School</strong><br>High School</span></div>
+              <div><i class="fa-solid fa-school"></i><span><strong>Payatas B. Annex Elementary School</strong><br>Elementary</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <section id="reviews"><div class="wrap">
-    <div class="section-head reveal"><span class="kicker">Client feedback layout</span><h2>What Clients Could Say</h2><p>Example testimonials illustrating the services and strengths featured in this portfolio.</p></div>
-    <p class="review-note"><i class="fa-solid fa-circle-info"></i> These are fictional sample reviews for design demonstration only — not real client endorsements. Replace them with genuine, permission-approved testimonials before presenting them as client feedback.</p>
-    <div class="grid three">
-      <article class="card reveal"><div class="stars">★★★★★</div><p>“Robert was organized, professional, and attentive to detail. He communicated clearly and handled administrative tasks with care.”</p><div class="reviewer"><div class="avatar">JM</div><div><strong>James Miller</strong><small>Sample client · Administrative support</small></div></div></article>
-      <article class="card reveal"><div class="stars">★★★★★</div><p>“His customer service approach was patient and thoughtful. He made sure questions were understood and concerns were handled professionally.”</p><div class="reviewer"><div class="avatar">SC</div><div><strong>Sarah Carter</strong><small>Sample client · Customer support</small></div></div></article>
-      <article class="card reveal"><div class="stars">★★★★★</div><p>“Reliable and detail-focused. Robert understands the importance of accurate data entry, confidentiality, and keeping records organized.”</p><div class="reviewer"><div class="avatar">DW</div><div><strong>Daniel Wilson</strong><small>Sample client · Data entry</small></div></div></article>
-    </div>
-  </div></section>
+    <section id="reviews">
+      <div class="container">
+        <div class="section-title reveal"><span class="eyebrow">Testimonials layout</span><h2>Built around reliable service.</h2><p>A sample layout showing where verified client feedback can appear.</p></div>
+        <p class="review-disclaimer"><i class="fa-solid fa-circle-info"></i> The following are fictional sample testimonials for design demonstration only, not real client endorsements. Replace them with genuine reviews and permission before publishing as client feedback.</p>
+        <div class="grid grid-3">
+          <article class="card reveal"><div class="stars">★★★★★</div><p>“Robert was organized, professional, and attentive to detail. He communicated clearly and handled administrative tasks with care.”</p><div class="review-person"><div class="avatar">JM</div><div><strong>James Miller</strong><small>Sample client · Admin support</small></div></div></article>
+          <article class="card reveal"><div class="stars">★★★★★</div><p>“His customer service approach was patient and thoughtful. He made sure questions were understood and concerns were handled professionally.”</p><div class="review-person"><div class="avatar">SC</div><div><strong>Sarah Carter</strong><small>Sample client · Customer support</small></div></div></article>
+          <article class="card reveal"><div class="stars">★★★★★</div><p>“Reliable and detail-focused. Robert understands the importance of accurate data entry, confidentiality, and organized records.”</p><div class="review-person"><div class="avatar">DW</div><div><strong>Daniel Wilson</strong><small>Sample client · Data entry</small></div></div></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="contact"><div class="wrap"><div class="contact-panel reveal">
-    <span class="kicker">Ready to work together?</span><h2 style="font:700 clamp(2rem,4vw,3rem) 'Space Grotesk';margin:10px 0">Let's make work easier.</h2>
-    <p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities. Feel free to reach out to discuss how I can support your team.</p>
-    <div class="contact-links"><a class="btn" href="mailto:robertcorpuz0101@gmail.com"><i class="fa-regular fa-envelope"></i> Email Robert</a><a class="contact-link" href="tel:+639932729986"><i class="fa-solid fa-phone"></i> +63 993 272 9986</a><span class="contact-link"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines</span></div>
-  </div></div></section>
-</main>
-<footer><div class="wrap">© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</div></footer>
-<script>
-  const menuBtn=document.getElementById('menuBtn'),navLinks=document.getElementById('navLinks');
-  menuBtn.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
-  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.innerHTML='<i class="fa-solid fa-bars"></i>';}));
-  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.body.classList.add('reduced');
-</script>
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <span class="eyebrow">Have a role in mind?</span>
+          <h2>Let's make work easier.</h2>
+          <p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities. Get in touch to discuss how I can help your team.</p>
+          <div class="contact-actions">
+            <a class="button" href="mailto:robertcorpuz0101@gmail.com"><i class="fa-regular fa-envelope"></i> Email me</a>
+            <a class="contact-detail" href="tel:09922880302"><i class="fa-solid fa-phone"></i> 0992 288 0302</a>
+            <a class="contact-detail" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-file-arrow-down"></i> Résumé PDF</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</div></footer>
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const opened = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(opened));
+      menuToggle.innerHTML = opened ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }));
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+  </script>
 </body>
 </html>
