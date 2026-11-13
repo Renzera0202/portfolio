@@ -293,6 +293,81 @@
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
 
+
+    /* Additional motion polish */
+    html { scroll-behavior: smooth; }
+    body::before { animation: ambient-drift 18s ease-in-out infinite alternate; }
+    @keyframes ambient-drift {
+      0% { transform: translate3d(-1%, -1%, 0) scale(1); }
+      100% { transform: translate3d(1.5%, 1%, 0) scale(1.045); }
+    }
+    .hero-copy > * { animation: hero-enter .8s cubic-bezier(.2,.75,.25,1) both; }
+    .hero-copy > *:nth-child(1) { animation-delay: .08s; }
+    .hero-copy > *:nth-child(2) { animation-delay: .18s; }
+    .hero-copy > *:nth-child(3) { animation-delay: .28s; }
+    .hero-copy > *:nth-child(4) { animation-delay: .38s; }
+    .hero-copy > *:nth-child(5) { animation-delay: .48s; }
+    @keyframes hero-enter {
+      from { opacity: 0; transform: translateY(24px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .photo-frame { animation: photo-float 7s ease-in-out infinite; }
+    @keyframes photo-float {
+      0%,100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-13px) rotate(1deg); }
+    }
+    .floating-label { animation: label-bob 5s ease-in-out infinite; }
+    .photo-caption { animation: label-bob 6s ease-in-out infinite reverse; }
+    @keyframes label-bob {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    .card, .stat, .tag, .contact-detail, .button, .nav-cta {
+      transition: transform .28s cubic-bezier(.2,.75,.25,1), box-shadow .28s ease,
+                  border-color .28s ease, background-color .28s ease;
+    }
+    .card:hover { transform: translateY(-7px) scale(1.008); }
+    .stat:hover { transform: translateY(-5px); }
+    .tag:hover { transform: translateY(-3px); background: rgba(111,155,220,.16); }
+    .button:hover, .nav-cta:hover { transform: translateY(-3px); }
+    .contact-detail:hover { transform: translateY(-3px); }
+    .icon-box { transition: transform .35s cubic-bezier(.2,.75,.25,1); }
+    .card:hover .icon-box { transform: rotate(-8deg) scale(1.09); }
+    .section-title .eyebrow { animation: eyebrow-glow 4s ease-in-out infinite; }
+    @keyframes eyebrow-glow {
+      0%,100% { text-shadow: 0 0 0 rgba(86,134,217,0); }
+      50% { text-shadow: 0 0 15px rgba(86,134,217,.32); }
+    }
+    .timeline-dot { animation: dot-pulse 3s ease-in-out infinite; }
+    @keyframes dot-pulse {
+      0%,100% { box-shadow: 0 0 0 5px rgba(125,169,226,.13); }
+      50% { box-shadow: 0 0 0 9px rgba(125,169,226,.06), 0 0 18px rgba(125,169,226,.3); }
+    }
+    .stars { display: inline-block; animation: star-shimmer 2.8s ease-in-out infinite; }
+    @keyframes star-shimmer {
+      0%,100% { filter: drop-shadow(0 0 0 rgba(231,173,76,0)); }
+      50% { filter: drop-shadow(0 0 5px rgba(231,173,76,.5)); }
+    }
+    .gradient-text { background-size: 180% 180%; animation: gradient-flow 6s ease infinite; }
+    @keyframes gradient-flow {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .button::after, .nav-cta::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.42) 48%, transparent 70%);
+      transform: translateX(-130%); transition: transform .7s ease; pointer-events: none;
+    }
+    .button, .nav-cta { position: relative; overflow: hidden; }
+    .button:hover::after, .nav-cta:hover::after { transform: translateX(130%); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important; scroll-behavior: auto !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -449,5 +524,38 @@
     }, { threshold: 0.12 });
     document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
   </script>
+
+  <script>
+    (() => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+      const revealTargets = document.querySelectorAll(
+        'section, .card, .stat, .timeline-item, .contact-box, .training-list > div'
+      );
+      revealTargets.forEach((el, index) => {
+        if (el.classList.contains('hero-copy')) return;
+        el.classList.add('motion-reveal');
+        el.style.setProperty('--reveal-delay', `${(index % 5) * 75}ms`);
+      });
+      const style = document.createElement('style');
+      style.textContent = `
+        .motion-reveal { opacity: 0; transform: translateY(22px) scale(.99);
+          transition: opacity .7s ease, transform .7s cubic-bezier(.2,.75,.25,1);
+          transition-delay: var(--reveal-delay, 0ms); }
+        .motion-reveal.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+      `;
+      document.head.appendChild(style);
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+      revealTargets.forEach(el => observer.observe(el));
+    })();
+  </script>
+
 </body>
 </html>
