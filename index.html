@@ -1,832 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f8fc">
-  <meta name="description" content="Robert Riparip Corpuz — Virtual Assistant, customer support and administrative support professional.">
-  <title>Robert Corpuz | Virtual Assistant & Operations Support</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <style>
-    :root {
-      --bg: #080d18;
-      --surface: #101827;
-      --surface-2: #131f31;
-      --text: #f4f7fb;
-      --muted: #9aa9bd;
-      --line: rgba(185, 205, 230, .13);
-      --cyan: #55e6e0;
-      --blue: #7c9cff;
-      --lime: #c5f36b;
-      --radius: 22px;
-      --shadow: 0 24px 70px rgba(0,0,0,.28);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
-    body {
-      margin: 0; color: var(--text); background: var(--bg);
-      font-family: "DM Sans", sans-serif; line-height: 1.65; overflow-x: hidden;
-    }
-    body::before {
-      content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
-      background:
-        radial-gradient(circle at 12% 12%, rgba(85,230,224,.11), transparent 28%),
-        radial-gradient(circle at 88% 22%, rgba(124,156,255,.13), transparent 30%),
-        linear-gradient(145deg, #080d18 0%, #0a1220 55%, #080d18 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    .container { width: min(1160px, calc(100% - 44px)); margin: auto; }
-    .header {
-      position: fixed; z-index: 50; inset: 0 0 auto; border-bottom: 1px solid var(--line);
-      background: rgba(8,13,24,.78); backdrop-filter: blur(18px);
-    }
-    .nav { min-height: 78px; display: flex; justify-content: space-between; align-items: center; gap: 25px; }
-    .logo { font: 800 1.04rem "Manrope", sans-serif; letter-spacing: .07em; }
-    .logo span { color: var(--cyan); }
-    .nav-links { display: flex; align-items: center; gap: 27px; color: #c1ccda; font-size: .9rem; }
-    .nav-links a { transition: color .2s; }
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-cta, .button {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 12px 18px; border-radius: 12px; font-weight: 700; border: 1px solid transparent;
-      background: linear-gradient(110deg, #55e6e0, #7c9cff); color: #07111c;
-      box-shadow: 0 9px 30px rgba(85,230,224,.15); transition: transform .22s, box-shadow .22s;
-    }
-    .nav-cta:hover, .button:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(85,230,224,.23); }
-    .button.outline { background: rgba(255,255,255,.035); border-color: var(--line); color: var(--text); box-shadow: none; }
-    .menu-toggle { display: none; background: none; border: 0; color: white; font-size: 1.35rem; cursor: pointer; }
-    .hero { min-height: 790px; padding: 160px 0 100px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 65px; align-items: center; }
-    .availability {
-      display: inline-flex; align-items: center; gap: 10px; padding: 8px 13px;
-      border: 1px solid rgba(85,230,224,.24); border-radius: 99px; color: var(--cyan);
-      background: rgba(85,230,224,.06); text-transform: uppercase; letter-spacing: .12em;
-      font-size: .72rem; font-weight: 800;
-    }
-    .availability i { font-size: .55rem; color: var(--lime); filter: drop-shadow(0 0 7px var(--lime)); }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { font: 800 clamp(3rem, 6.7vw, 5.7rem)/1.02 "Manrope", sans-serif; letter-spacing: -.065em; margin: 25px 0 22px; }
-    .gradient-text { color: transparent; background: linear-gradient(100deg, var(--cyan), #b4c4ff 80%); background-clip: text; -webkit-background-clip: text; }
-    .hero-copy { max-width: 660px; color: var(--muted); font-size: 1.08rem; }
-    .hero-copy strong { color: var(--text); }
-    .hero-actions { display: flex; gap: 13px; flex-wrap: wrap; margin-top: 30px; }
-    .location { margin-top: 25px; color: #8495aa; font-size: .88rem; }
-    .location i { color: var(--cyan); margin-right: 7px; }
-    .hero-visual { position: relative; max-width: 390px; width: 100%; margin: auto; }
-    .photo-frame {
-      position: relative; padding: 9px; border-radius: 30px;
-      background: linear-gradient(145deg, var(--cyan), #6c7fff 55%, rgba(124,156,255,.1));
-      box-shadow: 0 0 0 1px rgba(85,230,224,.1), 0 25px 80px rgba(43,110,150,.18);
-      animation: levitate 6s ease-in-out infinite;
-    }
-    .photo-frame::before { content: ""; position: absolute; inset: 18px -18px -18px 18px; border: 1px solid rgba(85,230,224,.23); border-radius: 28px; z-index: -1; }
-    .profile-photo { width: 100%; height: 475px; display: block; object-fit: cover; object-position: top; border-radius: 23px; background: var(--surface); }
-    .photo-caption {
-      position: absolute; bottom: 27px; left: -35px; padding: 14px 18px; border-radius: 15px;
-      background: rgba(13,23,38,.94); border: 1px solid rgba(85,230,224,.28); box-shadow: var(--shadow);
-      font-size: .82rem; color: var(--muted); backdrop-filter: blur(12px);
-    }
-    .photo-caption strong { display: block; color: var(--text); font-size: .95rem; }
-    .floating-label {
-      position: absolute; top: 35px; right: -35px; padding: 12px 15px; border-radius: 14px;
-      background: rgba(17,29,47,.94); border: 1px solid var(--line); box-shadow: var(--shadow);
-      color: var(--cyan); font-size: .78rem; font-weight: 700;
-    }
-    @keyframes levitate { 50% { transform: translateY(-11px); } }
-    .quick-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 610px; margin-top: 38px; }
-    .stat { padding: 15px 16px; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.025); }
-    .stat strong { display: block; color: var(--cyan); font: 800 1.65rem "Manrope"; }
-    .stat span { color: var(--muted); font-size: .76rem; line-height: 1.4; display: block; }
-    section { padding: 94px 0; }
-    .section-title { max-width: 700px; text-align: center; margin: 0 auto 46px; }
-    .eyebrow { color: var(--cyan); font-size: .73rem; letter-spacing: .17em; text-transform: uppercase; font-weight: 800; }
-    h2 { font: 800 clamp(2rem,4vw,3.15rem)/1.13 "Manrope"; letter-spacing: -.045em; margin: 10px 0 13px; }
-    .section-title p { color: var(--muted); margin-bottom: 0; }
-    .grid { display: grid; gap: 18px; }
-    .grid-3 { grid-template-columns: repeat(3,1fr); }
-    .grid-2 { grid-template-columns: repeat(2,1fr); }
-    .card {
-      padding: 27px; border-radius: var(--radius); border: 1px solid var(--line);
-      background: linear-gradient(145deg, rgba(19,31,49,.88), rgba(13,22,36,.94));
-      box-shadow: 0 10px 35px rgba(0,0,0,.08);
-      transition: transform .28s, border-color .28s, box-shadow .28s;
-    }
-    .card:hover { transform: translateY(-5px); border-color: rgba(85,230,224,.38); box-shadow: 0 18px 42px rgba(0,0,0,.2), 0 0 25px rgba(85,230,224,.06); }
-    .icon-box { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; color: var(--cyan); background: rgba(85,230,224,.09); margin-bottom: 18px; font-size: 1.15rem; }
-    .card h3 { font: 700 1.13rem "Manrope"; margin-bottom: 9px; }
-    .card p { color: var(--muted); font-size: .93rem; margin-bottom: 0; }
-    .timeline { max-width: 900px; margin: auto; position: relative; }
-    .timeline::before { content: ""; position: absolute; left: 17px; top: 12px; bottom: 15px; width: 2px; background: linear-gradient(var(--cyan),var(--blue),transparent); }
-    .timeline-item { position: relative; padding-left: 58px; margin-bottom: 20px; }
-    .timeline-dot { position: absolute; left: 8px; top: 29px; width: 20px; height: 20px; border: 3px solid var(--cyan); border-radius: 50%; background: var(--bg); box-shadow: 0 0 14px rgba(85,230,224,.45); }
-    .job-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
-    .job-heading h3 { margin: 0 0 5px; }
-    .company { color: var(--cyan); font-size: .9rem; font-weight: 700; }
-    .date { white-space: nowrap; border: 1px solid var(--line); color: #a9b8ca; border-radius: 99px; padding: 5px 11px; font-size: .76rem; }
-    .job-points { margin: 13px 0 0; padding-left: 19px; color: var(--muted); font-size: .9rem; }
-    .job-points li { margin: 5px 0; }
-    .service-card { min-height: 225px; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 9px; }
-    .tag { padding: 8px 12px; border: 1px solid rgba(85,230,224,.19); border-radius: 99px; background: rgba(85,230,224,.055); color: #dce8f3; font-size: .82rem; }
-    .training-list { display: grid; gap: 12px; }
-    .training-list div { display: flex; gap: 11px; align-items: flex-start; color: #d0dbea; font-size: .9rem; }
-    .training-list i { color: var(--cyan); margin-top: 5px; }
-    .education-row { display: flex; align-items: flex-start; gap: 16px; }
-    .education-row .icon-box { flex: 0 0 48px; margin: 0; }
-    .education-row h3 { margin-bottom: 5px; }
-    .education-row p { margin-bottom: 5px; }
-    .review-disclaimer { text-align: center; color: #e9cc83; font-size: .82rem; max-width: 800px; margin: -23px auto 28px; }
-    .stars { color: #ffd36e; letter-spacing: 3px; margin-bottom: 12px; }
-    .review-person { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
-    .avatar { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg,#165b65,#5355a8); font-weight: 800; }
-    .review-person small { display: block; color: var(--muted); }
-    .contact-box {
-      text-align: center; padding: 60px 28px; border: 1px solid rgba(85,230,224,.23); border-radius: 28px;
-      background: radial-gradient(ellipse at 50% 0,rgba(85,230,224,.1),transparent 62%), var(--surface);
-    }
-    .contact-box p { max-width: 610px; margin: 12px auto 26px; color: var(--muted); }
-    .contact-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-    .contact-detail { padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; color: #dce7f3; }
-    .contact-detail i { color: var(--cyan); margin-right: 7px; }
-    footer { border-top: 1px solid var(--line); padding: 25px 0; text-align: center; color: #8494a9; font-size: .82rem; }
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-    @media (max-width: 900px) {
-      .nav-links { gap: 16px; font-size: .82rem; }
-      .hero { gap: 35px; }
-      .profile-photo { height: 410px; }
-      .floating-label { right: -10px; }
-    }
-    @media (max-width: 760px) {
-      .nav { min-height: 70px; }
-      .menu-toggle { display: block; }
-      .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; padding: 22px; background: #0c1524; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; }
-      .nav-links.open { display: flex; }
-      .nav-links .nav-cta { text-align: center; }
-      .hero { min-height: auto; padding: 130px 0 75px; grid-template-columns: 1fr; text-align: center; }
-      .hero-copy { margin-inline: auto; }
-      .hero-actions { justify-content: center; }
-      .location { margin-bottom: 35px; }
-      .hero-visual { max-width: 310px; }
-      .profile-photo { height: 380px; }
-      .quick-stats { margin: 30px auto 0; }
-      .grid-3, .grid-2 { grid-template-columns: 1fr; }
-      section { padding: 72px 0; }
-    }
-    @media (max-width: 480px) {
-      .container { width: min(100% - 30px, 1160px); }
-      h1 { font-size: 2.75rem; }
-      .quick-stats { grid-template-columns: 1fr; text-align: left; }
-      .photo-caption { left: -12px; }
-      .floating-label { right: -8px; top: 18px; }
-      .timeline-item { padding-left: 46px; }
-      .job-heading { display: block; }
-      .date { display: inline-block; margin-top: 9px; }
-      .card { padding: 23px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
-
-    /* Soft light aesthetic override */
-    :root {
-      --bg: #f7f8fc;
-      --surface: #ffffff;
-      --surface-2: #f0f3fa;
-      --text: #20263a;
-      --muted: #69738a;
-      --line: rgba(76, 91, 130, .15);
-      --cyan: #5686d9;
-      --blue: #9b8be8;
-      --lime: #72b89b;
-      --shadow: 0 20px 55px rgba(62, 79, 125, .12);
-    }
-    body { color: var(--text); background: var(--bg); }
-    body::before {
-      background:
-        radial-gradient(circle at 12% 12%, rgba(164, 199, 255, .28), transparent 30%),
-        radial-gradient(circle at 88% 22%, rgba(210, 194, 255, .28), transparent 32%),
-        linear-gradient(145deg, #fbfcff 0%, #f4f6fc 55%, #fffafd 100%);
-    }
-    .header { background: rgba(250, 251, 255, .88); }
-    .logo span, .nav-links a:hover, .availability, .location i, .eyebrow,
-    .icon-box, .company, .training-list i, .contact-detail i { color: #5686d9; }
-    .nav-links { color: #59647b; }
-    .nav-cta, .button {
-      background: linear-gradient(110deg, #8fc5ee, #b7a8ef);
-      color: #20263a;
-      box-shadow: 0 9px 25px rgba(112, 145, 211, .18);
-    }
-    .nav-cta:hover, .button:hover { box-shadow: 0 14px 30px rgba(112, 145, 211, .25); }
-    .button.outline { background: rgba(255,255,255,.72); border-color: var(--line); color: var(--text); }
-    .menu-toggle { color: #303951; }
-    .availability { border-color: rgba(86,134,217,.25); background: rgba(86,134,217,.08); }
-    .availability i { color: #72b89b; filter: none; }
-    .gradient-text {
-      background: linear-gradient(100deg, #548bdc, #9b83df 80%);
-      background-clip: text; -webkit-background-clip: text;
-    }
-    .hero-copy strong, .photo-caption strong { color: #27314b; }
-    .location, footer { color: #8490a7; }
-    .photo-frame {
-      background: linear-gradient(145deg, #9bc9ee, #b9a9ee 55%, #e7dffc);
-      box-shadow: 0 18px 55px rgba(115, 137, 190, .2);
-    }
-    .photo-frame::before { border-color: rgba(117, 145, 207, .32); }
-    .profile-photo { background: #edf1f8; }
-    .photo-caption, .floating-label {
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(117, 145, 207, .2);
-      color: #69738a;
-      box-shadow: 0 14px 35px rgba(62,79,125,.13);
-    }
-    .photo-caption strong { color: #27314b; }
-    .floating-label { color: #5686d9; }
-    .stat {
-      background: rgba(255,255,255,.75);
-      border-color: rgba(100,119,164,.16);
-      box-shadow: 0 8px 25px rgba(62,79,125,.05);
-    }
-    .stat strong { color: #5686d9; }
-    .section-title p { color: var(--muted); }
-    .card {
-      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(247,249,255,.98));
-      border-color: rgba(100,119,164,.16);
-      box-shadow: 0 10px 32px rgba(62,79,125,.07);
-    }
-    .card:hover {
-      border-color: rgba(86,134,217,.35);
-      box-shadow: 0 18px 38px rgba(62,79,125,.12);
-    }
-    .icon-box { background: rgba(111,155,220,.12); }
-    .timeline::before { background: linear-gradient(#8bbbe8,#b5a7e9,transparent); }
-    .timeline-dot {
-      border-color: #7da9e2; background: var(--bg);
-      box-shadow: 0 0 0 5px rgba(125,169,226,.13);
-    }
-    .date { color: #68748c; background: rgba(255,255,255,.7); }
-    .job-points, .card p { color: #69738a; }
-    .tag {
-      border-color: rgba(111,155,220,.24);
-      background: rgba(111,155,220,.09);
-      color: #4b5c7b;
-    }
-    .training-list div { color: #56627b; }
-    .review-disclaimer { color: #9b7840; }
-    .stars { color: #e7ad4c; }
-    .avatar { background: linear-gradient(135deg,#9bc9ee,#b9a9ee); color: #293650; }
-    .contact-box {
-      border-color: rgba(111,155,220,.25);
-      background: radial-gradient(ellipse at 50% 0,rgba(173,197,244,.24),transparent 62%), #fff;
-      box-shadow: 0 15px 40px rgba(62,79,125,.08);
-    }
-    .contact-detail { color: #56627b; background: rgba(255,255,255,.75); }
-    footer { border-top-color: var(--line); }
-    @media (max-width: 760px) {
-      .nav-links { background: rgba(250,251,255,.98); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
-    }
-
-
-    /* Additional motion polish */
-    html { scroll-behavior: smooth; }
-    body::before { animation: ambient-drift 18s ease-in-out infinite alternate; }
-    @keyframes ambient-drift {
-      0% { transform: translate3d(-1%, -1%, 0) scale(1); }
-      100% { transform: translate3d(1.5%, 1%, 0) scale(1.045); }
-    }
-    .hero-copy > * { animation: hero-enter .8s cubic-bezier(.2,.75,.25,1) both; }
-    .hero-copy > *:nth-child(1) { animation-delay: .08s; }
-    .hero-copy > *:nth-child(2) { animation-delay: .18s; }
-    .hero-copy > *:nth-child(3) { animation-delay: .28s; }
-    .hero-copy > *:nth-child(4) { animation-delay: .38s; }
-    .hero-copy > *:nth-child(5) { animation-delay: .48s; }
-    @keyframes hero-enter {
-      from { opacity: 0; transform: translateY(24px); filter: blur(5px); }
-      to { opacity: 1; transform: translateY(0); filter: blur(0); }
-    }
-    .photo-frame { animation: photo-float 7s ease-in-out infinite; }
-    @keyframes photo-float {
-      0%,100% { transform: translateY(0) rotate(-1deg); }
-      50% { transform: translateY(-13px) rotate(1deg); }
-    }
-    .floating-label { animation: label-bob 5s ease-in-out infinite; }
-    .photo-caption { animation: label-bob 6s ease-in-out infinite reverse; }
-    @keyframes label-bob {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
-    }
-    .card, .stat, .tag, .contact-detail, .button, .nav-cta {
-      transition: transform .28s cubic-bezier(.2,.75,.25,1), box-shadow .28s ease,
-                  border-color .28s ease, background-color .28s ease;
-    }
-    .card:hover { transform: translateY(-7px) scale(1.008); }
-    .stat:hover { transform: translateY(-5px); }
-    .tag:hover { transform: translateY(-3px); background: rgba(111,155,220,.16); }
-    .button:hover, .nav-cta:hover { transform: translateY(-3px); }
-    .contact-detail:hover { transform: translateY(-3px); }
-    .icon-box { transition: transform .35s cubic-bezier(.2,.75,.25,1); }
-    .card:hover .icon-box { transform: rotate(-8deg) scale(1.09); }
-    .section-title .eyebrow { animation: eyebrow-glow 4s ease-in-out infinite; }
-    @keyframes eyebrow-glow {
-      0%,100% { text-shadow: 0 0 0 rgba(86,134,217,0); }
-      50% { text-shadow: 0 0 15px rgba(86,134,217,.32); }
-    }
-    .timeline-dot { animation: dot-pulse 3s ease-in-out infinite; }
-    @keyframes dot-pulse {
-      0%,100% { box-shadow: 0 0 0 5px rgba(125,169,226,.13); }
-      50% { box-shadow: 0 0 0 9px rgba(125,169,226,.06), 0 0 18px rgba(125,169,226,.3); }
-    }
-    .stars { display: inline-block; animation: star-shimmer 2.8s ease-in-out infinite; }
-    @keyframes star-shimmer {
-      0%,100% { filter: drop-shadow(0 0 0 rgba(231,173,76,0)); }
-      50% { filter: drop-shadow(0 0 5px rgba(231,173,76,.5)); }
-    }
-    .gradient-text { background-size: 180% 180%; animation: gradient-flow 6s ease infinite; }
-    @keyframes gradient-flow {
-      0%,100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-    .button::after, .nav-cta::after {
-      content: ""; position: absolute; inset: 0; border-radius: inherit;
-      background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.42) 48%, transparent 70%);
-      transform: translateX(-130%); transition: transform .7s ease; pointer-events: none;
-    }
-    .button, .nav-cta { position: relative; overflow: hidden; }
-    .button:hover::after, .nav-cta:hover::after { transform: translateX(130%); }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: .01ms !important; animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important; scroll-behavior: auto !important;
-      }
-    }
-
-
-    /* Reference-inspired hero redesign */
-    :root {
-      --bg: #f8f9ff;
-      --surface: #ffffff;
-      --text: #20243b;
-      --muted: #68718a;
-      --line: rgba(91, 105, 157, .14);
-      --cyan: #648ee9;
-      --blue: #a58bea;
-    }
-    body { background: #f8f9ff; color: #20243b; }
-    body::before {
-      background:
-        radial-gradient(circle at 76% 35%, rgba(187,169,255,.24), transparent 27%),
-        radial-gradient(circle at 12% 12%, rgba(177,218,255,.25), transparent 30%),
-        linear-gradient(120deg,#fff 0%,#f7f8ff 58%,#f2f0ff 100%);
-    }
-    .header {
-      background: rgba(255,255,255,.84);
-      border-bottom: 1px solid rgba(93,109,163,.10);
-      box-shadow: 0 5px 24px rgba(73,88,139,.045);
-    }
-    .nav { min-height: 76px; }
-    .logo { color: #303752; font-size: 1rem; letter-spacing: .02em; }
-    .logo span { color: #7b8fe9; }
-    .nav-links { gap: 25px; color: #515a75; font-size: .83rem; }
-    .nav-links a:hover { color: #7d76d8; }
-    .nav-cta, .button {
-      background: linear-gradient(115deg,#83baf2,#a78bea);
-      color: white;
-      border: 0;
-      border-radius: 999px;
-      box-shadow: 0 8px 20px rgba(133,143,220,.23);
-    }
-    .nav-cta { padding: 10px 17px; font-size: .8rem; }
-    .button { padding: 12px 21px; font-size: .9rem; }
-    .button.outline {
-      color: #5e6eae;
-      background: rgba(255,255,255,.8);
-      border: 1px solid rgba(119,132,205,.4);
-      box-shadow: 0 5px 15px rgba(94,108,172,.07);
-    }
-    .menu-toggle { color: #35405d; }
-    .hero {
-      min-height: 690px;
-      padding: 125px 0 55px;
-      grid-template-columns: .94fr 1.06fr;
-      gap: 28px;
-      align-items: center;
-      position: relative;
-    }
-    .hero > .reveal:first-child { position: relative; z-index: 3; }
-    .availability {
-      border: 0;
-      padding: 0;
-      color: #6b83cf;
-      background: transparent;
-      font-size: .67rem;
-      letter-spacing: .13em;
-    }
-    .availability i { color: #7dc7a7; }
-    .hero-greeting {
-      margin: 22px 0 0;
-      color: #343b57;
-      font: 700 clamp(1.45rem,2.4vw,2rem)/1.2 "Manrope",sans-serif;
-      letter-spacing: -.04em;
-    }
-    h1.hero-name {
-      margin: 0 0 12px;
-      color: #20243b;
-      font: 800 clamp(3.1rem,6vw,5.3rem)/1.02 "Manrope",sans-serif;
-      letter-spacing: -.075em;
-    }
-    .hero-name .gradient-text {
-      background: linear-gradient(100deg,#4f7fd2,#9b79dc);
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-    .hero-role {
-      color: #353d5b;
-      font: 800 1.03rem "Manrope",sans-serif;
-      margin: 0 0 8px;
-    }
-    .hero-copy {
-      color: #68718a;
-      font-size: .98rem;
-      line-height: 1.75;
-      max-width: 430px;
-    }
-    .hero-actions { gap: 12px; margin-top: 24px; }
-    .location { margin-top: 20px; color: #828ba2; font-size: .82rem; }
-    .quick-stats { margin-top: 27px; gap: 9px; }
-    .stat { padding: 12px 13px; border-radius: 13px; }
-    .stat strong { font-size: 1.35rem; }
-    .stat span { font-size: .69rem; }
-    .hero-visual {
-      width: 100%;
-      max-width: 560px;
-      height: 590px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      isolation: isolate;
-    }
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: min(88%, 470px);
-      height: 78%;
-      right: 1%;
-      bottom: 0;
-      border-radius: 48% 52% 12% 12% / 43% 44% 12% 12%;
-      background: linear-gradient(145deg,rgba(185,211,255,.92),rgba(207,187,255,.9));
-      box-shadow: 0 20px 55px rgba(133,135,211,.16);
-    }
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      width: 105px;
-      height: 105px;
-      top: 68px;
-      right: 8%;
-      border-radius: 50%;
-      background: rgba(185,164,255,.34);
-      filter: blur(1px);
-    }
-    .photo-frame {
-      width: min(100%, 490px);
-      padding: 0;
-      background: transparent;
-      border-radius: 0;
-      box-shadow: none;
-      animation: photo-float 7s ease-in-out infinite;
-      position: relative;
-    }
-    .photo-frame::before { display: none; }
-    .profile-photo {
-      height: 585px;
-      width: 100%;
-      object-fit: cover;
-      object-position: center 12%;
-      border-radius: 0;
-      background: transparent;
-      /* Softly blend the lower portrait edge into the hero background. */
-      -webkit-mask-image: linear-gradient(to bottom,#000 0%,#000 78%,transparent 100%);
-      mask-image: linear-gradient(to bottom,#000 0%,#000 78%,transparent 100%);
-    }
-    .photo-caption {
-      left: 0;
-      bottom: 34px;
-      padding: 11px 15px;
-      border-radius: 13px;
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(117,145,207,.17);
-      color: #68718a;
-      font-size: .75rem;
-    }
-    .photo-caption strong { color: #313a5a; font-size: .85rem; }
-    .floating-label {
-      top: 86px;
-      right: -3px;
-      padding: 11px 14px;
-      background: rgba(255,255,255,.94);
-      border: 1px solid rgba(117,145,207,.17);
-      color: #6579c2;
-      font-size: .73rem;
-    }
-    .cv-button { font-weight: 800; }
-    .cv-button:hover { box-shadow: 0 12px 28px rgba(132,133,220,.3); }
-    @media (max-width: 900px) {
-      .hero { min-height: 650px; gap: 14px; }
-      .hero-visual { height: 525px; }
-      .profile-photo { height: 520px; }
-      .floating-label { right: 0; }
-      .nav-links { gap: 14px; }
-    }
-    @media (max-width: 760px) {
-      .nav { min-height: 68px; }
-      .nav-links { top: 68px; background: rgba(255,255,255,.98); }
-      .hero {
-        min-height: auto;
-        padding: 112px 0 55px;
-        grid-template-columns: 1fr;
-        text-align: left;
-        gap: 5px;
-      }
-      .hero-copy { margin-left: 0; }
-      .hero-actions { justify-content: flex-start; }
-      .quick-stats { margin-left: 0; }
-      .hero-visual { max-width: 470px; height: 500px; margin: 8px auto 0; }
-      .profile-photo { height: 500px; }
-      .photo-caption { left: 4px; }
-      .floating-label { right: 0; top: 48px; }
-    }
-    @media (max-width: 480px) {
-      h1.hero-name { font-size: 3.15rem; }
-      .hero-greeting { font-size: 1.5rem; }
-      .hero-actions .button { width: auto; }
-      .hero-visual { height: 440px; }
-      .profile-photo { height: 440px; }
-      .floating-label { top: 25px; right: -4px; max-width: 180px; }
-      .photo-caption { bottom: 25px; }
-      .quick-stats { grid-template-columns: repeat(3,1fr); }
-      .stat { padding: 10px 8px; }
-      .stat strong { font-size: 1.1rem; }
-      .stat span { font-size: .62rem; }
-    }
-
-
-    /* Social profile links */
-    .social-links {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      margin-top: 22px;
-    }
-    .social-links a {
-      width: 39px;
-      height: 39px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      color: #647fc7;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(119,132,205,.24);
-      box-shadow: 0 6px 16px rgba(94,108,172,.09);
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: transform .25s ease, color .25s ease, box-shadow .25s ease;
-    }
-    .social-links a:hover {
-      transform: translateY(-4px) scale(1.06);
-      color: #fff;
-      background: linear-gradient(115deg,#83baf2,#a78bea);
-      box-shadow: 0 10px 22px rgba(132,133,220,.25);
-    }
-    .social-links a.viber-link { font-size: 1.12rem; }
-    .social-links a:focus-visible {
-      outline: 3px solid rgba(126,151,231,.55);
-      outline-offset: 3px;
-    }
-    .social-links .social-label {
-      margin-left: 3px;
-      color: #8790a7;
-      font-size: .75rem;
-    }
-    .contact-socials { justify-content: center; margin-top: 17px; }
-    @media (max-width:760px) {
-      .social-links { margin-top: 19px; }
-      .contact-socials { justify-content: center; }
-    }
-
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8fc">
+<meta name="description" content="Robert Corpuz — Virtual Assistant and Social Media Operations portfolio.">
+<title>Robert Corpuz | Portfolio & Social Media Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{--bg:#f7f8fc;--surface:#fff;--ink:#20263a;--muted:#69738a;--line:#e7eaf2;--blue:#7298df;--lav:#a894e8;--mint:#80bea9;--shadow:0 18px 55px rgba(62,79,125,.10);--r:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:linear-gradient(145deg,#fbfcff,#f4f6fc 60%,#fffafd);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}.container{width:min(1120px,calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:30;background:#ffffffdf;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font:800 1.05rem Manrope}.logo span{color:var(--lav)}.navlinks{display:flex;gap:23px;align-items:center;font-size:.9rem;color:#59647b}.navlinks a:hover{color:#7c70c9}.menu{display:none;border:0;background:none;font-size:1.3rem;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 18px;border:0;border-radius:13px;background:linear-gradient(110deg,#91c5ec,#b7a8ef);color:#20263a;font-weight:700;cursor:pointer;box-shadow:0 8px 24px #8495d52b;transition:.25s}.btn:hover{transform:translateY(-2px)}.btn.secondary{background:#fff;border:1px solid var(--line);box-shadow:none}.btn.small{padding:8px 12px;font-size:.85rem}
+.hero{padding:105px 0 75px;display:grid;grid-template-columns:1.2fr .8fr;gap:55px;align-items:center;min-height:650px}.eyebrow{color:#648bd2;font-size:.73rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font:800 clamp(3rem,7vw,5.6rem)/1.04 Manrope;letter-spacing:-.065em;margin:18px 0}.gradient{background:linear-gradient(100deg,#548bdc,#a18be0);color:transparent;background-clip:text}.lead{color:var(--muted);font-size:1.08rem;max-width:620px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.photo{max-width:350px;margin:auto;padding:9px;border-radius:30px;background:linear-gradient(145deg,#9bc9ee,#b9a9ee);box-shadow:var(--shadow);animation:float 7s ease-in-out infinite}.photo img{display:block;width:100%;height:420px;object-fit:cover;object-position:top;border-radius:23px;background:#edf1f8}.social{display:flex;gap:12px;margin-top:23px}.social a{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:white;border:1px solid var(--line);color:#728bd0}.social a:hover{background:#a894e8;color:white;transform:translateY(-3px)}@keyframes float{50%{transform:translateY(-10px)}}
+section{padding:76px 0}.section-head{text-align:center;max-width:700px;margin:0 auto 35px}.section-head h2{font:800 clamp(2rem,4vw,3rem)/1.15 Manrope;letter-spacing:-.04em;margin:10px 0}.section-head p,.muted{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{padding:25px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(145deg,#fff,#f8f9ff);box-shadow:0 8px 28px #52658a0c;transition:.25s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.card h3{font:700 1.1rem Manrope;margin:12px 0 7px}.card p{color:var(--muted);margin:0}.ico{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#eef1ff;color:#7588d1}
+.skills{display:flex;flex-wrap:wrap;gap:9px}.tag{background:#eef1ff;color:#53658d;border-radius:99px;padding:8px 13px;font-size:.86rem}.timeline{max-width:850px;margin:auto}.job{margin:14px 0}.contact{padding:48px 25px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}footer{text-align:center;padding:26px;color:#8490a7;border-top:1px solid var(--line);font-size:.85rem}
+/* Social Studio */
+#social-studio{background:linear-gradient(145deg,#f2f4ff,#fafbff 55%,#f4f9ff);border-block:1px solid #e8eafa}
+.studio-shell{background:#fff;border:1px solid var(--line);border-radius:25px;box-shadow:var(--shadow);overflow:hidden}
+.studio-top{padding:24px 26px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.studio-top h3{margin:0;font:800 1.25rem Manrope}.status{font-size:.8rem;color:#588d78;background:#eaf7f0;padding:7px 11px;border-radius:99px}
+.studio-body{display:grid;grid-template-columns:205px 1fr;min-height:570px}
+.studio-side{padding:18px 12px;background:#fafbff;border-right:1px solid var(--line)}
+.studio-nav{width:100%;display:flex;gap:10px;align-items:center;text-align:left;padding:12px;border:0;background:transparent;border-radius:12px;color:#65708a;cursor:pointer;margin:3px 0}
+.studio-nav.active,.studio-nav:hover{background:#efefff;color:#675fba;font-weight:700}
+.studio-main{padding:24px;min-width:0}.panel{display:none}.panel.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:22px}.statbox{padding:17px;border-radius:16px;background:#f5f6ff;border:1px solid #eceeff}.statbox b{font:800 1.7rem Manrope;color:#7b78c8;display:block}.statbox span{font-size:.82rem;color:var(--muted)}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}.field.full{grid-column:1/-1}.field label{font-size:.84rem;font-weight:700;color:#4e5871}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #e1e5f0;border-radius:11px;background:#fcfcff;color:var(--ink);outline-color:#a894e8}.field textarea{min-height:125px;resize:vertical}.help{font-size:.78rem;color:#7b8499}.platforms{display:flex;flex-wrap:wrap;gap:8px}.platform-chip{display:flex;gap:7px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:.82rem}.platform-chip input{accent-color:#8e83d7}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.notice{padding:12px 14px;background:#f5f6ff;border-radius:12px;color:#606b87;font-size:.84rem;margin:14px 0}.postlist{display:grid;gap:11px}.postrow{padding:15px;border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.postrow p{margin:6px 0;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eef1ff;color:#6575b9;font-size:.75rem}
+.loginbox{max-width:450px;padding:20px;border:1px solid var(--line);border-radius:17px;background:#fbfbff;margin:12px 0}.hidden{display:none!important}.toast{padding:11px 14px;border-radius:11px;background:#eef7f1;color:#367b58;margin:12px 0;font-size:.86rem}.toast.error{background:#fff0f0;color:#a44646}
+@media(max-width:820px){.navlinks{display:none;position:absolute;top:74px;left:0;right:0;background:#fff;padding:20px;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}.navlinks.open{display:flex}.menu{display:block}.hero{grid-template-columns:1fr;text-align:center;padding-top:75px}.lead{margin:auto}.actions,.social{justify-content:center}.photo{max-width:280px}.photo img{height:340px}.cards{grid-template-columns:1fr 1fr}.studio-body{grid-template-columns:1fr}.studio-side{display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.studio-nav{white-space:nowrap;width:auto}.studio-main{padding:17px}}
+@media(max-width:560px){.cards,.stats,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.studio-top{padding:18px}.postrow{display:block}.container{width:calc(100% - 28px)}section{padding:60px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <a class="logo" href="#home">ROBERT<span>.</span></a>
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#about">About</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
-        <a class="nav-cta" href="#contact">Let's talk <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-      </nav>
-      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </header>
+<header><div class="container"><nav><a class="logo" href="#home">ROBERT<span>.</span></a><button class="menu" id="menu" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button><div class="navlinks" id="navlinks"><a href="#about">About</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#social-studio">Social Media Tools</a><a href="#contact">Contact</a></div></nav></div></header>
+<main id="home">
+<section class="container hero"><div><span class="eyebrow">Open to remote opportunities</span><h1>Hello, I'm<br>Robert <span class="gradient">Corpuz</span></h1><p class="lead">Virtual Assistant & Administrative Support. I help businesses stay organized with reliable customer support, data entry, and administrative assistance.</p><div class="actions"><a class="btn" href="#contact">Hire Me <i class="fa-solid fa-arrow-right"></i></a><a class="btn secondary" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-download"></i> Download CV</a></div><p class="muted"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines · Remote-ready</p><div class="social"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302" aria-label="Viber"><i class="fa-brands fa-viber"></i></a></div></div><div class="photo"><img src="IMG_0031.png" alt="Robert Corpuz portrait"></div></section>
+<section id="about"><div class="container"><div class="section-head"><span class="eyebrow">About me</span><h2>Making the day-to-day easier.</h2><p>Service-first support, careful organization, and a professional approach to customer and back-office operations.</p></div><div class="cards"><article class="card"><div class="ico"><i class="fa-solid fa-headset"></i></div><h3>Customer care</h3><p>Customer inquiries, sales conversations, and order-related support.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-folder-open"></i></div><h3>Office administration</h3><p>Data encoding, document preparation, records management, and payroll documentation.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-shield-halved"></i></div><h3>Trust & detail</h3><p>Accuracy, confidentiality, clear communication, and time management.</p></article></div></div></section>
+<section id="services"><div class="container"><div class="section-head"><span class="eyebrow">Services</span><h2>Practical support for busy teams.</h2></div><div class="cards"><article class="card"><div class="ico"><i class="fa-solid fa-list-check"></i></div><h3>Virtual assistance</h3><p>Administrative help, document preparation, and file organization.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-comments"></i></div><h3>Customer support</h3><p>Professional communication, inquiry handling, and customer care.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-table"></i></div><h3>Data entry</h3><p>Accurate data input, spreadsheet updates, and record maintenance.</p></article></div></div></section>
+<section id="experience"><div class="container"><div class="section-head"><span class="eyebrow">Career journey</span><h2>Experience that builds confidence.</h2></div><div class="timeline"><article class="card job"><h3>Customer Sales Representative — Verizon Sales Account</h3><b>AFNI Philippines</b><p>Sep 2024 – Nov 2026 · Customer communication and sales assistance.</p></article><article class="card job"><h3>Customer Service Representative — Paychex Account</h3><b>Foundever</b><p>Jul – Sep 2024 · Customer service and inquiry support.</p></article><article class="card job"><h3>Customer Service Representative — U.S. Retail Voice Account</h3><b>Inspiro · 1-800-Flowers International</b><p>2024 · Seasonal · Customer inquiries and order support.</p></article><article class="card job"><h3>Accounts Payable / Receivable Support</h3><b>LTFRB Central Office</b><p>Oct – Dec 2020 · Encoding and disbursement documentation.</p></article></div></div></section>
+<section id="skills"><div class="container"><div class="section-head"><span class="eyebrow">Tools & strengths</span><h2>Skills I bring to the table.</h2></div><div class="card"><div class="skills"><span class="tag">Virtual Assistance</span><span class="tag">Administrative Support</span><span class="tag">Customer Service</span><span class="tag">Data Entry</span><span class="tag">Records Management</span><span class="tag">Microsoft Word</span><span class="tag">Microsoft Excel</span><span class="tag">PowerPoint</span><span class="tag">Business Communication</span><span class="tag">Data Privacy</span></div></div></div></section>
 
-  <main id="home">
-    <section class="container hero">
-      <div class="reveal">
-        <div class="availability"><i class="fa-solid fa-circle"></i> OPEN TO REMOTE OPPORTUNITIES</div>
-        <p class="hero-greeting">Hello, I’m</p>
-        <h1 class="hero-name">Robert <span class="gradient-text">Corpuz</span></h1>
-        <p class="hero-role">Virtual Assistant &amp; Administrative Support</p>
-        <p class="hero-copy">I help businesses stay organized with reliable customer support, data entry, and administrative assistance. Let’s make your day-to-day work easier.</p>
-        <div class="hero-actions">
-          <a class="button" href="#contact"><i class="fa-regular fa-paper-plane"></i> Hire Me</a>
-          <a class="button outline cv-button" href="assets/Robert-Corpuz-Resume.pdf" download aria-label="Download Robert Corpuz CV as PDF"><i class="fa-solid fa-download"></i> Download CV</a>
-        </div>
-        <div class="location"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines <span aria-hidden="true">·</span> Remote-ready</div>
+<section id="social-studio"><div class="container"><div class="section-head"><span class="eyebrow">My digital workspace</span><h2>Social Media Studio</h2><p>A public preview of my publishing workspace. Only the owner can access publishing controls.</p></div>
+<div class="studio-shell"><div class="studio-top"><div><h3><i class="fa-solid fa-wand-magic-sparkles"></i> Social Media Manager</h3><span class="muted">Plan, schedule and manage posts with Buffer</span></div><span class="status" id="apiStatus">● Demo mode · Backend not connected</span></div>
+<div class="studio-body"><aside class="studio-side" aria-label="Social studio navigation"><button class="studio-nav active" data-panel="overview"><i class="fa-solid fa-chart-pie"></i> Overview</button><button class="studio-nav" data-panel="compose"><i class="fa-solid fa-pen-to-square"></i> Create post</button><button class="studio-nav" data-panel="channels"><i class="fa-solid fa-share-nodes"></i> Channels</button><button class="studio-nav" data-panel="history"><i class="fa-solid fa-clock-rotate-left"></i> Post history</button><button class="studio-nav" data-panel="owner"><i class="fa-solid fa-lock"></i> Owner login</button></aside>
+<div class="studio-main">
+<div class="panel active" id="overview"><h3>Workspace overview</h3><div class="stats"><div class="statbox"><b id="countChannels">—</b><span>Connected channels</span></div><div class="statbox"><b id="countScheduled">—</b><span>Scheduled in Buffer</span></div><div class="statbox"><b>7</b><span>Target platforms</span></div></div><p class="muted">Connect your social profiles to Buffer, then sign in as the owner to create and schedule posts.</p><div class="notice">This dashboard is public to view. Publishing, channel details and post history are protected behind owner authentication.</div><button class="btn" onclick="showPanel('owner')">Owner sign in</button></div>
+<div class="panel" id="compose"><h3>Create and schedule a post</h3><div id="ownerRequired" class="notice">Sign in using the Owner Login tab to unlock the composer.</div><div id="composer" class="hidden">
+<div class="field"><label>Caption / post text</label><textarea id="postText" maxlength="5000" placeholder="Write your post caption..."></textarea></div>
+<div class="formgrid"><div class="field"><label>Media type</label><select id="mediaType"><option value="none">No media</option><option value="image">Image</option><option value="video">Video</option></select></div><div class="field"><label>Public media URL</label><input id="mediaUrl" type="url" placeholder="https://your-site.com/media.jpg"></div></div>
+<div class="formgrid"><div class="field"><label>Pinterest board service ID (Pinterest only)</label><input id="pinBoardId" placeholder="Required for Pinterest"></div><div class="field"><label>Pinterest pin title (optional)</label><input id="pinTitle" maxlength="100" placeholder="Pin title"></div></div>
+<div class="formgrid"><div class="field"><label>YouTube video title (YouTube only)</label><input id="youtubeTitle" maxlength="100" placeholder="Required for YouTube"></div><div class="field"><label>YouTube category ID</label><select id="youtubeCategory"><option value="22">People & Blogs (22)</option><option value="27">Education (27)</option><option value="26">Howto & Style (26)</option><option value="24">Entertainment (24)</option><option value="28">Science & Technology (28)</option><option value="19">Travel & Events (19)</option></select></div></div>
+<span class="help">Media must be a public HTTPS direct file URL. Instagram/TikTok require media; Pinterest requires an image and board ID; YouTube requires a video, title and category.</span>
+<div class="field"><label>Choose connected channels</label><div id="channelChoices" class="platforms"><span class="muted">Load channels after signing in.</span></div></div>
+<div class="formgrid"><div class="field"><label>Publishing option</label><select id="scheduleMode"><option value="queue">Add to next Buffer queue slot</option><option value="custom">Schedule at a specific time</option><option value="now">Publish as soon as Buffer allows</option></select></div><div class="field" id="dateField"><label>Date and time (Philippines local time)</label><input id="dueAt" type="datetime-local"></div></div>
+<div class="notice">Instagram and TikTok require media. Pinterest requires an image and board selection; YouTube requires a video and channel-specific title/category. Some post types need extra metadata in Buffer. The API will return a clear validation error if a selected channel needs settings not yet configured here.</div>
+<button class="btn" id="submitPost"><i class="fa-solid fa-calendar-check"></i> Send to Buffer</button><div id="composeMessage" aria-live="polite"></div>
+</div></div>
+<div class="panel" id="channels"><h3>Connected channels</h3><p class="muted">Channel names are loaded from your Buffer account after owner sign-in.</p><div id="channelList" class="postlist"><div class="notice">Sign in to load your channels.</div></div></div>
+<div class="panel" id="history"><h3>Recent scheduled posts</h3><p class="muted">Fetched from Buffer for your connected organization.</p><div id="historyList" class="postlist"><div class="notice">Sign in to load post history.</div></div></div>
+<div class="panel" id="owner"><h3>Owner access</h3><p class="muted">This login is for the portfolio owner. Never share the password with visitors.</p><div id="loginBox" class="loginbox"><div class="field"><label>Owner password</label><input type="password" id="ownerPassword" autocomplete="current-password" placeholder="Enter your dashboard password"></div><button class="btn" id="loginBtn">Sign in securely</button><div id="loginMessage" aria-live="polite"></div></div><div id="signedIn" class="hidden"><div class="toast">You are signed in as the dashboard owner.</div><button class="btn secondary" id="refreshBtn">Refresh Buffer data</button> <button class="btn secondary" id="logoutBtn">Sign out</button></div><p class="help">A session token is held in this browser tab only. The Buffer API key stays on the backend.</p></div>
+</div></div></div></div></section>
 
-        <div class="social-links" aria-label="Social media links">
-          <a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener noreferrer" aria-label="Visit my Facebook profile" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener noreferrer" aria-label="Visit my Instagram profile" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a class="viber-link" href="viber://chat?number=%2B639922880302" aria-label="Chat with me on Viber at 09922880302" title="Viber: 0992 288 0302"><i class="fa-brands fa-viber"></i></a>
-          <span class="social-label">Connect with me</span>
-        </div>
-        <div class="quick-stats">
-          <div class="stat"><strong>99%</strong><span>Internship evaluation rating</span></div>
-          <div class="stat"><strong>3+</strong><span>Customer support environments</span></div>
-          <div class="stat"><strong>2020–23</strong><span>Office Management Technology</span></div>
-        </div>
-      </div>
-      <div class="hero-visual reveal">
-        <div class="photo-frame">
-          <img class="profile-photo" src="IMG_0031.png" alt="Portrait of Robert Corpuz">
-          <div class="photo-caption"><strong>Let’s work together!</strong>Reliable · Organized · Detail-focused</div>
-        </div>
-        <div class="floating-label"><i class="fa-solid fa-sparkles"></i> Your Remote Support Partner</div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-title reveal"><span class="eyebrow">A little about me</span><h2>Making the day-to-day easier.</h2><p>I bring a service-first mindset, careful organization, and a professional approach to customer and back-office support.</p></div>
-        <div class="grid grid-3">
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-headset"></i></div><h3>Customer care</h3><p>Experience supporting U.S. voice accounts, assisting with inquiries, sales conversations, and order-related concerns.</p></article>
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-folder-open"></i></div><h3>Office administration</h3><p>Hands-on background in data encoding, document preparation, records management, and payroll-related documentation.</p></article>
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div><h3>Trust & attention to detail</h3><p>Focused on accuracy, confidentiality, clear communication, time management, and professional business etiquette.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="container">
-        <div class="section-title reveal"><span class="eyebrow">What I can help with</span><h2>Practical support for busy teams.</h2><p>Flexible assistance for entrepreneurs, small businesses, and remote teams.</p></div>
-        <div class="grid grid-3">
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-list-check"></i></div><h3>Virtual assistance</h3><p>Day-to-day administrative help, document preparation, file organization, and back-office tasks.</p></article>
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-comments"></i></div><h3>Customer support</h3><p>Professional customer communication, inquiry handling, and thoughtful assistance with customer concerns.</p></article>
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-table"></i></div><h3>Data entry & records</h3><p>Accurate data input, spreadsheet updates, record maintenance, and organized information handling.</p></article>
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div><h3>Documentation support</h3><p>Administrative support for payroll documentation, disbursement files, and AP/AR-related tasks.</p></article>
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div><h3>Sales assistance</h3><p>Customer-focused sales support, attentive listening, clear explanations, and professional service.</p></article>
-          <article class="card service-card reveal"><div class="icon-box"><i class="fa-solid fa-lock"></i></div><h3>Confidential office tasks</h3><p>Careful handling of business information with awareness of data privacy and workplace confidentiality.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <div class="container">
-        <div class="section-title reveal"><span class="eyebrow">Career journey</span><h2>Experience that builds confidence.</h2><p>Customer-facing and administrative roles across service and office environments.</p></div>
-        <div class="timeline">
-          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Sales Representative — Verizon Sales Account</h3><div class="company">AFNI Philippines</div></div><span class="date">Sep 2024 – Nov 2026</span></div><ul class="job-points"><li>Supported customers in a sales account environment.</li><li>Applied customer communication and sales assistance skills.</li></ul></div></article>
-          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Service Representative — Paychex Account</h3><div class="company">Foundever</div></div><span class="date">Jul – Sep 2024</span></div><ul class="job-points"><li>Provided customer service support in a Paychex account environment.</li><li>Used professional communication skills to assist with inquiries.</li></ul></div></article>
-          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Customer Service Representative — U.S. Retail Voice Account</h3><div class="company">Inspiro · 1-800-Flowers International</div></div><span class="date">2024 · Seasonal</span></div><ul class="job-points"><li>Supported customers during Valentine's Day and Mother's Day campaigns.</li><li>Assisted with inquiries and order-related concerns in a voice support environment.</li></ul></div></article>
-          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Accounts Payable / Receivable Support</h3><div class="company">LTFRB Central Office</div></div><span class="date">Oct – Dec 2020</span></div><ul class="job-points"><li>Encoded information and prepared disbursement files for drivers' monthly payroll.</li><li>Encoded records related to GAA and Bayanihan Act II projects.</li></ul></div></article>
-          <article class="timeline-item reveal"><span class="timeline-dot"></span><div class="card"><div class="job-heading"><div><h3>Encoder Intern</h3><div class="company">Ideal Residence Homeowners Association, Inc.</div></div><span class="date">Jan – Jul 2020</span></div><ul class="job-points"><li>Maintained monthly dues and tricycle sticker records.</li><li>Achieved a 99% internship evaluation rating.</li></ul></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <div class="section-title reveal"><span class="eyebrow">Tools & strengths</span><h2>Skills I bring to the table.</h2><p>A practical mix of customer support, office administration, and productivity tools.</p></div>
-        <div class="grid grid-2">
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-bolt"></i></div><h3>Core capabilities</h3><div class="skill-tags"><span class="tag">Virtual Assistance</span><span class="tag">Administrative Support</span><span class="tag">Customer Service</span><span class="tag">Client Support</span><span class="tag">Sales Assistance</span><span class="tag">Data Entry</span><span class="tag">Records Management</span><span class="tag">Document Preparation</span><span class="tag">Payroll Documentation</span><span class="tag">AP / AR Support</span><span class="tag">Time Management</span><span class="tag">Data Privacy</span><span class="tag">Business Communication</span></div></article>
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-laptop"></i></div><h3>Productivity tools</h3><div class="skill-tags"><span class="tag">Microsoft Word</span><span class="tag">Microsoft Excel</span><span class="tag">PowerPoint</span><span class="tag">Apple Pages</span><span class="tag">Apple Numbers</span><span class="tag">Apple Keynote</span></div><p style="margin-top:18px">Comfortable with document preparation, spreadsheets, presentations, and organized digital records.</p></article>
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-certificate"></i></div><h3>Selected training</h3><div class="training-list">
-            <div><i class="fa-solid fa-check"></i><span>Inspiro Relia Language Training – BPO</span></div>
-            <div><i class="fa-solid fa-check"></i><span>Clinical Documentation Standards</span></div>
-            <div><i class="fa-solid fa-check"></i><span>Data Privacy Act of 2012 and Pertinent DOH Rules on Privacy</span></div>
-            <div><i class="fa-solid fa-check"></i><span>Emergency Room Records and Medicolegal</span></div>
-            <div><i class="fa-solid fa-check"></i><span>Values Orientation Training for Future Employees</span></div>
-            <div><i class="fa-solid fa-check"></i><span>Workplace safety, interpersonal skills, time management, business etiquette, administrative procedures, and business communication</span></div>
-          </div></article>
-          <article class="card reveal"><div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div><h3>Education</h3>
-            <div class="training-list">
-              <div><i class="fa-solid fa-building-columns"></i><span><strong>Polytechnic University of the Philippines</strong><br>College Diploma in Office Management Technology · 2020–2023</span></div>
-              <div><i class="fa-solid fa-school"></i><span><strong>Datamex College of Saint Adeline – Fairview</strong><br>Senior High School</span></div>
-              <div><i class="fa-solid fa-school"></i><span><strong>Justice Cecilia Muñoz Palma High School</strong><br>High School</span></div>
-              <div><i class="fa-solid fa-school"></i><span><strong>Payatas B. Annex Elementary School</strong><br>Elementary</span></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="reviews">
-      <div class="container">
-        <div class="section-title reveal"><span class="eyebrow">Testimonials layout</span><h2>Built around reliable service.</h2><p>A sample layout showing where verified client feedback can appear.</p></div>
-        <p class="review-disclaimer"><i class="fa-solid fa-circle-info"></i> The following are fictional sample testimonials for design demonstration only, not real client endorsements. Replace them with genuine reviews and permission before publishing as client feedback.</p>
-        <div class="grid grid-3">
-          <article class="card reveal"><div class="stars">★★★★★</div><p>“Robert was organized, professional, and attentive to detail. He communicated clearly and handled administrative tasks with care.”</p><div class="review-person"><div class="avatar">JM</div><div><strong>James Miller</strong><small>Sample client · Admin support</small></div></div></article>
-          <article class="card reveal"><div class="stars">★★★★★</div><p>“His customer service approach was patient and thoughtful. He made sure questions were understood and concerns were handled professionally.”</p><div class="review-person"><div class="avatar">SC</div><div><strong>Sarah Carter</strong><small>Sample client · Customer support</small></div></div></article>
-          <article class="card reveal"><div class="stars">★★★★★</div><p>“Reliable and detail-focused. Robert understands the importance of accurate data entry, confidentiality, and organized records.”</p><div class="review-person"><div class="avatar">DW</div><div><strong>Daniel Wilson</strong><small>Sample client · Data entry</small></div></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="contact-box reveal">
-          <span class="eyebrow">Have a role in mind?</span>
-          <h2>Let's make work easier.</h2>
-          <p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities. Get in touch to discuss how I can help your team.</p>
-          <div class="contact-actions">
-            <a class="button" href="mailto:robertcorpuz0101@gmail.com"><i class="fa-regular fa-envelope"></i> Email me</a>
-            <a class="contact-detail" href="tel:09922880302"><i class="fa-solid fa-phone"></i> 0992 288 0302</a>
-            <a class="contact-detail" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-file-arrow-down"></i> Download My CV</a>
-          </div>
-
-          <div class="social-links contact-socials" aria-label="Connect on social media">
-            <a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a class="viber-link" href="viber://chat?number=%2B639922880302" aria-label="Viber chat 09922880302" title="Viber: 0992 288 0302"><i class="fa-brands fa-viber"></i></a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer><div class="container">© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</div></footer>
-  <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-    menuToggle.addEventListener("click", () => {
-      const opened = navLinks.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(opened));
-      menuToggle.innerHTML = opened ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-    });
-    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
-    }));
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
-  </script>
-
-  <script>
-    (() => {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      const revealTargets = document.querySelectorAll(
-        'section, .card, .stat, .timeline-item, .contact-box, .training-list > div'
-      );
-      revealTargets.forEach((el, index) => {
-        if (el.classList.contains('hero-copy')) return;
-        el.classList.add('motion-reveal');
-        el.style.setProperty('--reveal-delay', `${(index % 5) * 75}ms`);
-      });
-      const style = document.createElement('style');
-      style.textContent = `
-        .motion-reveal { opacity: 0; transform: translateY(22px) scale(.99);
-          transition: opacity .7s ease, transform .7s cubic-bezier(.2,.75,.25,1);
-          transition-delay: var(--reveal-delay, 0ms); }
-        .motion-reveal.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-      `;
-      document.head.appendChild(style);
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
-      revealTargets.forEach(el => observer.observe(el));
-    })();
-  </script>
-
-</body>
-</html>
+<section id="contact"><div class="container"><div class="contact"><span class="eyebrow">Have a role in mind?</span><h2>Let's make work easier.</h2><p class="muted">I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities.</p><div class="actions" style="justify-content:center"><a class="btn" href="mailto:robertcorpuz0101@gmail.com"><i class="fa-regular fa-envelope"></i> Email me</a><a class="btn secondary" href="tel:09922880302"><i class="fa-solid fa-phone"></i> 0992 288 0302</a><a class="btn secondary" href="assets/Robert-Corpuz-Resume.pdf" download>Download CV</a></div><div class="social" style="justify-content:center"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302"><i class="fa-brands fa-viber"></i></a></div></div></div></section>
+</main><footer>© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</footer>
+<script>
+const API_BASE = "https://YOUR-BACKEND-DOMAIN.example.com"; // Replace after deploying backend
+let sessionToken = sessionStorage.getItem("sm_owner_session") || "";
+let channels = [];
+const $ = id => document.getElementById(id);
+function showPanel(name){document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===name));document.querySelectorAll(".studio-nav").forEach(b=>b.classList.toggle("active",b.dataset.panel===name));}
+document.querySelectorAll(".studio-nav").forEach(b=>b.addEventListener("click",()=>showPanel(b.dataset.panel)));
+$("menu").addEventListener("click",()=>$("navlinks").classList.toggle("open"));
+document.querySelectorAll(".navlinks a").forEach(a=>a.addEventListener("click",()=>$("navlinks").classList.remove("open")));
+$("scheduleMode").addEventListener("change",()=>{$("dateField").classList.toggle("hidden",$("scheduleMode").value!=="custom")});
+function message(el,text,error=false){el.innerHTML="";const d=document.createElement("div");d.className=error?"toast error":"toast";d.textContent=text;el.appendChild(d);}
+async function api(path,opts={}){if(API_BASE.includes("YOUR-BACKEND"))throw new Error("Set API_BASE in index.html to your deployed backend URL first.");const headers={"Content-Type":"application/json",...(opts.headers||{})};if(sessionToken)headers.Authorization="Bearer "+sessionToken;const res=await fetch(API_BASE+path,{...opts,headers});const data=await res.json().catch(()=>({error:"Invalid server response"}));if(!res.ok)throw new Error(data.error||"Request failed");return data;}
+function setLoggedIn(on){$("loginBox").classList.toggle("hidden",on);$("signedIn").classList.toggle("hidden",!on);$("composer").classList.toggle("hidden",!on);$("ownerRequired").classList.toggle("hidden",on);$("apiStatus").textContent=on?"● Owner session active":"● Public preview";}
+function renderChannels(){const choices=$("channelChoices"),list=$("channelList");choices.innerHTML="";list.innerHTML="";channels.forEach(c=>{const label=document.createElement("label");label.className="platform-chip";const input=document.createElement("input");input.type="checkbox";input.value=c.id;input.checked=false;const span=document.createElement("span");span.textContent=c.service+" · "+c.name;label.append(input,span);choices.append(label);const row=document.createElement("div");row.className="postrow";const title=document.createElement("strong");title.textContent=c.name;const meta=document.createElement("span");meta.className="pill";meta.textContent=c.service;row.append(title,meta);list.append(row);});$("countChannels").textContent=channels.length;}
+async function refreshData(){const data=await api("/api/channels");channels=data.channels||[];renderChannels();const posts=await api("/api/posts");$("countScheduled").textContent=(posts.posts||[]).length;$("historyList").innerHTML="";(posts.posts||[]).forEach(p=>{const row=document.createElement("div");row.className="postrow";const left=document.createElement("div"),title=document.createElement("strong"),body=document.createElement("p"),meta=document.createElement("span");title.textContent=p.channelName||"Buffer post";body.textContent=p.text||"";meta.className="pill";meta.textContent=(p.status||"scheduled")+" · "+(p.dueAt?new Date(p.dueAt).toLocaleString():"");left.append(title,body,meta);row.append(left);$("historyList").append(row);});}
+$("loginBtn").addEventListener("click",async()=>{try{const data=await api("/api/login",{method:"POST",body:JSON.stringify({password:$("ownerPassword").value})});sessionToken=data.token;sessionStorage.setItem("sm_owner_session",sessionToken);$("ownerPassword").value="";setLoggedIn(true);message($("loginMessage"),"Signed in. Loading your Buffer channels…");await refreshData();}catch(e){message($("loginMessage"),e.message,true);}});
+$("logoutBtn").addEventListener("click",()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");channels=[];setLoggedIn(false);});
+$("refreshBtn").addEventListener("click",async()=>{try{await refreshData();message($("loginMessage"),"Buffer data refreshed.");}catch(e){message($("loginMessage"),e.message,true);}});
+$("submitPost").addEventListener("click",async()=>{const text=$("postText").value.trim(),channelIds=[...document.querySelectorAll("#channelChoices input:checked")].map(x=>x.value),mode=$("scheduleMode").value,mediaUrl=$("mediaUrl").value.trim();if(!text){message($("composeMessage"),"Write a caption first.",true);return;}if(!channelIds.length){message($("composeMessage"),"Choose at least one connected channel.",true);return;}if(mode==="custom"&&!$("dueAt").value){message($("composeMessage"),"Choose a future date and time.",true);return;}const payload={text,channelIds,mediaUrl:mediaUrl||undefined,mediaType:$("mediaType").value,pinBoardId:$("pinBoardId").value.trim(),pinTitle:$("pinTitle").value.trim(),youtubeTitle:$("youtubeTitle").value.trim(),youtubeCategoryId:$("youtubeCategory").value,mode,dueAt:mode==="custom"?new Date($("dueAt").value).toISOString():undefined};try{$("submitPost").disabled=true;const result=await api("/api/posts",{method:"POST",body:JSON.stringify(payload)});message($("composeMessage"),"Submitted to Buffer for "+result.results.length+" channel(s). Check Buffer for final publishing status.");$("postText").value="";await refreshData();}catch(e){message($("composeMessage"),e.message,true);}finally{$("submitPost").disabled=false;}});
+if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");setLoggedIn(false);});}else{setLoggedIn(false);}
+</script>
+</body></html>
