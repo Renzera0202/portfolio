@@ -285,11 +285,11 @@ async function api(path,opts={}){if(API_BASE.includes("YOUR-BACKEND"))throw new 
 function setLoggedIn(on){$("loginBox").classList.toggle("hidden",on);$("signedIn").classList.toggle("hidden",!on);$("composer").classList.toggle("hidden",!on);$("ownerRequired").classList.toggle("hidden",on);$("apiStatus").textContent=on?"● Owner session active":"● Public preview";}
 function renderChannels(){const choices=$("channelChoices"),list=$("channelList");choices.innerHTML="";list.innerHTML="";channels.forEach(c=>{const label=document.createElement("label");label.className="platform-chip";const input=document.createElement("input");input.type="checkbox";input.value=c.id;input.checked=false;const span=document.createElement("span");span.textContent=c.service+" · "+c.name;label.append(input,span);choices.append(label);const row=document.createElement("div");row.className="postrow";const title=document.createElement("strong");title.textContent=c.name;const meta=document.createElement("span");meta.className="pill";meta.textContent=c.service;row.append(title,meta);list.append(row);});$("countChannels").textContent=channels.length;}
 async function refreshData(){const data=await api("/api/channels");channels=data.channels||[];renderChannels();const posts=await api("/api/posts");$("countScheduled").textContent=(posts.posts||[]).length;$("historyList").innerHTML="";(posts.posts||[]).forEach(p=>{const row=document.createElement("div");row.className="postrow";const left=document.createElement("div"),title=document.createElement("strong"),body=document.createElement("p"),meta=document.createElement("span");title.textContent=p.channelName||"Buffer post";body.textContent=p.text||"";meta.className="pill";meta.textContent=(p.status||"scheduled")+" · "+(p.dueAt?new Date(p.dueAt).toLocaleString():"");left.append(title,body,meta);row.append(left);$("historyList").append(row);});}
-$("loginBtn").addEventListener("click",async()=>{try{const data=await api("/api/login",{method:"POST",body:JSON.stringify({password:$("ownerPassword").value})});sessionToken=data.token;sessionStorage.setItem("sm_owner_session",sessionToken);$("ownerPassword").value="";setLoggedIn(true);message($("loginMessage"),"Signed in. Loading your Buffer channels…");await refreshData();}catch(e){message($("loginMessage"),e.message,true);}});
-$("logoutBtn").addEventListener("click",()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");channels=[];setLoggedIn(false);});
+$("loginBtn").addEventListener("click",async()=>{try{const data=await api("/api/login",{method:"POST",body:JSON.stringify({password:$("ownerPassword").value})});sessionToken=data.token;sessionStorage.setItem("sm_owner_session",sessionToken);$("ownerPassword").value="";setLoggedIn(true);window.dispatchEvent(new Event("owner-session-changed"));message($("loginMessage"),"Signed in. Loading your Buffer channels…");await refreshData();}catch(e){message($("loginMessage"),e.message,true);}});
+$("logoutBtn").addEventListener("click",()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");channels=[];setLoggedIn(false);window.dispatchEvent(new Event("owner-session-changed"));});
 $("refreshBtn").addEventListener("click",async()=>{try{await refreshData();message($("loginMessage"),"Buffer data refreshed.");}catch(e){message($("loginMessage"),e.message,true);}});
 $("submitPost").addEventListener("click",async()=>{const text=$("postText").value.trim(),channelIds=[...document.querySelectorAll("#channelChoices input:checked")].map(x=>x.value),mode=$("scheduleMode").value,mediaUrl=$("mediaUrl").value.trim();if(!text){message($("composeMessage"),"Write a caption first.",true);return;}if(!channelIds.length){message($("composeMessage"),"Choose at least one connected channel.",true);return;}if(mode==="custom"&&!$("dueAt").value){message($("composeMessage"),"Choose a future date and time.",true);return;}const payload={text,channelIds,mediaUrl:mediaUrl||undefined,mediaType:$("mediaType").value,pinBoardId:$("pinBoardId").value.trim(),pinTitle:$("pinTitle").value.trim(),youtubeTitle:$("youtubeTitle").value.trim(),youtubeCategoryId:$("youtubeCategory").value,mode,dueAt:mode==="custom"?new Date($("dueAt").value).toISOString():undefined};try{$("submitPost").disabled=true;const result=await api("/api/posts",{method:"POST",body:JSON.stringify(payload)});message($("composeMessage"),"Submitted to Buffer for "+result.results.length+" channel(s). Check Buffer for final publishing status.");$("postText").value="";await refreshData();}catch(e){message($("composeMessage"),e.message,true);}finally{$("submitPost").disabled=false;}});
-if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");setLoggedIn(false);});}else{setLoggedIn(false);}
+if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");setLoggedIn(false);window.dispatchEvent(new Event("owner-session-changed"));});}else{setLoggedIn(false);}
 </script>
 
 <script>
@@ -345,7 +345,7 @@ if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sess
 </div>
 <section class="tool-window" id="tool-notes" role="dialog" aria-label="Notepad" hidden>
  <div class="tool-head"><h3><i class="fa-solid fa-note-sticky" style="color:#9a8be0"></i> My aesthetic notepad</h3><button class="tool-close" data-tool-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
- <p class="tool-muted">Your notes auto-save in this browser as you type.</p>
+ <p class="tool-muted" id="notesAccessMessage">Sign in with your owner password to unlock your private cloud notes.</p>
  <div class="note-tools" aria-label="Choose note color">
   <button class="note-color" style="background:#fff8dc" data-note-color="#fff8dc" aria-label="Cream note" aria-pressed="true"></button>
   <button class="note-color" style="background:#eaf6ff" data-note-color="#eaf6ff" aria-label="Blue note" aria-pressed="false"></button>
@@ -394,15 +394,76 @@ if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sess
  openButtons.forEach(btn=>btn.addEventListener('click',()=>{const name=btn.dataset.toolOpen;const wasOpen=!panels[name].hidden;closeTools();panels[name].hidden=wasOpen;}));
  document.querySelectorAll('[data-tool-close]').forEach(btn=>btn.addEventListener('click',closeTools));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTools()});
- // Notes persist in localStorage for this browser/device.
+ // Private notes are stored in the owner's Google Drive via the authenticated Render backend.
  const note=document.getElementById('quickNotes'),saved=document.getElementById('notesSaved'),colorButtons=document.querySelectorAll('[data-note-color]');
  const noteKey='rc_portfolio_quick_notes_v1',colorKey='rc_portfolio_note_color_v1';
- note.value=localStorage.getItem(noteKey)||'';
- function setNoteColor(color){note.style.setProperty('--note-bg',color);localStorage.setItem(colorKey,color);colorButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.noteColor===color)));}
- setNoteColor(localStorage.getItem(colorKey)||'#fff8dc');
- let saveTimer;note.addEventListener('input',()=>{saved.textContent='Saving…';clearTimeout(saveTimer);saveTimer=setTimeout(()=>{localStorage.setItem(noteKey,note.value);saved.textContent='Saved just now';},220);});
+ const notesAccessMessage=document.getElementById('notesAccessMessage');
+ let noteColor='#fff8dc', notesReady=false, notesLoading=false, saveTimer=null;
+ function paintNoteColor(color){
+   noteColor=color;note.style.setProperty('--note-bg',color);
+   colorButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.noteColor===color)));
+ }
+ function setNotesLocked(locked){
+   note.disabled=locked;
+   colorButtons.forEach(b=>b.disabled=locked);
+   document.getElementById('clearNotes').disabled=locked;
+   if(locked){notesReady=false;note.value='';saved.textContent='Locked';notesAccessMessage.textContent='Sign in with your owner password to unlock your private Google Drive notes.';}
+   else{notesAccessMessage.textContent='Private cloud notes · auto-save to your Google Drive';}
+ }
+ async function saveCloudNotes(){
+   if(!notesReady||notesLoading||!sessionToken)return;
+   saved.textContent='Saving to Drive…';
+   try{
+     await api('/api/notes',{method:'PUT',body:JSON.stringify({text:note.value,color:noteColor})});
+     localStorage.setItem(noteKey,note.value);
+     localStorage.setItem(colorKey,noteColor);
+     saved.textContent='Saved to Google Drive';
+   }catch(e){saved.textContent='Save failed';notesAccessMessage.textContent=e.message+' Your changes remain in this browser until connection is restored.';}
+ }
+ async function loadCloudNotes(){
+   if(!sessionToken){setNotesLocked(true);return;}
+   notesLoading=true;notesReady=false;saved.textContent='Loading…';
+   try{
+     const cloud=await api('/api/notes');
+     if(cloud.exists){
+       note.value=cloud.text||'';
+       paintNoteColor(cloud.color||'#fff8dc');
+     }else{
+       // Migrate this browser's previous local notes once, if present.
+       note.value=localStorage.getItem(noteKey)||'';
+       paintNoteColor(localStorage.getItem(colorKey)||'#fff8dc');
+       if(note.value||noteColor!=='#fff8dc'){
+         notesLoading=false;notesReady=true;await saveCloudNotes();notesLoading=true;
+       }
+     }
+     notesAccessMessage.textContent='Private cloud notes · auto-save to your Google Drive';
+     saved.textContent='Connected to Google Drive';
+     notesReady=true;
+   }catch(e){
+     saved.textContent='Drive unavailable';
+     notesAccessMessage.textContent=e.message;
+   }finally{notesLoading=false;}
+ }
+ setNotesLocked(!sessionToken);
+ if(sessionToken)loadCloudNotes();
+ note.addEventListener('input',()=>{
+   if(!notesReady)return;
+   saved.textContent='Unsaved changes…';
+   clearTimeout(saveTimer);saveTimer=setTimeout(saveCloudNotes,650);
+ });
+ function setNoteColor(color){
+   paintNoteColor(color);
+   if(notesReady){clearTimeout(saveTimer);saveCloudNotes();}
+ }
  colorButtons.forEach(b=>b.addEventListener('click',()=>setNoteColor(b.dataset.noteColor)));
- document.getElementById('clearNotes').addEventListener('click',()=>{if(confirm('Clear all your saved notes?')){note.value='';localStorage.removeItem(noteKey);saved.textContent='Cleared';}});
+ document.getElementById('clearNotes').addEventListener('click',()=>{
+   if(notesReady&&confirm('Clear all your saved notes from Google Drive?')){
+     note.value='';clearTimeout(saveTimer);saveCloudNotes();
+   }
+ });
+ window.addEventListener('owner-session-changed',()=>{
+   if(sessionToken)loadCloudNotes();else setNotesLocked(true);
+ });
  document.getElementById('downloadNotes').addEventListener('click',()=>{const blob=new Blob([note.value],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='my-notes.txt';a.click();URL.revokeObjectURL(url);});
  // Calendar and reminders persist locally by date.
  const grid=document.getElementById('calendarGrid'),monthLabel=document.getElementById('calMonthLabel'),selectedLabel=document.getElementById('calSelectedLabel'),eventList=document.getElementById('calEventList'),eventInput=document.getElementById('calEventInput');
