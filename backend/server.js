@@ -4,7 +4,6 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { google } from "googleapis";
 import "dotenv/config";
 
 const app = express();
@@ -12,7 +11,7 @@ app.disable("x-powered-by");
 app.use(helmet());
 app.use(express.json({ limit: "30kb" }));
 const allowedOrigin = process.env.FRONTEND_ORIGIN;
-app.use(cors({ origin: allowedOrigin, methods: ["GET","POST","PUT"], allowedHeaders: ["Content-Type","Authorization"] }));
+app.use(cors({ origin: allowedOrigin, methods: ["GET","POST"], allowedHeaders: ["Content-Type","Authorization"] }));
 
 const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 8, standardHeaders: "draft-7", legacyHeaders: false });
 const apiLimiter = rateLimit({ windowMs: 60 * 1000, limit: 30, standardHeaders: "draft-7", legacyHeaders: false });
@@ -29,48 +28,6 @@ function auth(req,res,next) {
     next();
   } catch { res.status(401).json({ error: "Please sign in again." }); }
 }
-
-function googleDriveClient() {
-  const oauth2 = new google.auth.OAuth2(
-    requireEnv("GOOGLE_CLIENT_ID"),
-    requireEnv("GOOGLE_CLIENT_SECRET")
-  );
-  oauth2.setCredentials({ refresh_token: requireEnv("GOOGLE_REFRESH_TOKEN") });
-  return google.drive({ version: "v3", auth: oauth2 });
-}
-
-async function getNotesFile(drive) {
-  const result = await drive.files.list({
-    q: "name = 'portfolio-notes.json' and trashed = false",
-    pageSize: 10,
-    fields: "files(id,name)"
-  });
-  return result.data.files?.[0] || null;
-}
-
-async function readDriveNotes(drive, fileId) {
-  const result = await drive.files.get(
-    { fileId, alt: "media" },
-    { responseType: "text" }
-  );
-  const raw = typeof result.data === "string" ? result.data : JSON.stringify(result.data);
-  return JSON.parse(raw || "{}");
-}
-
-async function writeDriveNotes(drive, file, notes) {
-  const body = JSON.stringify(notes);
-  const media = { mimeType: "application/json", body };
-  if (file) {
-    await drive.files.update({ fileId: file.id, media, fields: "id,name" });
-  } else {
-    await drive.files.create({
-      requestBody: { name: "portfolio-notes.json", mimeType: "application/json" },
-      media,
-      fields: "id,name"
-    });
-  }
-}
-
 async function buffer(query, variables={}) {
   const response = await fetch("https://api.buffer.com", {
     method: "POST",
@@ -90,46 +47,6 @@ app.post("/api/login", loginLimiter, async (req,res) => {
   if (!valid) return res.status(401).json({ error: "Incorrect owner password." });
   const token = jwt.sign({ role:"owner" }, requireEnv("JWT_SECRET"), { expiresIn:"2h", issuer:"robert-portfolio", audience:"social-studio" });
   res.json({ token, expiresIn: 7200 });
-});
-
-
-app.get("/api/notes", apiLimiter, auth, async (_req,res) => {
-  try {
-    const drive = googleDriveClient();
-    const file = await getNotesFile(drive);
-    if (!file) return res.json({ exists: false, text: "", color: "#fff8dc" });
-    const data = await readDriveNotes(drive, file.id);
-    res.json({
-      exists: true,
-      text: typeof data.text === "string" ? data.text : "",
-      color: /^#[0-9a-fA-F]{6}$/.test(data.color || "") ? data.color : "#fff8dc",
-      updatedAt: data.updatedAt || null
-    });
-  } catch(e) {
-    console.error("Google Drive notes read failed:", e.message);
-    res.status(502).json({ error: "Could not load notes from Google Drive. Check the Google Drive connection in Render." });
-  }
-});
-
-app.put("/api/notes", apiLimiter, auth, async (req,res) => {
-  try {
-    const text = req.body?.text;
-    const color = req.body?.color || "#fff8dc";
-    if (typeof text !== "string" || text.length > 20000) {
-      return res.status(400).json({ error: "Notes must be text and no longer than 20,000 characters." });
-    }
-    if (typeof color !== "string" || !/^#[0-9a-fA-F]{6}$/.test(color)) {
-      return res.status(400).json({ error: "Choose a valid note color." });
-    }
-    const drive = googleDriveClient();
-    const file = await getNotesFile(drive);
-    const payload = { text, color, updatedAt: new Date().toISOString() };
-    await writeDriveNotes(drive, file, payload);
-    res.json({ ok: true, updatedAt: payload.updatedAt });
-  } catch(e) {
-    console.error("Google Drive notes save failed:", e.message);
-    res.status(502).json({ error: "Could not save notes to Google Drive. Check the Google Drive connection in Render." });
-  }
 });
 
 app.get("/api/channels", apiLimiter, auth, async (_req,res) => {
