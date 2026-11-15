@@ -192,6 +192,44 @@ header::after { content:""; display:block; height:1px; background:linear-gradien
 @media(max-width:560px) { .career-timeline { padding-left:27px; } .career-timeline::before { left:7px; } .career-dot { left:-27px; } .career-item { padding:21px 18px; } .career-meta { align-items:flex-start; flex-direction:column; gap:6px; } }
 @media(prefers-reduced-motion:reduce) { .career-item,.tag,.studio-shell,.contact { transition:none!important; } }
 
+
+/* Personal productivity tools: notes, calendar, calculator and AI launcher */
+:root{--tool-accent:#9c8bea;--tool-accent2:#86c8ee}
+#personal-tools-dock{position:fixed;right:22px;bottom:22px;z-index:80;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.tool-launch{width:54px;height:54px;border:1px solid rgba(255,255,255,.9);border-radius:19px;background:linear-gradient(145deg,#8bcaf0,#a99aef 60%,#e6b6df);color:#26314c;box-shadow:0 9px 30px rgba(120,130,200,.28),0 0 22px rgba(168,151,242,.3);font-size:1.15rem;cursor:pointer;transition:.25s;position:relative}
+.tool-launch:hover{transform:translateY(-4px) rotate(-4deg);box-shadow:0 13px 35px rgba(120,130,200,.35),0 0 28px rgba(168,151,242,.42)}
+.tool-launch.ai{background:linear-gradient(145deg,#9be2e8,#a99aef 55%,#f1b9dc)}
+.tool-launch .tool-tip{position:absolute;right:64px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#fff;color:#4c5570;border:1px solid #e8e9f5;border-radius:9px;padding:5px 9px;font-size:.72rem;font-weight:700;opacity:0;pointer-events:none;transition:.2s;box-shadow:0 5px 18px #4c557014}
+.tool-launch:hover .tool-tip{opacity:1}
+.tool-window{position:fixed;right:92px;bottom:22px;width:min(390px,calc(100vw - 30px));max-height:min(76vh,680px);overflow:auto;z-index:81;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1px solid rgba(174,174,231,.48);border-radius:22px;box-shadow:0 24px 75px rgba(58,68,110,.22),0 0 28px rgba(166,151,239,.15);padding:17px;animation:tool-pop .25s ease both}
+.tool-window[hidden]{display:none!important}
+@keyframes tool-pop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.tool-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+.tool-head h3{margin:0;font:800 1.02rem Manrope;color:#303951}
+.tool-close{border:0;background:#f1f1fb;color:#68718d;width:32px;height:32px;border-radius:10px;cursor:pointer}
+.tool-muted{font-size:.78rem;color:#77819a}
+#quickNotes{width:100%;min-height:220px;resize:vertical;border:1px solid #e5e5f3;border-radius:14px;padding:13px;background:var(--note-bg,#fffdf5);color:#343b52;outline-color:var(--tool-accent);line-height:1.55}
+.note-tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.note-color{width:25px;height:25px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #d9dced;cursor:pointer}
+.note-color[aria-pressed="true"]{box-shadow:0 0 0 2px #8c83d5,0 0 12px #aaa0f0}
+.tool-action{border:1px solid #e5e6f2;background:linear-gradient(120deg,#f7faff,#f8f4ff);color:#555f7a;padding:8px 11px;border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;transition:.2s}
+.tool-action:hover{border-color:#b5a8ed;box-shadow:0 5px 15px #a99be522;transform:translateY(-1px)}
+#notesSaved{font-size:.72rem;color:#659b83;margin-left:auto}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
+.cal-head strong{font:800 .95rem Manrope;color:#414a67}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+.cal-week{font-size:.68rem;color:#8b91a8;padding:5px 0;font-weight:700}
+.cal-day{border:1px solid transparent;background:#f8f8ff;color:#505a76;border-radius:9px;min-height:36px;cursor:pointer;font-size:.78rem;position:relative}
+.cal-day:hover{border-color:#b9aaf0;background:#f2efff}.cal-day.other{opacity:.35}.cal-day.selected{background:linear-gradient(135deg,#91d4ed,#b9a5ef);color:#27304a;font-weight:800;box-shadow:0 0 14px #a99be555}.cal-day.today:not(.selected){border-color:#9d91e4}.cal-day.has-event:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#df91c4;bottom:4px;left:calc(50% - 2px);box-shadow:0 0 7px #df91c4}
+.cal-event-form{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:12px}.cal-event-form input{min-width:0;border:1px solid #e5e5f2;border-radius:10px;padding:9px;font-size:.8rem;outline-color:#a99aef}
+#calEventList{display:grid;gap:6px;margin-top:10px}.cal-event{font-size:.78rem;background:#f7f5ff;border:1px solid #ece8fb;border-radius:9px;padding:8px 10px;display:flex;justify-content:space-between;gap:8px;align-items:center}.cal-event button{border:0;background:transparent;color:#b36d91;cursor:pointer}
+.calc-display{width:100%;border:1px solid #e5e5f2;border-radius:13px;background:#f8f8ff;padding:13px;text-align:right;font:700 1.45rem Manrope;color:#343b58;margin-bottom:10px;min-height:56px;overflow:auto}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.calc-key{border:1px solid #e7e7f3;background:#f8f8ff;border-radius:11px;padding:12px 4px;color:#4d5875;font-weight:700;cursor:pointer}.calc-key:hover{background:#f0edff;border-color:#b7a9ec}.calc-key.operator{background:#f0efff;color:#7769c1}.calc-key.equals{background:linear-gradient(120deg,#91d2ed,#b4a4ef);color:#27304a}.calc-key.wide{grid-column:span 2}
+.ai-note{background:#f5f5ff;border:1px solid #e8e7fa;border-radius:12px;padding:11px;color:#68728c;font-size:.78rem;line-height:1.5;margin:10px 0}
+#aiPrompt{width:100%;min-height:120px;resize:vertical;border:1px solid #e5e5f2;border-radius:13px;padding:12px;outline-color:#a99aef;color:#343b52}
+@media(max-width:560px){#personal-tools-dock{right:12px;bottom:12px;gap:8px}.tool-launch{width:48px;height:48px;border-radius:16px}.tool-window{right:12px;bottom:70px;width:calc(100vw - 24px);max-height:75vh}.tool-launch .tool-tip{display:none}}
+@media(prefers-reduced-motion:reduce){.tool-window{animation:none}.tool-launch,.tool-action{transition:none}}
+
 </style>
 </head>
 <body>
@@ -295,6 +333,93 @@ if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sess
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
   targets.forEach(el => { if (!el.closest('.hero') || el.classList.contains('photo')) observer.observe(el); });
+})();
+</script>
+
+
+<div id="personal-tools-dock" aria-label="Personal productivity tools">
+  <button class="tool-launch ai" type="button" data-tool-open="ai" aria-label="Open AI helper"><i class="fa-solid fa-wand-magic-sparkles"></i><span class="tool-tip">AI helper</span></button>
+  <button class="tool-launch" type="button" data-tool-open="notes" aria-label="Open notepad"><i class="fa-solid fa-note-sticky"></i><span class="tool-tip">Notepad</span></button>
+  <button class="tool-launch" type="button" data-tool-open="calendar" aria-label="Open calendar"><i class="fa-regular fa-calendar-days"></i><span class="tool-tip">Calendar</span></button>
+  <button class="tool-launch" type="button" data-tool-open="calculator" aria-label="Open calculator"><i class="fa-solid fa-calculator"></i><span class="tool-tip">Calculator</span></button>
+</div>
+<section class="tool-window" id="tool-notes" role="dialog" aria-label="Notepad" hidden>
+ <div class="tool-head"><h3><i class="fa-solid fa-note-sticky" style="color:#9a8be0"></i> My aesthetic notepad</h3><button class="tool-close" data-tool-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+ <p class="tool-muted">Your notes auto-save in this browser as you type.</p>
+ <div class="note-tools" aria-label="Choose note color">
+  <button class="note-color" style="background:#fff8dc" data-note-color="#fff8dc" aria-label="Cream note" aria-pressed="true"></button>
+  <button class="note-color" style="background:#eaf6ff" data-note-color="#eaf6ff" aria-label="Blue note" aria-pressed="false"></button>
+  <button class="note-color" style="background:#f3edff" data-note-color="#f3edff" aria-label="Lavender note" aria-pressed="false"></button>
+  <button class="note-color" style="background:#ffeef5" data-note-color="#ffeef5" aria-label="Pink note" aria-pressed="false"></button>
+  <button class="note-color" style="background:#eaf8ef" data-note-color="#eaf8ef" aria-label="Mint note" aria-pressed="false"></button>
+  <span id="notesSaved" aria-live="polite">Saved</span>
+ </div>
+ <textarea id="quickNotes" placeholder="Write ideas, reminders, tasks, or anything you want to keep..."></textarea>
+ <div class="note-tools"><button class="tool-action" id="clearNotes">Clear notes</button><button class="tool-action" id="downloadNotes">Download .txt</button></div>
+</section>
+<section class="tool-window" id="tool-calendar" role="dialog" aria-label="Calendar" hidden>
+ <div class="tool-head"><h3><i class="fa-regular fa-calendar-days" style="color:#8e91df"></i> My calendar</h3><button class="tool-close" data-tool-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+ <div class="cal-head"><button class="tool-action" id="calPrev" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button><strong id="calMonthLabel"></strong><button class="tool-action" id="calNext" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button></div>
+ <div class="cal-grid" id="calendarGrid"></div>
+ <p class="tool-muted" id="calSelectedLabel" style="margin:12px 0 4px"></p>
+ <form class="cal-event-form" id="calEventForm"><input id="calEventInput" maxlength="100" placeholder="Add an event or reminder" required><button class="tool-action" type="submit">Add</button></form>
+ <div id="calEventList"></div>
+ <p class="tool-muted" style="margin-top:12px">Events are saved in this browser on this device. They are not synced to Google Calendar.</p>
+</section>
+<section class="tool-window" id="tool-calculator" role="dialog" aria-label="Calculator" hidden>
+ <div class="tool-head"><h3><i class="fa-solid fa-calculator" style="color:#8e91df"></i> Mini calculator</h3><button class="tool-close" data-tool-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+ <div class="calc-display" id="calcDisplay" aria-live="polite">0</div>
+ <div class="calc-grid" id="calcKeys">
+  <button class="calc-key" data-calc="clear">AC</button><button class="calc-key" data-calc="back">⌫</button><button class="calc-key operator" data-value="%">%</button><button class="calc-key operator" data-value="/">÷</button>
+  <button class="calc-key" data-value="7">7</button><button class="calc-key" data-value="8">8</button><button class="calc-key" data-value="9">9</button><button class="calc-key operator" data-value="*">×</button>
+  <button class="calc-key" data-value="4">4</button><button class="calc-key" data-value="5">5</button><button class="calc-key" data-value="6">6</button><button class="calc-key operator" data-value="-">−</button>
+  <button class="calc-key" data-value="1">1</button><button class="calc-key" data-value="2">2</button><button class="calc-key" data-value="3">3</button><button class="calc-key operator" data-value="+">+</button>
+  <button class="calc-key wide" data-value="0">0</button><button class="calc-key" data-value=".">.</button><button class="calc-key equals" data-calc="equals">=</button>
+ </div>
+</section>
+<section class="tool-window" id="tool-ai" role="dialog" aria-label="AI helper" hidden>
+ <div class="tool-head"><h3><i class="fa-solid fa-wand-magic-sparkles" style="color:#8e91df"></i> ChatGPT quick helper</h3><button class="tool-close" data-tool-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+ <p class="tool-muted">Draft a prompt here, then open ChatGPT to continue the conversation.</p>
+ <textarea id="aiPrompt" placeholder="Example: Help me write a professional email to a client..."></textarea>
+ <div class="ai-note"><strong>About the connection:</strong> This button opens ChatGPT in a new tab. A live AI chat embedded inside this website needs a secure server-side OpenAI API integration; never put an API key in this public HTML file.</div>
+ <div class="note-tools"><button class="tool-action" id="copyAiPrompt"><i class="fa-regular fa-copy"></i> Copy prompt</button><a class="tool-action" id="openChatGPT" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+</section>
+
+
+<script>
+(() => {
+ const openButtons=document.querySelectorAll('[data-tool-open]');
+ const panels={notes:document.getElementById('tool-notes'),calendar:document.getElementById('tool-calendar'),calculator:document.getElementById('tool-calculator'),ai:document.getElementById('tool-ai')};
+ function closeTools(){Object.values(panels).forEach(p=>p.hidden=true)}
+ openButtons.forEach(btn=>btn.addEventListener('click',()=>{const name=btn.dataset.toolOpen;const wasOpen=!panels[name].hidden;closeTools();panels[name].hidden=wasOpen;}));
+ document.querySelectorAll('[data-tool-close]').forEach(btn=>btn.addEventListener('click',closeTools));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTools()});
+ // Notes persist in localStorage for this browser/device.
+ const note=document.getElementById('quickNotes'),saved=document.getElementById('notesSaved'),colorButtons=document.querySelectorAll('[data-note-color]');
+ const noteKey='rc_portfolio_quick_notes_v1',colorKey='rc_portfolio_note_color_v1';
+ note.value=localStorage.getItem(noteKey)||'';
+ function setNoteColor(color){note.style.setProperty('--note-bg',color);localStorage.setItem(colorKey,color);colorButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.noteColor===color)));}
+ setNoteColor(localStorage.getItem(colorKey)||'#fff8dc');
+ let saveTimer;note.addEventListener('input',()=>{saved.textContent='Saving…';clearTimeout(saveTimer);saveTimer=setTimeout(()=>{localStorage.setItem(noteKey,note.value);saved.textContent='Saved just now';},220);});
+ colorButtons.forEach(b=>b.addEventListener('click',()=>setNoteColor(b.dataset.noteColor)));
+ document.getElementById('clearNotes').addEventListener('click',()=>{if(confirm('Clear all your saved notes?')){note.value='';localStorage.removeItem(noteKey);saved.textContent='Cleared';}});
+ document.getElementById('downloadNotes').addEventListener('click',()=>{const blob=new Blob([note.value],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='my-notes.txt';a.click();URL.revokeObjectURL(url);});
+ // Calendar and reminders persist locally by date.
+ const grid=document.getElementById('calendarGrid'),monthLabel=document.getElementById('calMonthLabel'),selectedLabel=document.getElementById('calSelectedLabel'),eventList=document.getElementById('calEventList'),eventInput=document.getElementById('calEventInput');
+ const eventKey='rc_portfolio_calendar_events_v1';let events={};try{events=JSON.parse(localStorage.getItem(eventKey)||'{}')||{};}catch{events={};}
+ const today=new Date();let viewMonth=new Date(today.getFullYear(),today.getMonth(),1),selectedDate=keyDate(today);
+ function keyDate(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+ function saveEvents(){localStorage.setItem(eventKey,JSON.stringify(events));}
+ function renderEvents(){selectedLabel.textContent=new Date(selectedDate+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});eventList.innerHTML='';const items=events[selectedDate]||[];if(!items.length){const empty=document.createElement('p');empty.className='tool-muted';empty.textContent='No events for this date yet.';eventList.append(empty);return;}items.forEach((item,index)=>{const row=document.createElement('div');row.className='cal-event';const text=document.createElement('span');text.textContent=item;const del=document.createElement('button');del.type='button';del.setAttribute('aria-label','Delete '+item);del.innerHTML='<i class="fa-solid fa-trash-can"></i>';del.addEventListener('click',()=>{events[selectedDate].splice(index,1);if(!events[selectedDate].length)delete events[selectedDate];saveEvents();renderCalendar();renderEvents();});row.append(text,del);eventList.append(row);});}
+ function renderCalendar(){grid.innerHTML='';monthLabel.textContent=viewMonth.toLocaleDateString(undefined,{month:'long',year:'numeric'});['S','M','T','W','T','F','S'].forEach(day=>{const el=document.createElement('div');el.className='cal-week';el.textContent=day;grid.append(el);});const first=new Date(viewMonth.getFullYear(),viewMonth.getMonth(),1),start=first.getDay(),days=new Date(viewMonth.getFullYear(),viewMonth.getMonth()+1,0).getDate(),prevDays=new Date(viewMonth.getFullYear(),viewMonth.getMonth(),0).getDate();for(let i=0;i<42;i++){let d,other=false;if(i<start){d=new Date(viewMonth.getFullYear(),viewMonth.getMonth()-1,prevDays-start+i+1);other=true;}else if(i>=start+days){d=new Date(viewMonth.getFullYear(),viewMonth.getMonth()+1,i-start-days+1);other=true;}else d=new Date(viewMonth.getFullYear(),viewMonth.getMonth(),i-start+1);const key=keyDate(d),btn=document.createElement('button');btn.type='button';btn.className='cal-day'+(other?' other':'')+(key===selectedDate?' selected':'')+(key===keyDate(today)?' today':'')+((events[key]||[]).length?' has-event':'');btn.textContent=d.getDate();btn.addEventListener('click',()=>{selectedDate=key;if(other)viewMonth=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();renderEvents();});grid.append(btn);}}
+ document.getElementById('calPrev').addEventListener('click',()=>{viewMonth=new Date(viewMonth.getFullYear(),viewMonth.getMonth()-1,1);renderCalendar()});document.getElementById('calNext').addEventListener('click',()=>{viewMonth=new Date(viewMonth.getFullYear(),viewMonth.getMonth()+1,1);renderCalendar()});
+ document.getElementById('calEventForm').addEventListener('submit',e=>{e.preventDefault();const value=eventInput.value.trim();if(!value)return;(events[selectedDate] ||= []).push(value);saveEvents();eventInput.value='';renderCalendar();renderEvents();});renderCalendar();renderEvents();
+ // Calculator: safe arithmetic parser (no eval/Function).
+ const display=document.getElementById('calcDisplay');let expression='';function showCalc(v){display.textContent=v||'0';}
+ function calculate(expr){const tokens=expr.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/%]/g);if(!tokens||tokens.join('')!==expr.replace(/\s/g,''))throw Error('Invalid');let values=[],ops=[],expectNumber=true;const prec=o=>(o==='+'||o==='-')?1:2;for(let i=0;i<tokens.length;i++){const t=tokens[i];if(/^(?:\d|\.)/.test(t)){if(!expectNumber)throw Error('Invalid');values.push(Number(t));expectNumber=false;}else{if(expectNumber&&t==='-'){const n=tokens[++i];if(!n||!/^(?:\d|\.)/.test(n))throw Error('Invalid');values.push(-Number(n));expectNumber=false;continue;}if(expectNumber)throw Error('Invalid');while(ops.length&&prec(ops.at(-1))>=prec(t)){const op=ops.pop(),b=values.pop(),a=values.pop();values.push(op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:op==='/'?a/b:a%b);}ops.push(t);expectNumber=true;}}if(expectNumber)throw Error('Invalid');while(ops.length){const op=ops.pop(),b=values.pop(),a=values.pop();values.push(op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:op==='/'?a/b:a%b);}if(values.length!==1||!Number.isFinite(values[0]))throw Error('Invalid');return String(Number(values[0].toPrecision(12)));}
+ document.getElementById('calcKeys').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.calc==='clear'){expression='';showCalc('0');return;}if(b.dataset.calc==='back'){expression=expression.slice(0,-1);showCalc(expression);return;}if(b.dataset.calc==='equals'){try{expression=calculate(expression);showCalc(expression);}catch{showCalc('Error');expression='';}return;}const v=b.dataset.value;if(!v)return;if(/[+*/%.-]/.test(v)&&(/[+*/%.-]$/.test(expression))){if(v==='-'&&expression.slice(-1)!=='-')expression+=v;else expression=expression.slice(0,-1)+v;}else expression+=v;showCalc(expression);});
+ // AI helper launches the real ChatGPT website; no API key is exposed in this static portfolio.
+ document.getElementById('copyAiPrompt').addEventListener('click',async()=>{const value=document.getElementById('aiPrompt').value.trim();if(!value){alert('Write a prompt first.');return;}try{await navigator.clipboard.writeText(value);document.getElementById('copyAiPrompt').textContent='Copied!';setTimeout(()=>document.getElementById('copyAiPrompt').innerHTML='<i class="fa-regular fa-copy"></i> Copy prompt',1500);}catch{document.getElementById('aiPrompt').select();document.execCommand('copy');}});
 })();
 </script>
 
