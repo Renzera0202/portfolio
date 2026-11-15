@@ -33,15 +33,180 @@ section{padding:76px 0}.section-head{text-align:center;max-width:700px;margin:0 
 @media(max-width:820px){.navlinks{display:none;position:absolute;top:74px;left:0;right:0;background:#fff;padding:20px;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}.navlinks.open{display:flex}.menu{display:block}.hero{grid-template-columns:1fr;text-align:center;padding-top:75px}.lead{margin:auto}.actions,.social{justify-content:center}.photo{max-width:280px}.photo img{height:340px}.cards{grid-template-columns:1fr 1fr}.studio-body{grid-template-columns:1fr}.studio-side{display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.studio-nav{white-space:nowrap;width:auto}.studio-main{padding:17px}}
 @media(max-width:560px){.cards,.stats,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.studio-top{padding:18px}.postrow{display:block}.container{width:calc(100% - 28px)}section{padding:60px 0}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Portfolio refresh: larger portrait, soft motion and clearer depth */
+:root { --shadow: 0 22px 65px rgba(87, 105, 158, .15); }
+body { position: relative; isolation: isolate; }
+body::before, body::after {
+  content: ""; position: fixed; z-index: -1; width: 34rem; height: 34rem;
+  border-radius: 50%; filter: blur(75px); opacity: .26; pointer-events: none;
+  animation: ambient-float 18s ease-in-out infinite alternate;
+}
+body::before { top: -14rem; left: -13rem; background: #b7d9fa; }
+body::after { right: -15rem; bottom: -16rem; background: #d9c7fa; animation-delay: -8s; }
+@keyframes ambient-float { from { transform: translate3d(0,0,0) scale(.92); } to { transform: translate3d(35px,28px,0) scale(1.12); } }
+.hero {
+  grid-template-columns: minmax(0, 1.04fr) minmax(390px, .96fr);
+  gap: clamp(34px, 5vw, 72px); min-height: 760px; padding-top: 112px;
+}
+.hero > div:first-child { animation: hero-copy-in .9s cubic-bezier(.2,.75,.25,1) both; }
+@keyframes hero-copy-in { from { opacity: 0; transform: translateY(26px); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
+.photo {
+  position: relative; width: min(100%, 490px); max-width: 490px; padding: 11px;
+  border-radius: 34px; isolation: isolate;
+  background: linear-gradient(145deg, #8ec5ef 0%, #a99ce9 52%, #d7c9fa 100%);
+  box-shadow: 0 25px 75px rgba(102, 124, 185, .23);
+  animation: portrait-hover 7s ease-in-out infinite;
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+.photo::before {
+  content: ""; position: absolute; inset: 18px -18px -18px 18px; z-index: -1;
+  border: 1px solid rgba(126, 150, 214, .45); border-radius: 34px;
+}
+.photo::after {
+  content: ""; position: absolute; inset: -8px; z-index: -2; border-radius: 40px;
+  background: linear-gradient(120deg, rgba(153,205,246,.4), rgba(189,164,238,.25));
+  filter: blur(18px); opacity: .7;
+}
+.photo img {
+  height: clamp(560px, 48vw, 690px); border-radius: 26px;
+  object-fit: cover; object-position: center top;
+}
+@keyframes portrait-hover { 0%,100% { transform: translateY(0) rotate(-.7deg); } 50% { transform: translateY(-13px) rotate(.7deg); } }
+.btn { box-shadow: 0 10px 28px rgba(132,149,213,.2); }
+.btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 17px 35px rgba(132,149,213,.26); }
+.card { transition: transform .32s cubic-bezier(.2,.75,.25,1), box-shadow .32s ease, border-color .32s ease; }
+.card:hover { transform: translateY(-8px); border-color: #d6d8f5; }
+.ico { transition: transform .35s cubic-bezier(.2,.75,.25,1); }
+.card:hover .ico { transform: rotate(-8deg) scale(1.1); }
+.social a { transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease; }
+.social a:hover { transform: translateY(-5px) scale(1.08); box-shadow: 0 10px 22px rgba(132,133,220,.22); }
+.section-head, .card, .job, .contact, #social-studio .studio-shell {
+  will-change: opacity, transform;
+}
+.scroll-reveal { opacity: 0; transform: translateY(24px) scale(.99); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.25,1); }
+.scroll-reveal.in-view { opacity: 1; transform: none; }
+#scrollProgress {
+  position: fixed; z-index: 100; inset: 0 auto auto 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, #83c5ed, #aa98e8); box-shadow: 0 0 12px rgba(143,166,228,.5);
+}
+@media (max-width: 1000px) {
+  .hero { grid-template-columns: minmax(0,1fr) minmax(340px,.9fr); gap: 30px; }
+  .photo { max-width: 430px; }
+  .photo img { height: 570px; }
+}
+@media (max-width: 820px) {
+  .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 78px; }
+  .photo { max-width: 420px; }
+  .photo img { height: 560px; }
+}
+@media (max-width: 560px) {
+  .hero { padding-top: 62px; }
+  .photo { max-width: 340px; }
+  .photo img { height: 455px; }
+  .photo::before { inset: 12px -10px -10px 12px; }
+}
+/* Aesthetic neon-glow motion layer */
+:root { --neon-blue: rgba(111, 196, 255, .72); --neon-lilac: rgba(183, 139, 255, .72); }
+html { scroll-behavior: smooth; }
+header { box-shadow: 0 8px 30px rgba(113, 135, 190, .07); }
+header::after { content:""; display:block; height:1px; background:linear-gradient(90deg,transparent,#9bd8ff,#c3a8ff,transparent); opacity:.7; }
+.photo {
+  --photo-scroll: 0px;
+  --photo-tilt: 0deg;
+  transform: translate3d(0,var(--photo-scroll),0) rotate(var(--photo-tilt));
+  will-change: transform, filter;
+  filter: drop-shadow(0 0 18px rgba(137,177,255,.18));
+  animation: portrait-hover 7s ease-in-out infinite, portrait-arrive 1.15s .12s cubic-bezier(.2,.8,.2,1) both;
+}
+.photo::after {
+  inset:-13px; opacity:.9; filter:blur(22px);
+  background:conic-gradient(from 0deg,rgba(128,211,255,.52),rgba(188,153,255,.58),rgba(255,190,226,.42),rgba(128,211,255,.52));
+  animation: neon-orbit 8s linear infinite;
+}
+.photo::before { border:1px solid rgba(143,174,255,.62); box-shadow:0 0 22px rgba(147,184,255,.23),inset 0 0 18px rgba(190,166,255,.12); }
+.photo img {
+  transform:scale(var(--photo-scale,1)) translateY(var(--image-drift,0px));
+  filter:saturate(1.04) contrast(1.02);
+  transition:filter .5s ease, transform .35s ease;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.65);
+}
+.photo:hover img { filter:saturate(1.12) contrast(1.04); }
+@keyframes portrait-arrive { from { opacity:0; transform:translate3d(0,42px,0) scale(.94) rotate(-2deg); filter:blur(8px); } to { opacity:1; transform:translate3d(0,var(--photo-scroll),0) scale(1) rotate(var(--photo-tilt)); filter:blur(0); } }
+@keyframes portrait-hover { 0%,100% { translate:0 0; } 50% { translate:0 -12px; } }
+@keyframes neon-orbit { to { filter:blur(22px) hue-rotate(360deg); } }
+.eyebrow { text-shadow:0 0 16px rgba(115,171,255,.22); }
+.gradient { background-image:linear-gradient(100deg,#4f8fe0,#9b80df,#e18bb9,#4f8fe0); background-size:220% auto; animation:gradient-flow 8s linear infinite; }
+@keyframes gradient-flow { to { background-position:220% center; } }
+.btn { position:relative; overflow:hidden; }
+.btn::after { content:""; position:absolute; inset:-2px; background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.5) 48%,transparent 70%); transform:translateX(-130%); transition:transform .7s ease; pointer-events:none; }
+.btn:hover::after { transform:translateX(130%); }
+.card { position:relative; overflow:hidden; }
+.card::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; background:radial-gradient(circle at 15% 0%,rgba(151,198,255,.16),transparent 55%); transition:opacity .35s ease; }
+.card:hover::after { opacity:1; }
+.scroll-reveal { opacity:0; transform:translateY(34px) scale(.975); filter:blur(3px); transition:opacity .8s ease,transform .8s cubic-bezier(.2,.75,.25,1),filter .8s ease; }
+.scroll-reveal.in-view { opacity:1; transform:translateY(0) scale(1); filter:blur(0); }
+.scroll-reveal.in-view .card { animation:card-soft-pop .65s both; }
+@keyframes card-soft-pop { from { opacity:.65; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+#scrollProgress { height:4px; background:linear-gradient(90deg,#7bcaf0,#9b9cf0,#d7a2e8); box-shadow:0 0 14px rgba(143,166,228,.72),0 0 25px rgba(183,139,255,.32); }
+#about, #services, #experience, #skills, #contact { position:relative; }
+#about::before, #services::before, #experience::before, #skills::before { content:""; position:absolute; width:210px; height:210px; border-radius:50%; background:radial-gradient(circle,rgba(172,193,255,.16),transparent 70%); top:12%; left:-100px; pointer-events:none; }
+.social a { box-shadow:0 0 0 0 rgba(157,175,255,0); }
+.social a:hover { box-shadow:0 0 0 5px rgba(157,175,255,.12),0 0 24px rgba(157,175,255,.35); }
+@media (max-width:820px) { .photo { --photo-scroll:0px !important; } }
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after, .photo, .hero > div:first-child, .gradient, .photo::after { animation:none !important; }
+  .scroll-reveal { opacity:1 !important; transform:none !important; filter:none !important; transition:none !important; }
+  .photo { transform:none !important; }
+}
+
+
+/* Career journey + refined scroll motion */
+.career-section { overflow:hidden; position:relative; }
+.career-section::before { content:""; position:absolute; width:520px; height:520px; left:50%; top:24%; transform:translateX(-50%); border-radius:50%; background:radial-gradient(circle,rgba(176,164,255,.13),rgba(143,211,255,.06) 42%,transparent 70%); pointer-events:none; }
+.career-timeline { position:relative; max-width:900px; padding:8px 0 8px 34px; }
+.career-timeline::before { content:""; position:absolute; left:9px; top:18px; bottom:18px; width:2px; border-radius:3px; background:linear-gradient(180deg,#91d8ff,#b59cff 48%,#f0b7df); box-shadow:0 0 13px rgba(153,173,255,.55); }
+.career-item { position:relative; margin:0 0 23px; padding:25px 28px 23px 30px; border-color:rgba(164,177,230,.34); background:linear-gradient(135deg,rgba(255,255,255,.97),rgba(247,248,255,.96)); box-shadow:0 12px 36px rgba(88,105,160,.09),inset 0 1px rgba(255,255,255,.9); transform-style:preserve-3d; }
+.career-item:last-child { margin-bottom:0; }
+.career-item:hover { transform:translateX(7px) translateY(-5px); border-color:rgba(156,157,239,.8); box-shadow:0 18px 45px rgba(117,133,205,.17),0 0 22px rgba(163,158,255,.13); }
+.career-dot { position:absolute; left:-33px; top:29px; width:17px; height:17px; border-radius:50%; background:linear-gradient(135deg,#8bd7f5,#b49af0); border:3px solid #fff; box-shadow:0 0 0 3px rgba(165,171,245,.22),0 0 17px rgba(132,190,255,.85); }
+.career-meta { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.career-date { color:#6d79bd; font-size:.74rem; font-weight:800; letter-spacing:.11em; }
+.career-type { color:#77829b; font-size:.75rem; padding:5px 10px; border:1px solid #e7e8fb; border-radius:99px; background:#f7f7ff; }
+.career-item h3 { margin:5px 0 6px; font-size:1.12rem; }
+.career-company { color:#6d75b8; font-size:.92rem; }
+.career-bullets { margin:13px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.career-bullets li { position:relative; padding-left:22px; color:var(--muted); font-size:.93rem; }
+.career-bullets li::before { content:""; position:absolute; left:2px; top:.68em; width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg,#83c9f2,#b29aef); box-shadow:0 0 10px rgba(153,166,255,.65); }
+.career-item.scroll-reveal { transform:translateX(-22px) translateY(20px); }
+.career-item.scroll-reveal.in-view { transform:translateX(0) translateY(0); }
+.career-item:nth-child(even).scroll-reveal { transform:translateX(22px) translateY(20px); }
+.career-item:nth-child(even).scroll-reveal.in-view { transform:translateX(0) translateY(0); }
+/* A gentle, staggered entrance for content as it enters the viewport. */
+.section-head.scroll-reveal { transition-delay:0ms!important; }
+.card.scroll-reveal { transition-duration:.85s; }
+.tag { transition:transform .25s ease, box-shadow .25s ease, background .25s ease; }
+.tag:hover { transform:translateY(-4px); background:#f1efff; box-shadow:0 8px 20px rgba(150,151,222,.2),0 0 14px rgba(156,194,255,.18); }
+.studio-shell, .contact { transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+.studio-shell:hover, .contact:hover { box-shadow:0 24px 70px rgba(92,111,172,.16),0 0 24px rgba(173,159,255,.12); }
+@media(max-width:560px) { .career-timeline { padding-left:27px; } .career-timeline::before { left:7px; } .career-dot { left:-27px; } .career-item { padding:21px 18px; } .career-meta { align-items:flex-start; flex-direction:column; gap:6px; } }
+@media(prefers-reduced-motion:reduce) { .career-item,.tag,.studio-shell,.contact { transition:none!important; } }
+
 </style>
 </head>
 <body>
+<div id="scrollProgress" aria-hidden="true"></div>
 <header><div class="container"><nav><a class="logo" href="#home">ROBERT<span>.</span></a><button class="menu" id="menu" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button><div class="navlinks" id="navlinks"><a href="#about">About</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#social-studio">Social Media Tools</a><a href="#contact">Contact</a></div></nav></div></header>
 <main id="home">
 <section class="container hero"><div><span class="eyebrow">Open to remote opportunities</span><h1>Hello, I'm<br>Robert <span class="gradient">Corpuz</span></h1><p class="lead">Virtual Assistant & Administrative Support. I help businesses stay organized with reliable customer support, data entry, and administrative assistance.</p><div class="actions"><a class="btn" href="#contact">Hire Me <i class="fa-solid fa-arrow-right"></i></a><a class="btn secondary" href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-download"></i> Download CV</a></div><p class="muted"><i class="fa-solid fa-location-dot"></i> Quezon City, Philippines · Remote-ready</p><div class="social"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302" aria-label="Viber"><i class="fa-brands fa-viber"></i></a></div></div><div class="photo"><img src="IMG_0031.png" alt="Robert Corpuz portrait"></div></section>
 <section id="about"><div class="container"><div class="section-head"><span class="eyebrow">About me</span><h2>Making the day-to-day easier.</h2><p>Service-first support, careful organization, and a professional approach to customer and back-office operations.</p></div><div class="cards"><article class="card"><div class="ico"><i class="fa-solid fa-headset"></i></div><h3>Customer care</h3><p>Customer inquiries, sales conversations, and order-related support.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-folder-open"></i></div><h3>Office administration</h3><p>Data encoding, document preparation, records management, and payroll documentation.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-shield-halved"></i></div><h3>Trust & detail</h3><p>Accuracy, confidentiality, clear communication, and time management.</p></article></div></div></section>
 <section id="services"><div class="container"><div class="section-head"><span class="eyebrow">Services</span><h2>Practical support for busy teams.</h2></div><div class="cards"><article class="card"><div class="ico"><i class="fa-solid fa-list-check"></i></div><h3>Virtual assistance</h3><p>Administrative help, document preparation, and file organization.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-comments"></i></div><h3>Customer support</h3><p>Professional communication, inquiry handling, and customer care.</p></article><article class="card"><div class="ico"><i class="fa-solid fa-table"></i></div><h3>Data entry</h3><p>Accurate data input, spreadsheet updates, and record maintenance.</p></article></div></div></section>
-<section id="experience"><div class="container"><div class="section-head"><span class="eyebrow">Career journey</span><h2>Experience that builds confidence.</h2></div><div class="timeline"><article class="card job"><h3>Customer Sales Representative — Verizon Sales Account</h3><b>AFNI Philippines</b><p>Sep 2024 – Nov 2026 · Customer communication and sales assistance.</p></article><article class="card job"><h3>Customer Service Representative — Paychex Account</h3><b>Foundever</b><p>Jul – Sep 2024 · Customer service and inquiry support.</p></article><article class="card job"><h3>Customer Service Representative — U.S. Retail Voice Account</h3><b>Inspiro · 1-800-Flowers International</b><p>2024 · Seasonal · Customer inquiries and order support.</p></article><article class="card job"><h3>Accounts Payable / Receivable Support</h3><b>LTFRB Central Office</b><p>Oct – Dec 2020 · Encoding and disbursement documentation.</p></article></div></div></section>
+<section id="experience" class="career-section"><div class="container"><div class="section-head"><span class="eyebrow">Career journey</span><h2>Every experience moves me forward.</h2><p>My professional journey across customer care, sales support, and administrative operations.</p></div><div class="timeline career-timeline">
+<article class="card job career-item"><span class="career-dot" aria-hidden="true"></span><div class="career-meta"><span class="career-date">SEP 2024 — NOV 2026</span><span class="career-type">Customer experience · Sales</span></div><h3>Customer Sales Representative — Verizon Sales Account</h3><b class="career-company">AFNI Philippines</b><ul class="career-bullets"><li>Handled customer communication.</li><li>Provided sales assistance.</li></ul></article>
+<article class="card job career-item"><span class="career-dot" aria-hidden="true"></span><div class="career-meta"><span class="career-date">JUL 2024 — SEP 2024</span><span class="career-type">Customer service</span></div><h3>Customer Service Representative — Paychex Account</h3><b class="career-company">Foundever</b><ul class="career-bullets"><li>Supported customer service needs.</li><li>Assisted with customer inquiries.</li></ul></article>
+<article class="card job career-item"><span class="career-dot" aria-hidden="true"></span><div class="career-meta"><span class="career-date">2024 · SEASONAL</span><span class="career-type">Retail · Voice support</span></div><h3>Customer Service Representative — U.S. Retail Voice Account</h3><b class="career-company">Inspiro · 1-800-Flowers International</b><ul class="career-bullets"><li>Responded to customer inquiries.</li><li>Provided order support.</li></ul></article>
+<article class="card job career-item"><span class="career-dot" aria-hidden="true"></span><div class="career-meta"><span class="career-date">OCT 2020 — DEC 2020</span><span class="career-type">Administrative support</span></div><h3>Accounts Payable / Receivable Support</h3><b class="career-company">LTFRB Central Office</b><ul class="career-bullets"><li>Handled data encoding.</li><li>Assisted with disbursement documentation.</li></ul></article>
+</div></div></section>
 <section id="skills"><div class="container"><div class="section-head"><span class="eyebrow">Tools & strengths</span><h2>Skills I bring to the table.</h2></div><div class="card"><div class="skills"><span class="tag">Virtual Assistance</span><span class="tag">Administrative Support</span><span class="tag">Customer Service</span><span class="tag">Data Entry</span><span class="tag">Records Management</span><span class="tag">Microsoft Word</span><span class="tag">Microsoft Excel</span><span class="tag">PowerPoint</span><span class="tag">Business Communication</span><span class="tag">Data Privacy</span></div></div></div></section>
 
 <section id="social-studio"><div class="container"><div class="section-head"><span class="eyebrow">My digital workspace</span><h2>Social Media Studio</h2><p>A public preview of my publishing workspace. Only the owner can access publishing controls.</p></div>
@@ -68,7 +233,7 @@ section{padding:76px 0}.section-head{text-align:center;max-width:700px;margin:0 
 <section id="contact"><div class="container"><div class="contact"><span class="eyebrow">Have a role in mind?</span><h2>Let's make work easier.</h2><p class="muted">I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities.</p><div class="actions" style="justify-content:center"><a class="btn" href="mailto:robertcorpuz0101@gmail.com"><i class="fa-regular fa-envelope"></i> Email me</a><a class="btn secondary" href="tel:09922880302"><i class="fa-solid fa-phone"></i> 0992 288 0302</a><a class="btn secondary" href="assets/Robert-Corpuz-Resume.pdf" download>Download CV</a></div><div class="social" style="justify-content:center"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302"><i class="fa-brands fa-viber"></i></a></div></div></div></section>
 </main><footer>© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</footer>
 <script>
-const API_BASE = "https://portfolio-8d8g.onrender.com"; // Replace after deploying backend
+const API_BASE = "https://portfolio-8d8g.onrender.com";
 let sessionToken = sessionStorage.getItem("sm_owner_session") || "";
 let channels = [];
 const $ = id => document.getElementById(id);
@@ -88,4 +253,49 @@ $("refreshBtn").addEventListener("click",async()=>{try{await refreshData();messa
 $("submitPost").addEventListener("click",async()=>{const text=$("postText").value.trim(),channelIds=[...document.querySelectorAll("#channelChoices input:checked")].map(x=>x.value),mode=$("scheduleMode").value,mediaUrl=$("mediaUrl").value.trim();if(!text){message($("composeMessage"),"Write a caption first.",true);return;}if(!channelIds.length){message($("composeMessage"),"Choose at least one connected channel.",true);return;}if(mode==="custom"&&!$("dueAt").value){message($("composeMessage"),"Choose a future date and time.",true);return;}const payload={text,channelIds,mediaUrl:mediaUrl||undefined,mediaType:$("mediaType").value,pinBoardId:$("pinBoardId").value.trim(),pinTitle:$("pinTitle").value.trim(),youtubeTitle:$("youtubeTitle").value.trim(),youtubeCategoryId:$("youtubeCategory").value,mode,dueAt:mode==="custom"?new Date($("dueAt").value).toISOString():undefined};try{$("submitPost").disabled=true;const result=await api("/api/posts",{method:"POST",body:JSON.stringify(payload)});message($("composeMessage"),"Submitted to Buffer for "+result.results.length+" channel(s). Check Buffer for final publishing status.");$("postText").value="";await refreshData();}catch(e){message($("composeMessage"),e.message,true);}finally{$("submitPost").disabled=false;}});
 if(sessionToken){setLoggedIn(true);refreshData().catch(()=>{sessionToken="";sessionStorage.removeItem("sm_owner_session");setLoggedIn(false);});}else{setLoggedIn(false);}
 </script>
+
+<script>
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const progress = document.getElementById('scrollProgress');
+  const portrait = document.querySelector('.photo');
+  let ticking = false;
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    if (portrait && !reduced && window.innerWidth > 820) {
+      const rect = portrait.getBoundingClientRect();
+      const travel = Math.max(-34, Math.min(34, (window.innerHeight * .42 - rect.top) * -.055));
+      portrait.style.setProperty('--photo-scroll', travel.toFixed(1) + 'px');
+      portrait.style.setProperty('--photo-tilt', (travel * .018).toFixed(2) + 'deg');
+      portrait.style.setProperty('--photo-scale', (1 + Math.min(.025, Math.abs(travel) / 1400)).toFixed(3));
+      portrait.style.setProperty('--image-drift', (travel * -.28).toFixed(1) + 'px');
+    }
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { window.requestAnimationFrame(updateProgress); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', updateProgress, { passive: true });
+  updateProgress();
+  if (reduced || !('IntersectionObserver' in window)) return;
+  const targets = document.querySelectorAll('section, .photo, .card, .job, .section-head, .contact, .studio-shell');
+  targets.forEach(el => { if (el.matches('.career-item')) el.setAttribute('data-motion', 'career'); });
+  targets.forEach((el, index) => {
+    if (el.closest('.hero') && !el.classList.contains('photo')) return;
+    el.classList.add('scroll-reveal');
+    el.style.transitionDelay = (index % 5) * 75 + 'ms';
+  });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  targets.forEach(el => { if (!el.closest('.hero') || el.classList.contains('photo')) observer.observe(el); });
+})();
+</script>
+
 </body></html>
