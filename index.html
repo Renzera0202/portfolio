@@ -58,6 +58,20 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 @media(max-width:760px){body{padding-left:0;padding-top:68px}.sidebar{inset:0 0 auto;width:100%;height:68px;min-height:0;padding:0 16px;flex-direction:row;align-items:center;justify-content:space-between}.profile{display:flex;align-items:center;gap:9px;text-align:left;padding:0;border:0}.avatar{width:40px;height:40px;margin:0;border-width:2px}.profile h2{font-size:.83rem}.handle,.social,.side-bottom{display:none}.nav{display:none;position:absolute;top:68px;left:0;right:0;background:#f8f8f3;padding:10px 14px 14px;grid-template-columns:repeat(2,1fr);box-shadow:0 14px 22px #283b5715}.nav.open{display:grid}.nav a{padding:9px}.menu{display:block;border:0;border-radius:10px;background:#fff;width:40px;height:40px;color:var(--ink)}main{padding:27px 16px 40px}.hero h1{font-size:2.35rem}.toolbar{gap:10px}.tool-intro{padding-right:10px}.tool-intro strong{font-size:.75rem}.dashboard{grid-template-columns:1fr 1fr;padding:8px;gap:8px}.panel{padding:14px;min-height:180px}.panel.projects{grid-column:span 2;min-height:210px}.panel.about,.panel.tools,.panel.services,.panel.career,.panel.contact{grid-column:span 1}.project-preview{width:45%;height:58%}.cards,.testimonial-grid{grid-template-columns:1fr}.contact-panel{align-items:flex-start;flex-direction:column}}
 @media(max-width:440px){.dashboard{grid-template-columns:1fr}.panel.projects,.panel.about,.panel.tools,.panel.services,.panel.career,.panel.contact{grid-column:span 1}.panel.projects{min-height:205px}.panel{min-height:160px}.about-art{width:75px;height:68px}.hero h1{font-size:2rem}.tool-intro small{font-size:.5rem}.tool-intro strong{font-size:.68rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none;filter:none}}
+
+.productivity-dock{position:fixed;z-index:60;right:18px;bottom:22px;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.dock-btn{display:flex;align-items:center;justify-content:flex-start;gap:8px;min-width:132px;border:1px solid #e3e6ec;background:rgba(255,255,251,.96);color:var(--ink);padding:11px 14px;border-radius:30px;box-shadow:0 8px 25px #24334e1c;font-weight:800;font-size:.75rem;cursor:pointer;transition:.25s;backdrop-filter:blur(12px)}
+.dock-btn i{color:#d58b5b}.dock-btn:hover{transform:translateY(-4px);box-shadow:0 13px 28px #24334e2a}
+.productivity-panel{position:fixed;z-index:59;right:82px;bottom:22px;width:min(360px,calc(100vw - 118px));max-height:min(560px,calc(100vh - 110px));overflow:auto;background:#fffefa;border:1px solid #e0e4eb;border-radius:20px;box-shadow:0 22px 60px #1d2c4928;padding:16px;display:none;animation:panelIn .25s ease}
+.productivity-panel.open{display:block}@keyframes panelIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.widget-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.widget-head h3{font:800 1rem Manrope;margin:0}.widget-close{border:0;background:#f2f3f5;width:30px;height:30px;border-radius:50%;cursor:pointer;color:#667080}
+.widget-login{display:grid;gap:9px}.widget-login p,.widget-hint{font-size:.75rem;color:#7e8794;margin:0}.widget-login input,.note-area,.event-title{width:100%;border:1px solid #e3e6eb;background:#fff;border-radius:11px;padding:10px 12px;font:inherit;color:var(--ink);outline:none}.widget-login input:focus,.note-area:focus,.event-title:focus{border-color:#aebde4;box-shadow:0 0 0 3px #aebde426}
+.widget-action{border:0;background:var(--ink);color:white;border-radius:11px;padding:10px 13px;font-weight:800;cursor:pointer}.widget-action:disabled{opacity:.55;cursor:wait}
+.calendar-top{display:flex;align-items:center;justify-content:space-between;margin:10px 0}.calendar-top strong{font:800 .85rem Manrope}.calendar-top button{border:0;background:#f3f4f7;border-radius:8px;width:30px;height:30px;cursor:pointer}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar-grid span{font-size:.64rem;color:#9399a3;text-align:center;padding:5px 0}.calendar-day{border:0;background:#f7f7f4;border-radius:8px;min-height:34px;color:#596273;cursor:pointer;font-size:.72rem;position:relative}.calendar-day:hover{background:#eaf0ff}.calendar-day.selected{background:#17233d;color:white}.calendar-day.marked:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#e58c4c;bottom:4px;left:calc(50% - 2px)}.calendar-day.selected.marked:after{background:#fff}
+.event-form{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:12px}.event-form input{min-width:0}.event-list{display:grid;gap:6px;margin-top:10px}.event-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f7f7f4;border-radius:10px;padding:8px 10px;font-size:.72rem}.event-item small{display:block;color:#8b929d}.event-delete{border:0;background:transparent;color:#a36d56;cursor:pointer;padding:4px}
+.note-area{min-height:230px;resize:vertical;line-height:1.6}.save-status{font-size:.68rem;color:#8a929e;margin-top:7px;display:flex;align-items:center;gap:6px}.save-status:before{content:"";width:6px;height:6px;border-radius:50%;background:#d8a36d}.save-status.saved:before{background:#62b78a}
+@media(max-width:760px){.productivity-dock{right:12px;bottom:14px;gap:8px}.dock-btn{padding:10px 12px;min-width:118px}.productivity-panel{right:12px;bottom:112px;width:min(360px,calc(100vw - 24px));max-height:calc(100vh - 135px)}}
 </style>
 </head>
 <body>
@@ -80,9 +94,44 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
     <a href="#testimonials"><i class="fa-solid fa-star"></i>Testimonials</a>
     <a href="#about"><i class="fa-regular fa-user"></i>About</a>
     <a href="#contact"><i class="fa-regular fa-message"></i>Contact</a>
+    <a href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-file-arrow-down"></i>Download CV</a>
   </nav>
   <div class="side-bottom"><div class="availability"><span class="dot"></span> Available for remote opportunities</div>© 2026 Robert Corpuz. All rights reserved.</div>
 </aside>
+
+<div class="productivity-dock" aria-label="Floating calendar and notepad tools on the right side of the screen">
+  <button class="dock-btn" id="open-calendar"><i class="fa-regular fa-calendar-days"></i> Calendar</button>
+  <button class="dock-btn" id="open-notes"><i class="fa-regular fa-note-sticky"></i> Notepad</button>
+</div>
+<section class="productivity-panel" id="calendar-panel" aria-label="Calendar widget">
+  <div class="widget-head"><h3><i class="fa-regular fa-calendar-days" style="color:#d58b5b;margin-right:7px"></i>My Calendar</h3><button class="widget-close" data-close="calendar-panel" aria-label="Close calendar"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="widget-login" id="calendar-login">
+    <p>Connect your Google account to view and sync your personal calendar.</p>
+    <button class="widget-action" id="calendar-google-signin"><i class="fa-brands fa-google"></i> Continue with Google</button>
+    <p class="widget-hint">Only your authorized Google account can access this calendar.</p>
+  </div>
+  <div id="calendar-content" hidden>
+    <div class="calendar-top"><button id="calendar-prev" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button><strong id="calendar-month"></strong><button id="calendar-next" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button></div>
+    <div class="calendar-grid" id="calendar-grid"></div>
+    <p class="widget-hint" id="selected-date-label" style="margin-top:10px"></p>
+    <form class="event-form" id="event-form"><input class="event-title" id="event-title" maxlength="120" placeholder="Add an event for this date" required><button class="widget-action" type="submit" aria-label="Save event"><i class="fa-solid fa-plus"></i></button></form>
+    <div class="event-list" id="event-list"></div>
+    <p class="save-status" id="calendar-status">Calendar ready to sync.</p>
+  </div>
+</section>
+<section class="productivity-panel" id="notes-panel" aria-label="Notepad widget">
+  <div class="widget-head"><h3><i class="fa-regular fa-note-sticky" style="color:#d58b5b;margin-right:7px"></i>Private Notepad</h3><button class="widget-close" data-close="notes-panel" aria-label="Close notepad"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="widget-login" id="notes-login">
+    <p>Connect your Google account to open your private cloud notes.</p>
+    <button class="widget-action" id="notes-google-signin"><i class="fa-brands fa-google"></i> Continue with Google</button>
+    <p class="widget-hint">Only your authorized Google account can access these notes.</p>
+  </div>
+  <div id="notes-content" hidden>
+    <textarea class="note-area" id="cloud-note" maxlength="30000" placeholder="Write your notes here. Changes save automatically to your Google Drive..."></textarea>
+    <div class="save-status" id="notes-status">Waiting to load your notes…</div>
+  </div>
+</section>
+
 <main id="home">
   <div class="topline"><a class="contact-btn" href="#contact">Get in touch <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem;margin-left:5px"></i></a></div>
   <header class="hero reveal">
@@ -198,6 +247,54 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
  const progress=document.getElementById('progress');
  const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';};
  addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+
+ // Google OAuth sign-in for the private Calendar + Notepad widgets.
+ const API_BASE='https://portfolio-8d8g.onrender.com';
+ let googleToken=localStorage.getItem('portfolio_google_session')||'';
+ let selectedDate=new Date();selectedDate.setHours(0,0,0,0);
+ let monthCursor=new Date(selectedDate.getFullYear(),selectedDate.getMonth(),1);
+ let calendarEvents=[];let noteSaveTimer=null;
+ const $=id=>document.getElementById(id);
+ const params=new URLSearchParams(location.search);
+ const returnedToken=params.get('google_auth');
+ if(returnedToken){googleToken=returnedToken;localStorage.setItem('portfolio_google_session',googleToken);history.replaceState({},document.title,location.pathname+location.hash);}
+ async function googleApi(path,options={}){
+   const response=await fetch(API_BASE+path,{...options,headers:{'Content-Type':'application/json','Authorization':'Bearer '+googleToken,...(options.headers||{})}});
+   const data=await response.json().catch(()=>({}));
+   if(response.status===401){googleToken='';localStorage.removeItem('portfolio_google_session');throw new Error('Please connect your Google account again.');}
+   if(!response.ok)throw new Error(data.error||'Could not sync. Please try again.');return data;
+ }
+ function connectGoogle(which){location.href=API_BASE+'/auth/google/start?widget='+encodeURIComponent(which);}
+ $('calendar-google-signin')?.addEventListener('click',()=>connectGoogle('calendar'));
+ $('notes-google-signin')?.addEventListener('click',()=>connectGoogle('notes'));
+ function showWidget(which){$('calendar-panel').classList.toggle('open',which==='calendar');$('notes-panel').classList.toggle('open',which==='notes');if(googleToken){if(which==='calendar')loadCalendar();else loadNotes();}else connectGoogle(which);}
+ $('open-calendar')?.addEventListener('click',()=>showWidget('calendar'));
+ $('open-notes')?.addEventListener('click',()=>showWidget('notes'));
+ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('open')));
+ const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ function drawCalendar(){
+   $('calendar-month').textContent=monthCursor.toLocaleDateString(undefined,{month:'long',year:'numeric'});const grid=$('calendar-grid');grid.innerHTML='';
+   ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(day=>{const el=document.createElement('span');el.textContent=day;grid.append(el);});
+   const first=new Date(monthCursor.getFullYear(),monthCursor.getMonth(),1).getDay(),days=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,0).getDate();
+   for(let i=0;i<first;i++){const blank=document.createElement('span');grid.append(blank);}
+   for(let n=1;n<=days;n++){const d=new Date(monthCursor.getFullYear(),monthCursor.getMonth(),n),key=dateKey(d);const btn=document.createElement('button');btn.className='calendar-day'+(key===dateKey(selectedDate)?' selected':'')+(calendarEvents.some(ev=>ev.date===key)?' marked':'');btn.textContent=n;btn.addEventListener('click',()=>{selectedDate=d;drawCalendar();renderEvents();});grid.append(btn);}
+   $('selected-date-label').textContent='Selected: '+selectedDate.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+ }
+ function renderEvents(){const list=$('event-list');list.innerHTML='';const todays=calendarEvents.filter(e=>e.date===dateKey(selectedDate));if(!todays.length){const p=document.createElement('p');p.className='widget-hint';p.textContent='No events saved for this date yet.';list.append(p);}todays.forEach(ev=>{const row=document.createElement('div');row.className='event-item';const label=document.createElement('span');label.textContent=ev.title;const del=document.createElement('button');del.className='event-delete';del.innerHTML='<i class="fa-regular fa-trash-can"></i>';del.setAttribute('aria-label','Delete event');del.addEventListener('click',()=>deleteEvent(ev.id));row.append(label,del);list.append(row);});}
+ async function loadCalendar(){
+   $('calendar-login').hidden=true;$('calendar-content').hidden=false;$('calendar-status').textContent='Syncing Google Calendar…';
+   try{const data=await googleApi('/api/calendar?month='+dateKey(monthCursor).slice(0,7));calendarEvents=data.events||[];drawCalendar();renderEvents();$('calendar-status').textContent='Synced with your Google Calendar.';$('calendar-status').classList.add('saved');}
+   catch(e){$('calendar-status').textContent=e.message;$('calendar-content').hidden=true;$('calendar-login').hidden=false;}
+ }
+ $('calendar-prev')?.addEventListener('click',async()=>{monthCursor=new Date(monthCursor.getFullYear(),monthCursor.getMonth()-1,1);await loadCalendar();});
+ $('calendar-next')?.addEventListener('click',async()=>{monthCursor=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,1);await loadCalendar();});
+ $('event-form')?.addEventListener('submit',async e=>{e.preventDefault();const title=$('event-title').value.trim();if(!title)return;$('calendar-status').textContent='Saving event…';try{await googleApi('/api/calendar',{method:'POST',body:JSON.stringify({date:dateKey(selectedDate),title})});$('event-title').value='';await loadCalendar();}catch(err){$('calendar-status').textContent=err.message;}});
+ async function deleteEvent(id){if(!confirm('Delete this calendar event?'))return;try{await googleApi('/api/calendar/'+encodeURIComponent(id),{method:'DELETE'});await loadCalendar();}catch(e){$('calendar-status').textContent=e.message;}}
+ async function loadNotes(){$('notes-login').hidden=true;$('notes-content').hidden=false;$('notes-status').textContent='Loading your private notes…';try{const data=await googleApi('/api/notes');$('cloud-note').value=data.text||'';$('notes-status').textContent='Saved securely in your Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;$('notes-content').hidden=true;$('notes-login').hidden=false;}}
+ $('cloud-note')?.addEventListener('input',()=>{clearTimeout(noteSaveTimer);$('notes-status').textContent='Saving…';$('notes-status').classList.remove('saved');noteSaveTimer=setTimeout(async()=>{try{await googleApi('/api/notes',{method:'PUT',body:JSON.stringify({text:$('cloud-note').value})});$('notes-status').textContent='All changes saved to Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;}},700);});
+ // Resume the widget after Google's authorization redirect.
+ if(returnedToken){const widget=params.get('widget')==='calendar'?'calendar':'notes';$('calendar-panel').classList.toggle('open',widget==='calendar');$('notes-panel').classList.toggle('open',widget==='notes');if(widget==='calendar')loadCalendar();else loadNotes();}
+
 })();
 </script>
 </body>
