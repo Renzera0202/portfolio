@@ -551,15 +551,19 @@ const oauthClient = () => new google.auth.OAuth2(
   requireEnv("GOOGLE_OAUTH_REDIRECT_URI")
 );
 
+// The refresh token is stored in Render Environment Variables.
+// Notes themselves are stored in Google Drive.
+// Calendar events are stored in Google Calendar.
+
 function getGoogleRefreshToken() {
   return requireEnv("GOOGLE_REFRESH_TOKEN");
 }
 
 app.get("/auth/google/start", (req, res) => {
-  const requestedWidget = String(req.query.widget || "notes");
-  const widget = ["calendar", "notes", "gmail"].includes(requestedWidget)
-    ? requestedWidget
-    : "notes";
+  const widget =
+    req.query.widget === "calendar"
+      ? "calendar"
+      : "notes";
 
   const state = jwt.sign(
     {
@@ -584,8 +588,7 @@ app.get("/auth/google/start", (req, res) => {
       "openid",
       "email",
       "https://www.googleapis.com/auth/drive.file",
-      "https://www.googleapis.com/auth/calendar.events",
-      "https://www.googleapis.com/auth/gmail.readonly"
+      "https://www.googleapis.com/auth/calendar.events"
     ]
   });
 
@@ -637,17 +640,14 @@ app.get("/auth/google/callback", async (req, res) => {
       );
     }
 
-    const existingRefreshToken = process.env.GOOGLE_REFRESH_TOKEN || "";
-    const hadPersistentRefreshToken = Boolean(existingRefreshToken);
+    const hadPersistentRefreshToken = Boolean(
+      process.env.GOOGLE_REFRESH_TOKEN
+    );
 
     const refreshToken =
       tokens.refresh_token ||
-      existingRefreshToken ||
+      process.env.GOOGLE_REFRESH_TOKEN ||
       null;
-
-    const needsTokenSave =
-      !hadPersistentRefreshToken ||
-      Boolean(tokens.refresh_token && tokens.refresh_token !== existingRefreshToken);
 
     if (!refreshToken) {
       throw new Error(
@@ -655,9 +655,13 @@ app.get("/auth/google/callback", async (req, res) => {
       );
     }
 
+    // Keep it available for this running process.
+    // For persistence across Render restarts, add it once
+    // as GOOGLE_REFRESH_TOKEN in Render Environment.
+
     process.env.GOOGLE_REFRESH_TOKEN = refreshToken;
 
-    if (needsTokenSave) {
+    if (!hadPersistentRefreshToken) {
       const safeToken = String(refreshToken).replace(
         /[&<>"']/g,
         ch => ({
@@ -674,10 +678,10 @@ app.get("/auth/google/callback", async (req, res) => {
         <html>
         <head>
           <meta name="viewport" content="width=device-width,initial-scale=1">
-          <title>Finish Google setup</title>
+          <title>Finish Google Drive setup</title>
         </head>
         <body style="font-family:Arial,sans-serif;max-width:720px;margin:40px auto;padding:20px;line-height:1.5">
-          <h2>Save your Google refresh token</h2>
+          <h2>One-time setup: save your Google refresh token</h2>
           <p>
             Copy the token below. In Render, open your backend service,
             go to Environment, and create a variable named
@@ -694,7 +698,7 @@ app.get("/auth/google/callback", async (req, res) => {
             </button>
           </p>
           <p>
-            After adding or updating it in Render, redeploy your service
+            After adding it to Render, redeploy your service
             and sign in again from your portfolio.
           </p>
         </body>
@@ -800,6 +804,7 @@ async function driveNotesFile(authClient) {
   };
 }
 
+// Get saved notes
 app.get(
   "/api/notes",
   apiLimiter,
@@ -846,6 +851,7 @@ app.get(
   }
 );
 
+// Save notes to Google Drive
 app.put(
   "/api/notes",
   apiLimiter,
@@ -907,6 +913,7 @@ app.put(
 // GOOGLE CALENDAR
 // ============================================
 
+// Load events for a month
 app.get(
   "/api/calendar",
   apiLimiter,
@@ -971,6 +978,7 @@ app.get(
   }
 );
 
+// Add calendar event
 app.post(
   "/api/calendar",
   apiLimiter,
@@ -1023,6 +1031,7 @@ app.post(
   }
 );
 
+// Delete calendar event
 app.delete(
   "/api/calendar/:id",
   apiLimiter,
@@ -1056,128 +1065,6 @@ app.delete(
     }
   }
 );
-
-// ============================================
-// GMAIL READ-ONLY INBOX
-// ============================================
-
-function decodeGmailBody(data = "") {
-  if (!data) return "";
-  const normalized = data.replace(/-/g, "+").replace(/_/g, "/");
-  return Buffer.from(normalized, "base64").toString("utf8");
-}
-
-function findGmailTextPart(payload, wantedMime) {
-  if (!payload) return "";
-  if (payload.mimeType === wantedMime && payload.body?.data) {
-    return decodeGmailBody(payload.body.data);
-  }
-  for (const part of payload.parts || []) {
-    const found = findGmailTextPart(part, wantedMime);
-    if (found) return found;
-  }
-  return "";
-}
-
-function gmailHeader(headers = [], name) {
-  return headers.find(h => String(h.name || "").toLowerCase() === name.toLowerCase())?.value || "";
-}
-
-app.get("/api/gmail/messages", apiLimiter, googleSession, async (req, res) => {
-  try {
-    const gmail = google.gmail({ version: "v1", auth: await googleAuth() });
-    const q = typeof req.query.q === "string" ? req.query.q.slice(0, 200) : "";
-    const maxResults = Math.min(Math.max(Number(req.query.maxResults) || 20, 1), 50);
-    const listed = await gmail.users.messages.list({
-      userId: "me",
-      q,
-      maxResults
-    });
-    const ids = (listed.data.messages || []).map(m => m.id).filter(Boolean);
-    const messages = await Promise.all(ids.map(async id => {
-      const result = await gmail.users.messages.get({
-        userId: "me",
-        id,
-        format: "metadata",
-        metadataHeaders: ["From", "Subject", "Date"]
-      });
-      const msg = result.data;
-      const headers = msg.payload?.headers || [];
-      return {
-        id: msg.id,
-        threadId: msg.threadId,
-        from: gmailHeader(headers, "From"),
-        subject: gmailHeader(headers, "Subject") || "(No subject)",
-        date: gmailHeader(headers, "Date"),
-        snippet: msg.snippet || "",
-        unread: (msg.labelIds || []).includes("UNREAD")
-      };
-    }));
-    res.json({
-      messages,
-      resultSizeEstimate: listed.data.resultSizeEstimate || messages.length
-    });
-  } catch (e) {
-    console.error("Gmail inbox error:", e.message);
-    res.status(502).json({
-      error: "Gmail could not load. Please reconnect Google and approve Gmail read-only access."
-    });
-  }
-});
-
-app.get("/api/gmail/messages/:id", apiLimiter, googleSession, async (req, res) => {
-  try {
-    const id = String(req.params.id || "");
-    if (!/^[A-Za-z0-9_-]{1,200}$/.test(id)) {
-      return res.status(400).json({ error: "Invalid email ID." });
-    }
-
-    const gmail = google.gmail({
-      version: "v1",
-      auth: await googleAuth()
-    });
-
-    const result = await gmail.users.messages.get({
-      userId: "me",
-      id,
-      format: "full"
-    });
-
-    const msg = result.data;
-    const headers = msg.payload?.headers || [];
-
-    let body = findGmailTextPart(msg.payload, "text/plain");
-
-    if (!body) {
-      const htmlBody = findGmailTextPart(msg.payload, "text/html");
-      body = htmlBody
-        .replace(/<style[\s\S]*?<\/style>/gi, " ")
-        .replace(/<script[\s\S]*?<\/script>/gi, " ")
-        .replace(/<[^>]+>/g, " ")
-        .replace(/&nbsp;/g, " ")
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">");
-    }
-
-    res.json({
-      id: msg.id,
-      threadId: msg.threadId,
-      from: gmailHeader(headers, "From"),
-      to: gmailHeader(headers, "To"),
-      subject: gmailHeader(headers, "Subject") || "(No subject)",
-      date: gmailHeader(headers, "Date"),
-      body: body.slice(0, 30000),
-      unread: (msg.labelIds || []).includes("UNREAD")
-    });
-
-  } catch (e) {
-    console.error("Gmail message error:", e.message);
-    res.status(502).json({
-      error: "This email could not be opened. Please try again."
-    });
-  }
-});
 
 // ============================================
 // NOT FOUND
