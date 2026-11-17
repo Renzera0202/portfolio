@@ -63,7 +63,7 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 .dock-btn{display:flex;align-items:center;justify-content:flex-start;gap:8px;min-width:132px;border:1px solid #e3e6ec;background:rgba(255,255,251,.96);color:var(--ink);padding:11px 14px;border-radius:30px;box-shadow:0 8px 25px #24334e1c;font-weight:800;font-size:.75rem;cursor:pointer;transition:.25s;backdrop-filter:blur(12px)}
 .dock-btn i{color:#d58b5b}.dock-btn:hover{transform:translateY(-4px);box-shadow:0 13px 28px #24334e2a}
 .productivity-panel{position:fixed;z-index:59;right:82px;bottom:22px;width:min(360px,calc(100vw - 118px));max-height:min(560px,calc(100vh - 110px));overflow:auto;background:#fffefa;border:1px solid #e0e4eb;border-radius:20px;box-shadow:0 22px 60px #1d2c4928;padding:16px;display:none;animation:panelIn .25s ease}
-.productivity-panel.open{display:block}.gmail-panel{width:min(420px,calc(100vw - 118px))}.gmail-panel .gmail-list{max-height:390px;overflow:auto}.gmail-panel .gmail-message pre{max-height:320px}@keyframes panelIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.productivity-panel.open{display:block}@keyframes panelIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
 .widget-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.widget-head h3{font:800 1rem Manrope;margin:0}.widget-close{border:0;background:#f2f3f5;width:30px;height:30px;border-radius:50%;cursor:pointer;color:#667080}
 .widget-login{display:grid;gap:9px}.widget-login p,.widget-hint{font-size:.75rem;color:#7e8794;margin:0}.widget-login input,.note-area,.event-title{width:100%;border:1px solid #e3e6eb;background:#fff;border-radius:11px;padding:10px 12px;font:inherit;color:var(--ink);outline:none}.widget-login input:focus,.note-area:focus,.event-title:focus{border-color:#aebde4;box-shadow:0 0 0 3px #aebde426}
 .widget-action{border:0;background:var(--ink);color:white;border-radius:11px;padding:10px 13px;font-weight:800;cursor:pointer}.widget-action:disabled{opacity:.55;cursor:wait}
@@ -71,24 +71,6 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calendar-grid span{font-size:.64rem;color:#9399a3;text-align:center;padding:5px 0}.calendar-day{border:0;background:#f7f7f4;border-radius:8px;min-height:34px;color:#596273;cursor:pointer;font-size:.72rem;position:relative}.calendar-day:hover{background:#eaf0ff}.calendar-day.selected{background:#17233d;color:white}.calendar-day.marked:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#e58c4c;bottom:4px;left:calc(50% - 2px)}.calendar-day.selected.marked:after{background:#fff}
 .event-form{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:12px}.event-form input{min-width:0}.event-list{display:grid;gap:6px;margin-top:10px}.event-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f7f7f4;border-radius:10px;padding:8px 10px;font-size:.72rem}.event-item small{display:block;color:#8b929d}.event-delete{border:0;background:transparent;color:#a36d56;cursor:pointer;padding:4px}
 .note-area{min-height:230px;resize:vertical;line-height:1.6}.save-status{font-size:.68rem;color:#8a929e;margin-top:7px;display:flex;align-items:center;gap:6px}.save-status:before{content:"";width:6px;height:6px;border-radius:50%;background:#d8a36d}.save-status.saved:before{background:#62b78a}
-
-.gmail-unread-badge{margin-left:auto;min-width:19px;height:19px;padding:0 5px;border-radius:20px;background:#d94b43;color:white;font-size:.62rem;display:inline-grid;place-items:center}
-.gmail-toolbar{display:grid;grid-template-columns:1fr auto;gap:7px;margin:8px 0}
-.gmail-toolbar input{min-width:0;border:1px solid #e3e6eb;border-radius:10px;padding:10px 11px;font:inherit;font-size:.75rem;outline:none}
-.gmail-list{display:grid;gap:7px;margin-top:9px}
-.gmail-row{width:100%;text-align:left;border:1px solid #eceef2;border-radius:12px;background:#fff;padding:10px 11px;cursor:pointer;color:var(--ink);transition:.2s}
-.gmail-row:hover{border-color:#c7d3ed;background:#f8faff;transform:translateY(-1px)}
-.gmail-row.unread{background:#f7f8ff;border-color:#dce3f4}
-.gmail-row-top{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:.7rem}
-.gmail-row-from{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.gmail-row-date{color:#9097a3;font-size:.61rem;white-space:nowrap}
-.gmail-row-subject{font-size:.72rem;font-weight:800;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.gmail-row-snippet{font-size:.66rem;color:#838b98;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.gmail-message{margin-top:10px;border-top:1px solid #eceef2;padding-top:10px}
-.gmail-back{border:0;background:#f1f3f7;border-radius:9px;padding:7px 10px;font-size:.68rem;font-weight:800;cursor:pointer;color:#536078}
-.gmail-message h4{font:800 .9rem Manrope;line-height:1.35;margin:12px 0 6px;overflow-wrap:anywhere}
-.gmail-message-meta{font-size:.65rem;color:#7d8794;margin:3px 0;overflow-wrap:anywhere}
-.gmail-message pre{font: .72rem/1.6 "DM Sans",sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;color:#364154;background:#f8f8f5;border-radius:11px;padding:11px;max-height:300px;overflow:auto}
 @media(max-width:760px){.productivity-dock{right:12px;bottom:14px;gap:8px}.dock-btn{padding:10px 12px;min-width:118px}.productivity-panel{right:12px;bottom:112px;width:min(360px,calc(100vw - 24px));max-height:calc(100vh - 135px)}}
 </style>
 </head>
@@ -120,7 +102,6 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 <div class="productivity-dock" aria-label="Floating calendar and notepad tools on the right side of the screen">
   <button class="dock-btn" id="open-calendar"><i class="fa-regular fa-calendar-days"></i> Calendar</button>
   <button class="dock-btn" id="open-notes"><i class="fa-regular fa-note-sticky"></i> Notepad</button>
-  <button class="dock-btn" id="open-gmail"><i class="fa-regular fa-envelope" style="color:#d94b43"></i> Gmail <span id="gmail-unread-badge" class="gmail-unread-badge" hidden>0</span></button>
 </div>
 <section class="productivity-panel" id="calendar-panel" aria-label="Calendar widget">
   <div class="widget-head"><h3><i class="fa-regular fa-calendar-days" style="color:#d58b5b;margin-right:7px"></i>My Calendar</h3><button class="widget-close" data-close="calendar-panel" aria-label="Close calendar"><i class="fa-solid fa-xmark"></i></button></div>
@@ -148,29 +129,6 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
   <div id="notes-content" hidden>
     <textarea class="note-area" id="cloud-note" maxlength="30000" placeholder="Write your notes here. Changes save automatically to your Google Drive..."></textarea>
     <div class="save-status" id="notes-status">Waiting to load your notes…</div>
-  </div>
-</section>
-<section class="productivity-panel gmail-panel" id="gmail-panel" aria-label="Gmail inbox">
-  <div class="widget-head"><h3><i class="fa-regular fa-envelope" style="color:#d94b43;margin-right:7px"></i>My Gmail</h3><button class="widget-close" data-close="gmail-panel" aria-label="Close Gmail"><i class="fa-solid fa-xmark"></i></button></div>
-  <div class="widget-login" id="gmail-login">
-    <p>Connect your authorized Google account to read your inbox inside your portfolio.</p>
-    <button class="widget-action" id="gmail-google-signin"><i class="fa-brands fa-google"></i> Continue with Google</button>
-    <p class="widget-hint">Read-only access: this widget cannot send or delete emails.</p>
-  </div>
-  <div id="gmail-content" hidden>
-    <div class="gmail-toolbar">
-      <input id="gmail-search" type="search" placeholder="Search your emails…" aria-label="Search Gmail">
-      <button class="widget-action" id="gmail-refresh" type="button" aria-label="Refresh inbox"><i class="fa-solid fa-rotate"></i></button>
-    </div>
-    <p class="save-status" id="gmail-status">Loading inbox…</p>
-    <div id="gmail-list" class="gmail-list"></div>
-    <article id="gmail-message" class="gmail-message" hidden>
-      <button id="gmail-back" class="gmail-back" type="button"><i class="fa-solid fa-arrow-left"></i> Back to inbox</button>
-      <h4 id="gmail-message-subject"></h4>
-      <p id="gmail-message-from" class="gmail-message-meta"></p>
-      <p id="gmail-message-date" class="gmail-message-meta"></p>
-      <pre id="gmail-message-body"></pre>
-    </article>
   </div>
 </section>
 
@@ -309,15 +267,9 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
  function connectGoogle(which){location.href=API_BASE+'/auth/google/start?widget='+encodeURIComponent(which);}
  $('calendar-google-signin')?.addEventListener('click',()=>connectGoogle('calendar'));
  $('notes-google-signin')?.addEventListener('click',()=>connectGoogle('notes'));
- $('gmail-google-signin')?.addEventListener('click',()=>connectGoogle('gmail'));
- function showWidget(which){
-   ['calendar','notes','gmail'].forEach(name=>$(name+'-panel').classList.toggle('open',name===which));
-   if(!googleToken){connectGoogle(which);return;}
-   if(which==='calendar')loadCalendar();else if(which==='notes')loadNotes();else loadGmail();
- }
+ function showWidget(which){$('calendar-panel').classList.toggle('open',which==='calendar');$('notes-panel').classList.toggle('open',which==='notes');if(googleToken){if(which==='calendar')loadCalendar();else loadNotes();}else connectGoogle(which);}
  $('open-calendar')?.addEventListener('click',()=>showWidget('calendar'));
  $('open-notes')?.addEventListener('click',()=>showWidget('notes'));
- $('open-gmail')?.addEventListener('click',()=>showWidget('gmail'));
  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('open')));
  const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
  function drawCalendar(){
@@ -340,37 +292,8 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
  async function deleteEvent(id){if(!confirm('Delete this calendar event?'))return;try{await googleApi('/api/calendar/'+encodeURIComponent(id),{method:'DELETE'});await loadCalendar();}catch(e){$('calendar-status').textContent=e.message;}}
  async function loadNotes(){$('notes-login').hidden=true;$('notes-content').hidden=false;$('notes-status').textContent='Loading your private notes…';try{const data=await googleApi('/api/notes');$('cloud-note').value=data.text||'';$('notes-status').textContent='Saved securely in your Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;$('notes-content').hidden=true;$('notes-login').hidden=false;}}
  $('cloud-note')?.addEventListener('input',()=>{clearTimeout(noteSaveTimer);$('notes-status').textContent='Saving…';$('notes-status').classList.remove('saved');noteSaveTimer=setTimeout(async()=>{try{await googleApi('/api/notes',{method:'PUT',body:JSON.stringify({text:$('cloud-note').value})});$('notes-status').textContent='All changes saved to Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;}},700);});
- // Gmail inbox: read-only messages, using the same Google session.
- let gmailQuery='';
- function gmailDate(value){if(!value)return '';const d=new Date(value);return Number.isNaN(d.getTime())?value:d.toLocaleDateString(undefined,{month:'short',day:'numeric'});}
- async function loadGmail(){
-   $('gmail-login').hidden=true;$('gmail-content').hidden=false;$('gmail-message').hidden=true;$('gmail-list').hidden=false;$('gmail-status').textContent='Loading your inbox…';
-   try{
-     const data=await googleApi('/api/gmail/messages?maxResults=30&q='+encodeURIComponent(gmailQuery));
-     const messages=data.messages||[];const unread=messages.filter(m=>m.unread).length;
-     $('gmail-unread-badge').textContent=unread>99?'99+':String(unread);$('gmail-unread-badge').hidden=unread===0;
-     const list=$('gmail-list');list.innerHTML='';
-     if(!messages.length){const empty=document.createElement('p');empty.className='widget-hint';empty.textContent='No emails found.';list.append(empty);}
-     messages.forEach(m=>{
-       const button=document.createElement('button');button.type='button';button.className='gmail-row'+(m.unread?' unread':'');
-       const top=document.createElement('div');top.className='gmail-row-top';const from=document.createElement('span');from.className='gmail-row-from';from.textContent=m.from||'Unknown sender';const date=document.createElement('span');date.className='gmail-row-date';date.textContent=gmailDate(m.date);top.append(from,date);
-       const subject=document.createElement('div');subject.className='gmail-row-subject';subject.textContent=m.subject||'(No subject)';const snippet=document.createElement('div');snippet.className='gmail-row-snippet';snippet.textContent=m.snippet||'';
-       button.append(top,subject,snippet);button.addEventListener('click',()=>openGmailMessage(m.id));list.append(button);
-     });
-     $('gmail-status').textContent=`Showing ${messages.length} recent email${messages.length===1?'':'s'} · Read-only access`;
-   }catch(e){$('gmail-status').textContent=e.message;if(/reconnect|connect your Google/i.test(e.message)){$('gmail-content').hidden=true;$('gmail-login').hidden=false;}}
- }
- async function openGmailMessage(id){
-   $('gmail-status').textContent='Opening email…';
-   try{const m=await googleApi('/api/gmail/messages/'+encodeURIComponent(id));$('gmail-list').hidden=true;$('gmail-message').hidden=false;$('gmail-message-subject').textContent=m.subject||'(No subject)';$('gmail-message-from').textContent='From: '+(m.from||'Unknown sender');$('gmail-message-date').textContent=m.date||'';$('gmail-message-body').textContent=m.body||'(This email has no readable text body.)';$('gmail-status').textContent='Email opened · Read-only';}
-   catch(e){$('gmail-status').textContent=e.message;}
- }
- $('gmail-refresh')?.addEventListener('click',loadGmail);
- $('gmail-search')?.addEventListener('keydown',e=>{if(e.key==='Enter'){gmailQuery=$('gmail-search').value.trim();loadGmail();}});
- $('gmail-back')?.addEventListener('click',()=>{$('gmail-message').hidden=true;$('gmail-list').hidden=false;});
-
- // Resume the correct widget after Google's authorization redirect.
- if(returnedToken){const widget=['calendar','notes','gmail'].includes(params.get('widget'))?params.get('widget'):'notes';['calendar','notes','gmail'].forEach(name=>$(name+'-panel').classList.toggle('open',name===widget));if(widget==='calendar')loadCalendar();else if(widget==='gmail')loadGmail();else loadNotes();}
+ // Resume the widget after Google's authorization redirect.
+ if(returnedToken){const widget=params.get('widget')==='calendar'?'calendar':'notes';$('calendar-panel').classList.toggle('open',widget==='calendar');$('notes-panel').classList.toggle('open',widget==='notes');if(widget==='calendar')loadCalendar();else loadNotes();}
 
 })();
 </script>
