@@ -1067,7 +1067,7 @@ app.delete(
 );
 
 // ============================================
-// AI ASSISTANT - GOOGLE GEMINI FREE TIER
+// AI ASSISTANT - GEMINI 3.8 FLASH (INTERACTIONS API)
 // API key stays securely in Render Environment
 // ============================================
 app.post("/api/assistant", apiLimiter, async (req, res) => {
@@ -1083,27 +1083,23 @@ app.post("/api/assistant", apiLimiter, async (req, res) => {
     const apiKey = requireEnv("GEMINI_API_KEY");
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      "https://generativelanguage.googleapis.com/v1beta/interactions",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
+          "x-goog-api-key": apiKey,
+          "Api-Revision": "2026-05-20"
         },
         body: JSON.stringify({
-          systemInstruction: {
-            parts: [{
-              text: "You are a friendly and professional AI assistant on a virtual assistant portfolio website. Help users with writing, grammar, email drafting, summaries, planning, productivity, coding, and general questions. Give clear, useful, accurate answers. Keep responses easy to understand."
-            }]
+          model: "gemini-3.8-flash",
+          input: prompt,
+          system_instruction: "You are a friendly and professional AI assistant on a virtual assistant portfolio website. Help users with writing, grammar, email drafting, summaries, planning, productivity, coding, and general questions. Give clear, useful, accurate answers. Keep responses easy to understand.",
+          generation_config: {
+            max_output_tokens: 700,
+            thinking_level: "low"
           },
-          contents: [{
-            role: "user",
-            parts: [{ text: prompt }]
-          }],
-          generationConfig: {
-            maxOutputTokens: 700,
-            temperature: 0.7
-          }
+          store: false
         })
       }
     );
@@ -1111,20 +1107,38 @@ app.post("/api/assistant", apiLimiter, async (req, res) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Gemini API error:", data.error);
+      console.error("Gemini Interactions API error:", data.error);
       return res.status(502).json({
         error: data.error?.message || "Gemini AI request failed. Please try again."
       });
     }
 
-    const reply = data.candidates?.[0]?.content?.parts
-      ?.map(part => part.text || "")
-      .join("")
-      .trim();
+    // The Interactions API exposes the final text as output_text in
+    // supported responses; the steps fallback handles raw REST responses.
+    let reply = typeof data.output_text === "string" ? data.output_text.trim() : "";
+
+    if (!reply && Array.isArray(data.steps)) {
+      reply = data.steps
+        .filter(step => step.type === "model_output")
+        .flatMap(step => Array.isArray(step.content) ? step.content : [])
+        .filter(part => part.type === "text" && typeof part.text === "string")
+        .map(part => part.text)
+        .join("")
+        .trim();
+    }
+
+    if (!reply && Array.isArray(data.output)) {
+      reply = data.output
+        .filter(part => part.type === "text" && typeof part.text === "string")
+        .map(part => part.text)
+        .join("")
+        .trim();
+    }
 
     if (!reply) {
+      console.error("Gemini returned no readable text:", JSON.stringify(data).slice(0, 2000));
       return res.status(502).json({
-        error: "Gemini did not return a response. Please try again."
+        error: "Gemini did not return a text response. Please try again."
       });
     }
 
