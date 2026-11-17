@@ -1082,27 +1082,52 @@ app.post("/api/assistant", apiLimiter, async (req, res) => {
   try {
     const apiKey = requireEnv("GEMINI_API_KEY");
 
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/interactions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey,
-          "Api-Revision": "2026-05-20"
-        },
-        body: JSON.stringify({
-          model: "gemini-3.8-flash",
-          input: prompt,
-          system_instruction: "You are a friendly and professional AI assistant on a virtual assistant portfolio website. Help users with writing, grammar, email drafting, summaries, planning, productivity, coding, and general questions. Give clear, useful, accurate answers. Keep responses easy to understand.",
-          generation_config: {
-            max_output_tokens: 700,
-            thinking_level: "low"
-          },
-          store: false
-        })
+    // Retry temporary overload / rate-limit / server errors up to 3 attempts.
+    // Delays: 1.5 seconds, then 3 seconds. Other errors are returned immediately.
+    let response;
+    let data;
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        response = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/interactions",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": apiKey,
+              "Api-Revision": "2026-05-20"
+            },
+            body: JSON.stringify({
+              model: "gemini-3.8-flash",
+              input: prompt,
+              system_instruction: "You are a friendly and professional AI assistant on a virtual assistant portfolio website. Help users with writing, grammar, email drafting, summaries, planning, productivity, coding, and general questions. Give clear, useful, accurate answers. Keep responses easy to understand.",
+              generation_config: {
+                max_output_tokens: 700,
+                thinking_level: "low"
+              },
+              store: false
+            })
+          }
+        );
+
+        data = await response.json();
+
+        const temporaryFailure = response.status === 429 || response.status === 500 ||
+          response.status === 502 || response.status === 503 || response.status === 504;
+
+        if (response.ok || !temporaryFailure || attempt === 3) {
+          break;
+        }
+
+        console.warn(`Gemini temporary error (HTTP ${response.status}); retrying attempt ${attempt + 1}/3.`);
+        await new Promise(resolve => setTimeout(resolve, attempt * 1500));
+      } catch (fetchError) {
+        if (attempt === 3) throw fetchError;
+        console.warn(`Gemini network error; retrying attempt ${attempt + 1}/3.`);
+        await new Promise(resolve => setTimeout(resolve, attempt * 1500));
       }
-    );
+    }
 
     const data = await response.json();
 
