@@ -1067,36 +1067,74 @@ app.delete(
 );
 
 // ============================================
-// AI ASSISTANT (API key stays in Render Environment)
+// AI ASSISTANT - GOOGLE GEMINI FREE TIER
+// API key stays securely in Render Environment
 // ============================================
 app.post("/api/assistant", apiLimiter, async (req, res) => {
   const prompt = String(req.body?.prompt || "").trim();
+
   if (!prompt || prompt.length > 6000) {
-    return res.status(400).json({ error: "Enter a prompt of up to 6,000 characters." });
-  }
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${requireEnv("OPENAI_API_KEY")}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a concise, helpful writing and productivity assistant for a virtual assistant professional. Help with drafting, grammar, summaries, and organizing work." },
-          { role: "user", content: prompt }
-        ],
-        max_tokens: 700
-      })
+    return res.status(400).json({
+      error: "Enter a prompt of up to 6,000 characters."
     });
+  }
+
+  try {
+    const apiKey = requireEnv("GEMINI_API_KEY");
+
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{
+              text: "You are a friendly and professional AI assistant on a virtual assistant portfolio website. Help users with writing, grammar, email drafting, summaries, planning, productivity, coding, and general questions. Give clear, useful, accurate answers. Keep responses easy to understand."
+            }]
+          },
+          contents: [{
+            role: "user",
+            parts: [{ text: prompt }]
+          }],
+          generationConfig: {
+            maxOutputTokens: 700,
+            temperature: 0.7
+          }
+        })
+      }
+    );
+
     const data = await response.json();
+
     if (!response.ok) {
-      return res.status(502).json({ error: data.error?.message || "AI service request failed." });
+      console.error("Gemini API error:", data.error);
+      return res.status(502).json({
+        error: data.error?.message || "Gemini AI request failed. Please try again."
+      });
     }
-    res.json({ reply: data.choices?.[0]?.message?.content || "No response was returned." });
+
+    const reply = data.candidates?.[0]?.content?.parts
+      ?.map(part => part.text || "")
+      .join("")
+      .trim();
+
+    if (!reply) {
+      return res.status(502).json({
+        error: "Gemini did not return a response. Please try again."
+      });
+    }
+
+    return res.json({ reply });
+
   } catch (error) {
-    res.status(500).json({ error: error.message || "AI assistant is unavailable." });
+    console.error("AI assistant error:", error);
+    return res.status(500).json({
+      error: error.message || "AI assistant is currently unavailable."
+    });
   }
 });
 
