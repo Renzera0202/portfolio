@@ -1129,8 +1129,6 @@ app.post("/api/assistant", apiLimiter, async (req, res) => {
       }
     }
 
-    const data = await response.json();
-
     if (!response.ok) {
       console.error("Gemini Interactions API error:", data.error);
       return res.status(502).json({
