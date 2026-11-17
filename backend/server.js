@@ -1067,6 +1067,40 @@ app.delete(
 );
 
 // ============================================
+// AI ASSISTANT (API key stays in Render Environment)
+// ============================================
+app.post("/api/assistant", apiLimiter, async (req, res) => {
+  const prompt = String(req.body?.prompt || "").trim();
+  if (!prompt || prompt.length > 6000) {
+    return res.status(400).json({ error: "Enter a prompt of up to 6,000 characters." });
+  }
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${requireEnv("OPENAI_API_KEY")}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a concise, helpful writing and productivity assistant for a virtual assistant professional. Help with drafting, grammar, summaries, and organizing work." },
+          { role: "user", content: prompt }
+        ],
+        max_tokens: 700
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return res.status(502).json({ error: data.error?.message || "AI service request failed." });
+    }
+    res.json({ reply: data.choices?.[0]?.message?.content || "No response was returned." });
+  } catch (error) {
+    res.status(500).json({ error: error.message || "AI assistant is unavailable." });
+  }
+});
+
+// ============================================
 // NOT FOUND
 // ============================================
 
