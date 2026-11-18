@@ -96,6 +96,7 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
     <a href="#services"><i class="fa-solid fa-layer-group"></i>Services</a>
     <a href="#testimonials"><i class="fa-solid fa-star"></i>Testimonials</a>
     <a href="#about"><i class="fa-regular fa-user"></i>About</a>
+    <a href="#client-center"><i class="fa-solid fa-folder-open"></i>Client Center</a>
     <a href="#contact"><i class="fa-regular fa-message"></i>Contact</a>
     <a href="assets/Robert-Corpuz-Resume.pdf" download><i class="fa-solid fa-file-arrow-down"></i>Download CV</a>
   </nav>
@@ -241,6 +242,18 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
     </div>
   </section>
 
+  <section class="section-block reveal" id="client-center">
+    <div class="section-title"><span class="eyebrow">Resources for new clients</span><h2>Client Center</h2><p>Download editable onboarding and service templates. Open a document, fill in the blanks, then print or save it as a PDF.</p></div>
+    <div class="cards">
+      <article class="info-card"><i class="fa-solid fa-file-signature"></i><h3>VA Service Agreement</h3><p>General service terms, scope, schedule, payment, confidentiality, ownership, and signatures.</p><p><a href="assets/client-documents/va-service-agreement.html" download><b>Download editable template →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-shield-halved"></i><h3>NDA / Confidentiality</h3><p>Template to define how non-public business and client information is protected.</p><p><a href="assets/client-documents/confidentiality-nda.html" download><b>Download editable template →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-clipboard-list"></i><h3>Client Onboarding Form</h3><p>Collect project goals, tasks, schedules, communication preferences, and requirements.</p><p><a href="assets/client-documents/client-onboarding-form.html" download><b>Download editable form →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-file-invoice-dollar"></i><h3>Invoice Template</h3><p>Prepare a clear invoice with service descriptions, dates, rates, totals, and payment instructions.</p><p><a href="assets/client-documents/invoice-template.html" download><b>Download editable template →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-handshake"></i><h3>Client Welcome Guide</h3><p>Explain communication, task handoff, approvals, access, reporting, and first-week steps.</p><p><a href="assets/client-documents/client-welcome-guide.html" download><b>Download editable guide →</b></a></p></article>
+    </div>
+    <p style="font-size:.76rem;color:#7b8190;margin-top:14px">Privacy reminder: never upload signed contracts, completed client forms, invoices, passwords, or confidential client information to this public page. These are blank templates only. Contract and NDA templates are general starting points, not legal advice.</p>
+  </section>
+
   <section class="section-block reveal" id="contact">
     <div class="contact-panel"><div><span class="eyebrow">Have a role in mind?</span><h2>Let's make work easier.</h2><p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities.</p></div><a class="contact-btn" href="mailto:robertcorpuz0101@gmail.com">Get in touch <i class="fa-solid fa-arrow-right"></i></a></div>
     <div class="social" style="justify-content:center;margin-top:18px"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302" aria-label="Viber"><i class="fa-brands fa-viber"></i></a></div>
@@ -257,7 +270,7 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
   const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}}),{threshold:.12});
   targets.forEach((el,i)=>{el.style.transitionDelay=(i%4)*65+'ms';revealObserver.observe(el);});
  }else targets.forEach(el=>el.classList.add('visible'));
- const sections=['home','projects','services','testimonials','about','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+ const sections=['home','projects','services','testimonials','about','client-center','contact'].map(id=>document.getElementById(id)).filter(Boolean);
  const navLinks=[...document.querySelectorAll('.nav a')];
  const activeObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}),{rootMargin:'-25% 0px -65% 0px'});
  sections.forEach(s=>activeObserver.observe(s));
