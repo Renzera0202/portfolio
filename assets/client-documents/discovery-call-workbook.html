@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VA Discovery Call Workbook</title><style>
+:root{--ink:#243b53;--muted:#627d98;--blue:#dceeff;--lav:#eee8ff}*{box-sizing:border-box}body{margin:0;padding:32px 16px;font:16px/1.6 Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f7fbff,#f8f5ff)}main{max-width:760px;margin:auto;background:#fff;border:1px solid #e5eaf0;border-radius:22px;padding:30px;box-shadow:0 18px 50px #243b5312}h1{margin:0 0 8px;font-size:clamp(25px,5vw,38px)}p{color:var(--muted)}.pill{display:inline-block;background:var(--lav);padding:5px 12px;border-radius:30px;font-size:12px;font-weight:bold}.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:24px 0}.feature{padding:15px;border-radius:14px;background:#f5f8fc}.feature b{display:block}.btn{display:inline-block;background:#243b53;color:white;text-decoration:none;border:0;border-radius:12px;padding:13px 20px;font-weight:bold;cursor:pointer;font-size:15px}.note{font-size:13px}.back{display:inline-block;margin-top:20px;color:#426b9a}
+</style></head><body><main><span class="pill">FREE CLIENT RESOURCE</span><h1>VA Client Discovery Call Workbook</h1><p>Download an editable Excel workbook to guide your discovery calls, qualify client projects, record important details, and keep every follow-up organized.</p><div class="features"><div class="feature"><b>01 · Discovery Call</b>Client details, business needs, tasks, scope, budget, notes and fit check.</div><div class="feature"><b>02 · Follow-Up Tracker</b>Track leads, next actions, due dates and status in one place.</div><div class="feature"><b>03 · 30-Minute Call Guide</b>A simple conversation flow and useful questions to ask.</div></div><button class="btn" id="download">Download Excel Workbook (.xlsx) ↓</button><p class="note" id="status">The workbook is generated in your browser. Your entries are not uploaded or sent anywhere.</p><a class="back" href="../../#client-center">← Back to Client Center</a></main>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script>
+const btn=document.getElementById('download'),status=document.getElementById('status');
+btn.addEventListener('click',()=>{
+ if(!window.XLSX){status.textContent='The Excel library did not load. Please refresh this page and try again.';return;}
+ const wb=XLSX.utils.book_new();
+ const discovery=[
+ ['VA CLIENT DISCOVERY CALL','','',''],
+ ['Editable workbook · Capture needs, qualify the project, and agree on next steps','','',''],
+ ['','','',''],
+ ['1. CALL DETAILS','','',''],
+ ['Client / Business name','','Call date',new Date().toISOString().slice(0,10)],
+ ['Contact person','','Email / preferred contact',''],
+ ['Business website / social','','Time zone',''],
+ ['Call duration','30 minutes','Your name',''],
+ ['','','',''],
+ ['2. OPENING & BUSINESS OVERVIEW','','',''],
+ ['Opening','Thank the client, introduce yourself, confirm time available, and explain the purpose of the call.','',''],
+ ['Business overview','What does your business do, who do you serve, and what makes your offer different?','',''],
+ ['Current situation','What prompted you to look for VA support right now?','',''],
+ ['Goals','What would you most like to improve or achieve in the next 30–90 days?','',''],
+ ['','','',''],
+ ['3. TASKS, TOOLS & WORKING PREFERENCES','','',''],
+ ['Tasks to delegate','Which tasks would you like to hand off? List the most important first.','',''],
+ ['Frequency / volume','How often do these tasks happen? Approximate weekly or monthly volume?','',''],
+ ['Tools & access','Which platforms do you use (e.g., Gmail, Google Workspace, CRM, spreadsheets, project tools)?','',''],
+ ['Existing process','Do you have SOPs, templates, scripts, or a process I should follow?','',''],
+ ['Communication','Preferred channel, response window, meeting frequency, and working hours?','',''],
+ ['Approval & reporting','Who approves work, and how would you like progress reported?','',''],
+ ['','','',''],
+ ['4. SCOPE, TIMELINE & BUDGET','','',''],
+ ['Priority deliverables','What are the first 3 outcomes or deliverables you expect?','',''],
+ ['Start date / deadline','When would you like support to begin? Are there fixed deadlines?','',''],
+ ['Hours / availability','Estimated hours per week, preferred schedule, and time-zone overlap?','',''],
+ ['Budget / rate range','What budget or rate range have you allocated for this support?','',''],
+ ['Engagement type','One-time project, ongoing retainer, hourly support, or undecided?','',''],
+ ['','','',''],
+ ['5. DISCOVERY NOTES','','',''],
+ ['Pain points / challenges','','',''],
+ ['Success measures / expected results','','',''],
+ ['Risks, blockers, or dependencies','','',''],
+ ['Additional notes','','',''],
+ ['','','',''],
+ ['6. NEXT STEPS & FOLLOW-UP','','',''],
+ ['Agreed next step','e.g., send proposal, share portfolio, schedule second call','',''],
+ ['Owner','Client / VA','',''],
+ ['Due date','','',''],
+ ['Follow-up date','','',''],
+ ['Follow-up channel','Email / call / other','',''],
+ ['','','',''],
+ ['7. FIT CHECK','','',''],
+ ['Needs match my services?','Yes / Partly / No','',''],
+ ['Scope is clear and realistic?','Yes / Needs clarification / No','',''],
+ ['Timeline is workable?','Yes / Needs discussion / No','',''],
+ ['Budget aligns?','Yes / Needs discussion / No','',''],
+ ['Decision','Proceed / Send proposal / Follow up / Decline','','']
+ ];
+ const ws=XLSX.utils.aoa_to_sheet(discovery);ws['!cols']=[{wch:28},{wch:72},{wch:26},{wch:38}];ws['!freeze']={xSplit:0,ySplit:4};ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:3}},{s:{r:1,c:0},e:{r:1,c:3}}];
+ const tracker=[['LEAD & FOLLOW-UP TRACKER'],['Track discovery calls, next actions, deadlines, and lead status.'],[],['Client / Lead','Call Date','Main Need','Next Action','Owner','Due Date','Status','Last Contact / Notes']];
+ for(let i=0;i<20;i++)tracker.push(['','','','','','','New','']);
+ const tr=XLSX.utils.aoa_to_sheet(tracker);tr['!cols']=[{wch:24},{wch:15},{wch:28},{wch:30},{wch:16},{wch:15},{wch:20},{wch:36}];tr['!autofilter']={ref:'A4:H24'};tr['!freeze']={xSplit:0,ySplit:4};
+ const guide=[['30-MINUTE DISCOVERY CALL GUIDE'],['A simple flow to keep the conversation professional, helpful, and client-focused.'],[],['Time','Stage','What to do / say'],['0–3 min','Welcome','“Thanks for taking the time to meet with me. I’d love to learn more about your business, what support you need, and what a successful working arrangement would look like.”'],['3–8 min','Understand the business','Ask what the business does, who its customers are, and what prompted the search for support.'],['8–15 min','Explore needs','Ask about recurring tasks, pain points, current tools, existing processes, and what takes the most time.'],['15–21 min','Define the scope','Clarify priorities, deliverables, hours, deadlines, communication, access, and approval process.'],['21–25 min','Check fit','Discuss budget/rate range, timeline, availability, and whether the work matches your skills and capacity.'],['25–30 min','Close & agree next steps','Summarize what you heard, confirm missing details, agree who will do what and by when, and set a follow-up date.'],[],['USEFUL QUESTIONS','Purpose'],['“What would you like to stop doing yourself?”','Find tasks that consume the client’s time.'],['“What does success look like after the first month?”','Define expectations without promising results you cannot control.'],['“What has or hasn’t worked with support in the past?”','Understand preferences and potential friction points.'],['“Who will I work with and who approves the work?”','Clarify stakeholders and decision-making.'],['“What would you need from me to feel confident moving forward?”','Surface concerns and next-step requirements.']];
+ const g=XLSX.utils.aoa_to_sheet(guide);g['!cols']=[{wch:18},{wch:34},{wch:100}];g['!freeze']={xSplit:0,ySplit:4};
+ XLSX.utils.book_append_sheet(wb,ws,'Discovery Call');XLSX.utils.book_append_sheet(wb,tr,'Follow-Up Tracker');XLSX.utils.book_append_sheet(wb,g,'Call Guide');
+ XLSX.writeFile(wb,'VA_Discovery_Call_Workbook.xlsx');status.textContent='Your Excel workbook has been generated. Check your browser downloads.';
+});
+</script></body></html>
