@@ -374,7 +374,23 @@ body.welcome-locked>.sidebar,body.welcome-locked>main,body.welcome-locked>.produ
  const welcomeForm=document.getElementById('welcome-form');
  const welcomeInput=document.getElementById('welcome-password');
  const welcomeError=document.getElementById('welcome-error');
- const WELCOME_PASSWORD='iLeconiTy01*$
+ const WELCOME_PASSWORD='iLeconiTy01*'+String.fromCharCode(36,36,36);
+ if(sessionStorage.getItem('portfolio_welcome_unlocked')==='yes'){
+   document.body.classList.remove('welcome-locked');welcomeGate.hidden=true;
+ }else{
+   document.body.classList.add('welcome-locked');welcomeInput?.focus();
+ }
+ welcomeForm?.addEventListener('submit',e=>{
+   e.preventDefault();
+   if(welcomeInput.value===WELCOME_PASSWORD){
+     sessionStorage.setItem('portfolio_welcome_unlocked','yes');
+     welcomeGate.hidden=true;document.body.classList.remove('welcome-locked');
+     welcomeError.textContent='';
+   }else{
+     welcomeError.textContent='Incorrect password. Please try again.';
+     welcomeInput.value='';welcomeInput.focus();
+   }
+ });
  const menu=document.getElementById('menu'),nav=document.getElementById('nav');
  menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
  document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false');if(menu)menu.innerHTML='<i class="fa-solid fa-bars"></i>'; }));
