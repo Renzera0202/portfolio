@@ -110,9 +110,43 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 @media(max-width:900px){.project-track{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.project-track{grid-template-columns:1fr}.project-dialog{padding:18px}.project-flow span{font-size:.56rem}}
 @media(prefers-reduced-motion:reduce){.project-card,.project-flow span,.project-detail,.project-dialog{animation:none!important;transition:none!important}}
+
+/* Full-screen portfolio welcome gate */
+body.welcome-locked{padding-left:0!important;overflow:hidden!important}
+body.welcome-locked>.sidebar,body.welcome-locked>main,body.welcome-locked>.productivity-dock,body.welcome-locked>.productivity-panel{visibility:hidden!important}
+#welcome-gate{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:24px;background:linear-gradient(115deg,rgba(13,26,61,.25),rgba(24,33,77,.34)),url("data:image/jpeg;base64,PASTE_B64") center/cover no-repeat;font-family:"DM Sans",sans-serif}
+#welcome-gate[hidden]{display:none}
+.welcome-card{width:min(440px,100%);padding:30px;border:1px solid rgba(255,255,255,.62);border-radius:26px;background:rgba(255,255,255,.88);box-shadow:0 28px 90px rgba(20,32,74,.28);backdrop-filter:blur(18px);text-align:center}
+.welcome-kicker{font-size:.68rem;letter-spacing:.2em;font-weight:800;color:#6177bd}
+.welcome-card h1{font:800 clamp(1.8rem,5vw,2.5rem)/1.1 Manrope,sans-serif;letter-spacing:-.05em;color:#17234b;margin:9px 0}
+.welcome-card p{color:#64708a;font-size:.86rem;margin:0 0 20px}
+.welcome-input-wrap{display:flex;gap:8px}
+#welcome-password{flex:1;min-width:0;padding:14px 15px;border:1px solid #d6def2;border-radius:13px;background:#fff;font:600 .95rem "DM Sans",sans-serif;outline:none}
+#welcome-password:focus{border-color:#7e9bea;box-shadow:0 0 0 4px #7e9bea24}
+#welcome-submit{border:0;border-radius:13px;padding:0 19px;background:linear-gradient(110deg,#287fe8,#7953df);color:#fff;font-weight:800;cursor:pointer}
+#welcome-submit:hover{filter:brightness(1.06);transform:translateY(-1px)}
+#welcome-error{min-height:22px;margin:10px 0 0;color:#b42342;font-size:.76rem;font-weight:700}
+.welcome-foot{margin-top:12px!important;font-size:.68rem!important;color:#8790a4!important}
+@media(max-width:520px){.welcome-card{padding:24px 19px}.welcome-input-wrap{flex-direction:column}#welcome-submit{padding:13px}}
+
 </style>
 </head>
 <body>
+
+<div id="welcome-gate" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+ <form class="welcome-card" id="welcome-form">
+  <div class="welcome-kicker">BUILD · AUTOMATE · INNOVATE</div>
+  <h1 id="welcome-title">Welcome to my portfolio</h1>
+  <p>Please enter the access password to continue.</p>
+  <div class="welcome-input-wrap">
+   <input id="welcome-password" type="password" placeholder="Enter password" autocomplete="current-password" required aria-label="Portfolio password">
+   <button id="welcome-submit" type="submit">Enter <i class="fa-solid fa-arrow-right"></i></button>
+  </div>
+  <div id="welcome-error" role="alert" aria-live="polite"></div>
+  <p class="welcome-foot">Robert Corpuz · Portfolio</p>
+ </form>
+</div>
+
 <div id="progress"></div>
 <aside class="sidebar">
   <div class="profile">
@@ -334,6 +368,135 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
 </main>
 <script>
 (() => {
+
+ // Visual welcome-screen password gate. This is a deterrent only, not server-side security.
+ const welcomeGate=document.getElementById('welcome-gate');
+ const welcomeForm=document.getElementById('welcome-form');
+ const welcomeInput=document.getElementById('welcome-password');
+ const welcomeError=document.getElementById('welcome-error');
+ const WELCOME_PASSWORD='iLeconiTy01*$
+ const menu=document.getElementById('menu'),nav=document.getElementById('nav');
+ menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
+ document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false');if(menu)menu.innerHTML='<i class="fa-solid fa-bars"></i>'; }));
+ const targets=[...document.querySelectorAll('.reveal')];
+ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}}),{threshold:.12});
+  targets.forEach((el,i)=>{el.style.transitionDelay=(i%4)*65+'ms';revealObserver.observe(el);});
+ }else targets.forEach(el=>el.classList.add('visible'));
+ const sections=['home','projects','project-workflows','services','testimonials','about','client-center','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+ const navLinks=[...document.querySelectorAll('.nav a')];
+ const activeObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}),{rootMargin:'-25% 0px -65% 0px'});
+ sections.forEach(s=>activeObserver.observe(s));
+ const progress=document.getElementById('progress');
+ const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';};
+ addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+
+ // Google OAuth sign-in for the private Calendar + Notepad widgets.
+ const API_BASE='https://portfolio-8d8g.onrender.com';
+ let googleToken=localStorage.getItem('portfolio_google_session')||'';
+ let selectedDate=new Date();selectedDate.setHours(0,0,0,0);
+ let monthCursor=new Date(selectedDate.getFullYear(),selectedDate.getMonth(),1);
+ let calendarEvents=[];let noteSaveTimer=null;
+ const $=id=>document.getElementById(id);
+ const params=new URLSearchParams(location.search);
+ const returnedToken=params.get('google_auth');
+ if(returnedToken){googleToken=returnedToken;localStorage.setItem('portfolio_google_session',googleToken);history.replaceState({},document.title,location.pathname+location.hash);}
+ async function googleApi(path,options={}){
+   const response=await fetch(API_BASE+path,{...options,headers:{'Content-Type':'application/json','Authorization':'Bearer '+googleToken,...(options.headers||{})}});
+   const data=await response.json().catch(()=>({}));
+   if(response.status===401){googleToken='';localStorage.removeItem('portfolio_google_session');throw new Error('Please connect your Google account again.');}
+   if(!response.ok)throw new Error(data.error||'Could not sync. Please try again.');return data;
+ }
+ function connectGoogle(which){location.href=API_BASE+'/auth/google/start?widget='+encodeURIComponent(which);}
+ $('calendar-google-signin')?.addEventListener('click',()=>connectGoogle('calendar'));
+ $('notes-google-signin')?.addEventListener('click',()=>connectGoogle('notes'));
+ function showWidget(which){$('calendar-panel').classList.toggle('open',which==='calendar');$('notes-panel').classList.toggle('open',which==='notes');if(googleToken){if(which==='calendar')loadCalendar();else loadNotes();}else connectGoogle(which);}
+ $('open-calendar')?.addEventListener('click',()=>showWidget('calendar'));
+ $('open-notes')?.addEventListener('click',()=>showWidget('notes'));
+ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).classList.remove('open')));
+ const dateKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+ function drawCalendar(){
+   $('calendar-month').textContent=monthCursor.toLocaleDateString(undefined,{month:'long',year:'numeric'});const grid=$('calendar-grid');grid.innerHTML='';
+   ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(day=>{const el=document.createElement('span');el.textContent=day;grid.append(el);});
+   const first=new Date(monthCursor.getFullYear(),monthCursor.getMonth(),1).getDay(),days=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,0).getDate();
+   for(let i=0;i<first;i++){const blank=document.createElement('span');grid.append(blank);}
+   for(let n=1;n<=days;n++){const d=new Date(monthCursor.getFullYear(),monthCursor.getMonth(),n),key=dateKey(d);const btn=document.createElement('button');btn.className='calendar-day'+(key===dateKey(selectedDate)?' selected':'')+(calendarEvents.some(ev=>ev.date===key)?' marked':'');btn.textContent=n;btn.addEventListener('click',()=>{selectedDate=d;drawCalendar();renderEvents();});grid.append(btn);}
+   $('selected-date-label').textContent='Selected: '+selectedDate.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+ }
+ function renderEvents(){const list=$('event-list');list.innerHTML='';const todays=calendarEvents.filter(e=>e.date===dateKey(selectedDate));if(!todays.length){const p=document.createElement('p');p.className='widget-hint';p.textContent='No events saved for this date yet.';list.append(p);}todays.forEach(ev=>{const row=document.createElement('div');row.className='event-item';const label=document.createElement('span');label.textContent=ev.title;const del=document.createElement('button');del.className='event-delete';del.innerHTML='<i class="fa-regular fa-trash-can"></i>';del.setAttribute('aria-label','Delete event');del.addEventListener('click',()=>deleteEvent(ev.id));row.append(label,del);list.append(row);});}
+ async function loadCalendar(){
+   $('calendar-login').hidden=true;$('calendar-content').hidden=false;$('calendar-status').textContent='Syncing Google Calendar…';
+   try{const data=await googleApi('/api/calendar?month='+dateKey(monthCursor).slice(0,7));calendarEvents=data.events||[];drawCalendar();renderEvents();$('calendar-status').textContent='Synced with your Google Calendar.';$('calendar-status').classList.add('saved');}
+   catch(e){$('calendar-status').textContent=e.message;$('calendar-content').hidden=true;$('calendar-login').hidden=false;}
+ }
+ $('calendar-prev')?.addEventListener('click',async()=>{monthCursor=new Date(monthCursor.getFullYear(),monthCursor.getMonth()-1,1);await loadCalendar();});
+ $('calendar-next')?.addEventListener('click',async()=>{monthCursor=new Date(monthCursor.getFullYear(),monthCursor.getMonth()+1,1);await loadCalendar();});
+ $('event-form')?.addEventListener('submit',async e=>{e.preventDefault();const title=$('event-title').value.trim();if(!title)return;$('calendar-status').textContent='Saving event…';try{await googleApi('/api/calendar',{method:'POST',body:JSON.stringify({date:dateKey(selectedDate),title})});$('event-title').value='';await loadCalendar();}catch(err){$('calendar-status').textContent=err.message;}});
+ async function deleteEvent(id){if(!confirm('Delete this calendar event?'))return;try{await googleApi('/api/calendar/'+encodeURIComponent(id),{method:'DELETE'});await loadCalendar();}catch(e){$('calendar-status').textContent=e.message;}}
+ async function loadNotes(){$('notes-login').hidden=true;$('notes-content').hidden=false;$('notes-status').textContent='Loading your private notes…';try{const data=await googleApi('/api/notes');$('cloud-note').value=data.text||'';$('notes-status').textContent='Saved securely in your Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;$('notes-content').hidden=true;$('notes-login').hidden=false;}}
+ $('cloud-note')?.addEventListener('input',()=>{clearTimeout(noteSaveTimer);$('notes-status').textContent='Saving…';$('notes-status').classList.remove('saved');noteSaveTimer=setTimeout(async()=>{try{await googleApi('/api/notes',{method:'PUT',body:JSON.stringify({text:$('cloud-note').value})});$('notes-status').textContent='All changes saved to Google Drive.';$('notes-status').classList.add('saved');}catch(e){$('notes-status').textContent=e.message;}},700);});
+ // Resume the widget after Google's authorization redirect.
+ if(returnedToken){const widget=params.get('widget')==='calendar'?'calendar':'notes';$('calendar-panel').classList.toggle('open',widget==='calendar');$('notes-panel').classList.toggle('open',widget==='notes');if(widget==='calendar')loadCalendar();else loadNotes();}
+
+
+ // Project detail popups: practical workflow demonstrations based on stated experience.
+ const projectDetails={
+  customer:{kicker:'CUSTOMER EXPERIENCE · SALES SUPPORT',title:'Customer Inquiry & Sales Follow-up',intro:'A repeatable customer-care workflow informed by my customer service and sales support background across Verizon, Paychex, and U.S. retail customer interactions.',steps:['Capture the customer request and preferred contact channel.','Confirm the issue, order, or product need and review the available information.','Record the interaction, outcome, and any action still required.','Assign a clear next step and a realistic follow-up date.','Contact the customer as agreed, document the response, and close or escalate the case.'],followup:'Same-day note after the interaction; follow up on the agreed date; if there is no response, make one courteous reminder according to the business contact policy; update the status so no open request is forgotten.',tools:'CRM or shared tracker, spreadsheet, email, calendar reminders, clear written notes, and careful customer communication.'},
+  admin:{kicker:'ADMINISTRATION · RECORDS CONTROL',title:'Records & Documentation Control',intro:'An organized records process reflecting my experience with data encoding and accounts payable / receivable documentation support.',steps:['Receive documents and identify the record type and required fields.','Enter information carefully into the approved tracker or system.','Check names, dates, amounts, references, and required attachments for completeness.','Flag missing or inconsistent details for clarification rather than guessing.','Save files using a consistent naming structure and update the record status.','Prepare a concise handoff or pending-items summary.'],followup:'Review pending or incomplete records at the start of each work period; request missing information from the assigned contact; track the due date; and confirm when the record is complete and filed.',tools:'Excel or Google Sheets, Google Drive, Microsoft 365, document checklists, naming conventions, and status trackers.'},
+  onboarding:{kicker:'VIRTUAL ASSISTANCE · CLIENT OPERATIONS',title:'Client Onboarding & Task Management',intro:'A client-start workflow that brings together the onboarding forms, service agreement, NDA, invoice template, and welcome guide available in my Client Center.',steps:['Collect the client brief, business context, priorities, and preferred communication channel.','Confirm scope, deliverables, working hours, timeline, and payment terms in writing.','Complete the service agreement and confidentiality requirements before access is granted.','Create a task list with owners, priorities, due dates, and approval steps.','Request secure, role-based access to only the tools needed for the work.','Send progress updates and record decisions, blockers, and next actions.'],followup:'Send a kickoff recap after onboarding; provide updates at the agreed cadence; flag blockers early; follow up on approvals or missing materials; and share a weekly summary of completed, in-progress, and next tasks.',tools:'Google Workspace, Microsoft 365, task trackers, calendar reminders, client forms, written checklists, and secure access practices.'}
+ };
+ const detailModal=$('project-detail');
+ function closeProjectDetail(){detailModal?.classList.remove('open');document.body.style.overflow='';}
+ function openProjectDetail(key){const d=projectDetails[key];if(!d)return;$('project-detail-kicker').textContent=d.kicker;$('project-detail-title').textContent=d.title;$('project-detail-intro').textContent=d.intro;$('project-detail-followup').textContent=d.followup;$('project-detail-tools').textContent=d.tools;const list=$('project-detail-steps');list.innerHTML='';d.steps.forEach(step=>{const li=document.createElement('li');li.textContent=step;list.append(li);});detailModal.classList.add('open');document.body.style.overflow='hidden';$('project-detail-close').focus();}
+ document.querySelectorAll('[data-project]').forEach(b=>b.addEventListener('click',()=>openProjectDetail(b.dataset.project)));
+ $('project-detail-close')?.addEventListener('click',closeProjectDetail);
+ detailModal?.addEventListener('click',e=>{if(e.target===detailModal)closeProjectDetail();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&detailModal?.classList.contains('open'))closeProjectDetail();});
+ // Separate quick-tool popups. Calendar and Notepad remain connected to Google as before.
+ const toolPanels=['clock','focus','tasks','calculator','ai','currency','hours'];
+ function openTool(name){document.querySelectorAll('.productivity-panel').forEach(p=>p.classList.remove('open'));const p=$(name+'-panel');if(p)p.classList.add('open');}
+ document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>openTool(b.dataset.tool)));
+ const originalShowWidget=showWidget; // Keep existing Calendar/Notepad behavior intact.
+ document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close)?.classList.remove('open')));
+ // World clocks
+ let zones=['Asia/Manila','America/New_York','America/Los_Angeles','America/Chicago'];function drawZones(){const out=$('world-clocks');if(!out)return;out.innerHTML='';zones.forEach(z=>{const d=document.createElement('div');d.className='clock-line';try{d.innerHTML='<strong>'+z.replace('_',' ')+'</strong><span>'+new Intl.DateTimeFormat('en-US',{timeZone:z,dateStyle:'medium',timeStyle:'medium'}).format(new Date())+'</span>';}catch{d.textContent=z+' (invalid timezone)';}out.append(d);});}drawZones();setInterval(drawZones,1000);
+ $('add-zone')?.addEventListener('click',()=>{const z=$('tz-city').value.trim();try{new Intl.DateTimeFormat('en',{timeZone:z});if(z&&!zones.includes(z)){zones.push(z);drawZones();$('tz-city').value='';}}catch{$('tz-city').setCustomValidity('Enter a valid timezone such as Europe/London.');$('tz-city').reportValidity();}});
+ // Focus timer
+ let focusSeconds=1500,focusRunning=false,focusInterval=null,focusBreak=false;function paintFocus(){$('focus-display').textContent=String(Math.floor(focusSeconds/60)).padStart(2,'0')+':'+String(focusSeconds%60).padStart(2,'0');}
+ $('focus-start')?.addEventListener('click',()=>{if(focusRunning){clearInterval(focusInterval);focusRunning=false;$('focus-start').textContent='Resume';return;}focusRunning=true;$('focus-start').textContent='Pause';focusInterval=setInterval(()=>{focusSeconds--;paintFocus();if(focusSeconds<=0){clearInterval(focusInterval);focusRunning=false;focusBreak=!focusBreak;focusSeconds=focusBreak?300:1500;$('focus-start').textContent=focusBreak?'Start break':'Start focus';paintFocus();alert(focusBreak?'Focus session complete. Take a 5-minute break!':'Break complete. Ready to focus?');}},1000);});$('focus-reset')?.addEventListener('click',()=>{clearInterval(focusInterval);focusRunning=false;focusSeconds=focusBreak?300:1500;$('focus-start').textContent='Start';paintFocus();});paintFocus();
+ // Local task list
+ let tasks=JSON.parse(localStorage.getItem('portfolio_tasks')||'[]');function drawTasks(){const el=$('task-list');el.innerHTML='';tasks.forEach((t,i)=>{const row=document.createElement('div');row.className='task-line';const label=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.addEventListener('change',()=>{tasks[i].done=cb.checked;saveTasks();});label.append(cb,document.createTextNode(' '+t.text));const del=document.createElement('button');del.textContent='Delete';del.onclick=()=>{tasks.splice(i,1);saveTasks();};row.append(label,del);el.append(row);});}function saveTasks(){localStorage.setItem('portfolio_tasks',JSON.stringify(tasks));drawTasks();} $('task-add')?.addEventListener('click',()=>{const v=$('task-input').value.trim();if(v){tasks.push({text:v,done:false});$('task-input').value='';saveTasks();}});drawTasks();
+ // Calculator: only evaluates a restricted arithmetic expression.
+ let calc='0';function paintCalc(){$('calc-display').value=calc;}document.querySelectorAll('.calc-key').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;if(k==='C')calc='0';else if(k==='⌫')calc=calc.length>1?calc.slice(0,-1):'0';else if(k==='='){try{const expr=calc.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');if(!/^[0-9+*/().% -]+$/.test(expr))throw 0;const result=Function('"use strict";return ('+expr+')')();if(!Number.isFinite(result))throw 0;calc=String(result);}catch{calc='Error';}}else calc=calc==='0'||calc==='Error'?k:calc+k;paintCalc();}));
+ // AI calls the portfolio backend; API key must stay in Render, never in this page.
+ $('ai-send')?.addEventListener('click',async()=>{const prompt=$('ai-prompt').value.trim();if(!prompt)return;$('ai-send').disabled=true;$('ai-answer').textContent='Thinking…';try{const r=await fetch(API_BASE+'/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});const d=await r.json();if(!r.ok)throw new Error(d.error||'AI request failed');$('ai-answer').textContent=d.reply;}catch(e){$('ai-answer').textContent=e.message;}finally{$('ai-send').disabled=false;}});
+ // Currency conversion using public exchangerate.host-compatible open.er-api endpoint.
+ $('currency-go')?.addEventListener('click',async()=>{const from=$('currency-from').value,to=$('currency-to').value,amount=Number($('currency-amount').value);$('currency-result').textContent='Loading rate…';try{const r=await fetch('https://open.er-api.com/v6/latest/'+encodeURIComponent(from));const d=await r.json();if(!r.ok||d.result!=='success')throw new Error('Rate unavailable. Try again later.');const rate=d.rates[to];$('currency-result').textContent=amount.toLocaleString()+' '+from+' = '+(amount*rate).toLocaleString(undefined,{maximumFractionDigits:2})+' '+to+'  ·  Rate: '+rate+'  ·  '+d.time_last_update_utc;}catch(e){$('currency-result').textContent=e.message;}});
+ // Work timer and session totals (local browser storage).
+ let workStart=0,workElapsed=0,workTick=null,workSessions=JSON.parse(localStorage.getItem('portfolio_work_sessions')||'[]');function fmtWork(s){return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,'0')).join(':');}function drawWork(){const total=workSessions.reduce((a,x)=>a+x.seconds,0);$('work-total').textContent='Saved time: '+fmtWork(total)+' across '+workSessions.length+' session(s).';} $('work-start')?.addEventListener('click',()=>{if(workStart)return;workStart=Date.now();workTick=setInterval(()=>$('work-clock').textContent=fmtWork(Math.floor((Date.now()-workStart)/1000)),1000);});$('work-stop')?.addEventListener('click',()=>{if(!workStart)return;clearInterval(workTick);const seconds=Math.floor((Date.now()-workStart)/1000);workSessions.push({project:$('work-project').value.trim()||'General',seconds,date:new Date().toISOString()});localStorage.setItem('portfolio_work_sessions',JSON.stringify(workSessions));workStart=0;$('work-clock').textContent='00:00:00';drawWork();});drawWork();
+
+})();
+</script>
+</body>
+</html>
+;
+ if(sessionStorage.getItem('portfolio_welcome_unlocked')==='yes'){
+   document.body.classList.remove('welcome-locked');welcomeGate.hidden=true;
+ }else{
+   document.body.classList.add('welcome-locked');welcomeInput?.focus();
+ }
+ welcomeForm?.addEventListener('submit',e=>{
+   e.preventDefault();
+   if(welcomeInput.value===WELCOME_PASSWORD){
+     sessionStorage.setItem('portfolio_welcome_unlocked','yes');
+     welcomeGate.hidden=true;document.body.classList.remove('welcome-locked');
+     welcomeError.textContent='';
+   }else{
+     welcomeError.textContent='Incorrect password. Please try again.';
+     welcomeInput.value='';welcomeInput.focus();
+   }
+ });
+
  const menu=document.getElementById('menu'),nav=document.getElementById('nav');
  menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
  document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false');if(menu)menu.innerHTML='<i class="fa-solid fa-bars"></i>'; }));
