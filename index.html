@@ -141,7 +141,8 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
     <a class="active" href="#home"><i class="fa-solid fa-house"></i>Home</a>
     <a href="#projects"><i class="fa-regular fa-folder"></i>Projects</a>
     <a href="#services"><i class="fa-solid fa-layer-group"></i>Services</a>
-    <a href="#testimonials"><i class="fa-solid fa-star"></i>Testimonials</a>
+    <a href="#testimonials"><i class="fa-solid fa-heart"></i>How I Work</a>
+    <a href="assets/client-documents/book-discovery-call.html"><i class="fa-regular fa-calendar-check"></i>Book a Call</a>
     <a href="#about"><i class="fa-regular fa-user"></i>About</a>
     <a href="#client-center"><i class="fa-solid fa-folder-open"></i>Client Center</a>
     <a href="#contact"><i class="fa-regular fa-message"></i>Contact</a>
@@ -271,7 +272,8 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
         <button class="project-launch" data-project="onboarding"><i class="fa-regular fa-window-maximize"></i> View workflow</button>
       </article>
     </div>
-    <p style="font-size:.72rem;color:#858d9b;margin-top:14px">These are portfolio workflow demonstrations based on my experience and skills, not claims of commissioned client projects or measured client results.</p>
+    <div class="project-card reveal" style="margin-top:18px"><span class="project-number">INTERACTIVE DEMO · SALES SUPPORT</span><h3>Try the Lead & Follow-up CRM</h3><p>Add fictional leads, move them through a pipeline, track follow-up dates, and export the demo data to CSV. Entries stay in your current browser only.</p><a class="project-launch" href="assets/client-documents/lead-crm-demo.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open interactive CRM demo</a></div>
+    <p style="font-size:.72rem;color:#858d9b;margin-top:14px">These are portfolio workflow demonstrations based on my experience and skills, not claims of commissioned client projects or measured client results. The CRM is a local-only demonstration using fictional data.</p>
   </section>
 
   <section class="project-detail" id="project-detail" role="dialog" aria-modal="true" aria-labelledby="project-detail-title">
@@ -295,24 +297,11 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
   </section>
 
   <section class="section-block reveal" id="testimonials">
-    <div class="section-title"><span class="eyebrow">Client feedback</span><h2>Kind words about the work.</h2><p>review layouts showing how client feedback can appear on this portfolio.</p></div>
-    <div class="-note"><i class="fa-solid fa-circle-info"></i> REVIEWS — actual client endorsements</div>
+    <div class="section-title"><span class="eyebrow">My working principles</span><h2>Clear communication. Consistent follow-through.</h2><p>A practical approach to supporting customers, clients, and busy teams.</p></div>
     <div class="testimonial-grid">
-      <article class="testimonial-card">
-        <div class="testimonial-stars" aria-label="Five out of five stars">★★★★★</div>
-        <p class="testimonial-quote">“Robert was organized, responsive, and careful with the details. Communication was clear, and tasks were handled with a positive attitude.”</p>
-        <div class="testimonial-person"><span class="testimonial-avatar">JM</span><div><strong>James Mitchell</strong><small>U.S. Client · Small Business Owner</small></div></div>
-      </article>
-      <article class="testimonial-card">
-        <div class="testimonial-stars" aria-label="Five out of five stars">★★★★★</div>
-        <p class="testimonial-quote">“I appreciated the consistency and willingness to learn. Robert followed instructions closely and helped keep day-to-day administrative work organized.”</p>
-        <div class="testimonial-person"><span class="testimonial-avatar">SC</span><div><strong>Sarah Collins</strong><small>U.S. Client · Operations Manager</small></div></div>
-      </article>
-      <article class="testimonial-card">
-        <div class="testimonial-stars" aria-label="Five out of five stars">★★★★★</div>
-        <p class="testimonial-quote">“Professional, courteous, and detail-oriented. Robert made communication easy and approached each task with care.”</p>
-        <div class="testimonial-person"><span class="testimonial-avatar">DW</span><div><strong>Daniel Wilson</strong><small>U.S. Client · Agency Coordinator</small></div></div>
-      </article>
+      <article class="testimonial-card"><div class="testimonial-stars"><i class="fa-solid fa-comments"></i></div><h3>Communicate clearly</h3><p class="testimonial-quote">Confirm expectations, share concise updates, and raise questions early instead of making assumptions.</p></article>
+      <article class="testimonial-card"><div class="testimonial-stars"><i class="fa-solid fa-list-check"></i></div><h3>Stay organized</h3><p class="testimonial-quote">Keep tasks, due dates, records, and next actions visible so important details do not get lost.</p></article>
+      <article class="testimonial-card"><div class="testimonial-stars"><i class="fa-solid fa-shield-halved"></i></div><h3>Respect client processes</h3><p class="testimonial-quote">Follow approved procedures, protect confidential information, and escalate work outside my authorization.</p></article>
     </div>
   </section>
 
@@ -326,7 +315,7 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
   </section>
 
   <section class="section-block reveal" id="client-center">
-    <div class="section-title"><span class="eyebrow">Resources for new clients</span><h2>Client Center</h2><p>Download editable onboarding and service templates. Open a document, fill in the blanks, then print or save it as a PDF.</p></div>
+    <div class="section-title"><span class="eyebrow">Private resource library</span><h2>Client Center</h2><p>Unlock a growing collection of editable client onboarding documents, Excel trackers, customer communication templates, and workflow checklists.</p></div>
     <form class="client-lock-card" id="client-center-form">
       <label for="client-center-password">Client Center access password</label>
       <div class="client-lock-input">
@@ -343,13 +332,16 @@ footer{text-align:center;padding:30px 0 8px;color:#9298a2;font-size:.7rem}
       <article class="info-card"><i class="fa-solid fa-file-invoice-dollar"></i><h3>Invoice Template</h3><p>Prepare a clear invoice with service descriptions, dates, rates, totals, and payment instructions.</p><p><a href="assets/client-documents/invoice-template.html" download><b>Download editable template →</b></a></p></article>
       <article class="info-card"><i class="fa-solid fa-handshake"></i><h3>Client Welcome Guide</h3><p>Explain communication, task handoff, approvals, access, reporting, and first-week steps.</p><p><a href="assets/client-documents/client-welcome-guide.html" download><b>Download editable guide →</b></a></p></article>
       <article class="info-card"><i class="fa-solid fa-calendar-check"></i><h3>Discovery Call Workbook</h3><p>Prepare for client calls, capture business needs, qualify project scope, and organize your follow-ups with an editable Excel workbook.</p><p><a href="assets/client-documents/discovery-call-workbook.html"><b>Download Excel workbook →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-file-excel"></i><h3>VA Professional Toolkit</h3><p>Five Excel worksheets: daily planner, weekly client report, lead tracker, support ticket tracker, and timesheet.</p><p><a href="assets/client-documents/va-professional-toolkit.html"><b>Generate Excel toolkit →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-envelope-open-text"></i><h3>Customer Email Templates</h3><p>Copy-ready examples for inquiries, follow-ups, appointments, complaints, outreach, and daily updates.</p><p><a href="assets/client-documents/customer-email-templates.html"><b>Open email template pack →</b></a></p></article>
+      <article class="info-card"><i class="fa-solid fa-list-check"></i><h3>VA SOP Checklist Pack</h3><p>Printable checklists for inbox management, scheduling, records, customer support, and onboarding.</p><p><a href="assets/client-documents/sop-checklist-pack.html"><b>Open SOP checklist pack →</b></a></p></article>
     </div>
-    <p style="font-size:.76rem;color:#7b8190;margin-top:14px">Privacy reminder: never upload signed contracts, completed client forms, invoices, passwords, or confidential client information to this public page. These are blank templates only. Contract and NDA templates are general starting points, not legal advice.</p>
+    <p style="font-size:.76rem;color:#7b8190;margin-top:14px">Privacy reminder: never upload signed contracts, completed client forms, invoices, passwords, or confidential client information to this public page. These are blank templates only. Contract and NDA templates are general starting points, not legal advice. The password prompt is a visual gate only; files hosted on public GitHub Pages are not securely private.</p>
     </div>
   </section>
 
   <section class="section-block reveal" id="contact">
-    <div class="contact-panel"><div><span class="eyebrow">Have a role in mind?</span><h2>Let's make work easier.</h2><p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities.</p></div><a class="contact-btn" href="mailto:robertcorpuz0101@gmail.com">Get in touch <i class="fa-solid fa-arrow-right"></i></a></div>
+    <div class="contact-panel"><div><span class="eyebrow">Have a role in mind?</span><h2>Let's make work easier.</h2><p>I'm interested in Virtual Assistant, customer support, data entry, and administrative support opportunities.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="contact-btn" href="assets/client-documents/book-discovery-call.html">Request a discovery call <i class="fa-solid fa-arrow-right"></i></a><a class="contact-btn" href="mailto:robertcorpuz0101@gmail.com">Email me <i class="fa-regular fa-envelope"></i></a></div></div>
     <div class="social" style="justify-content:center;margin-top:18px"><a href="https://www.facebook.com/rcorpuzva" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/rencorpuz01" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="viber://chat?number=%2B639922880302" aria-label="Viber"><i class="fa-brands fa-viber"></i></a></div>
   </section>
   <footer>© 2026 Robert Riparip Corpuz · Virtual Assistant & Administrative Support</footer>
